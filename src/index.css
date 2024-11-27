@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities{
+    .background-color{
+      background-image: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+      box-shadow: 0 0 50px gray;
+    }
+    .text-color{
+      color: white;
+    }
+    .admin-bgcolor{
+        background-image: linear-gradient(to right, rgb(67, 67, 67) 0%, black 100%);
+    }
+  }
