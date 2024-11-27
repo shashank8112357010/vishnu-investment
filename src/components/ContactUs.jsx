@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaPhone, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import contact1 from '../assets/trading-6531134.jpg';
+import { FaTelegram } from "react-icons/fa";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -37,11 +38,11 @@ const ContactUs = () => {
         <div className="flex flex-col md:flex-row justify-between gap-6 p-4 md:p-10 lg:p-20">
           {/* Card 1 - Call Us */}
           <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center w-full md:w-1/3">
-            <FaPhone className="text-2xl md:text-3xl mb-4 text-[#1D7B83]" />
-            <h2 className="text-xl md:text-2xl font-semibold mb-2">Call Us</h2>
-            <p className="mb-4 text-sm md:text-base">We are available 24/7 to answer your calls.</p>
+            <FaTelegram  className="text-2xl md:text-3xl mb-4 text-[#1D7B83]" />
+            <h2 className="text-xl md:text-2xl font-semibold mb-2">Telegram Channel</h2>
+            <p className="mb-4 text-sm md:text-base">We are available 24/7 to answer your questions.</p>
             <button className="bg-[#000] text-white px-4 py-2 rounded hover:bg-[#333]">
-              +123 456 7890
+            Join@Trustbotsupportfx
             </button>
           </div>
 
@@ -51,7 +52,7 @@ const ContactUs = () => {
             <h2 className="text-xl md:text-2xl font-semibold mb-2">Email Us</h2>
             <p className="mb-4 text-sm md:text-base">Feel free to send us an email anytime.</p>
             <button className="bg-[#000] text-white px-4 py-2 rounded hover:bg-[#333]">
-              contact@example.com
+            trustbotfx@gmail.com
             </button>
           </div>
 
@@ -146,7 +147,7 @@ const ContactUs = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#000] text-white py-3 px-6 rounded-lg hover:bg-[#333] transition duration-300"
+                className="w-full bg-[#2735ff] text-white py-3 px-6 rounded-lg hover:bg-[#6257f8] transition duration-300"
               >
                 Submit
               </button>

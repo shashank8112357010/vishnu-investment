@@ -131,28 +131,20 @@ export default function Register() {
 
   return (
    <div className="bg-black py-10 object-center w-full flex justify-center flex-col items-center gap-5">
-     <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input bg-[#0D0B1A] backdrop-blur-xl mt-[100px]">
+     <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input border bg-[#0D0B1A] backdrop-blur-xl mt-[100px]">
       <div className="w-full flex flex-col items-center">
         <img src="/group-3-13@2x.png" className="w-32" alt="" />
         <h2 className="text-white font-semibold font-lora text-3xl tracking-wider text-center">Registration Form</h2>
       </div>
       <form className="my-10" onSubmit={handleSubmit}>
         {/* <div className="flex "> */}
-          <LabelInputContainer className="mb-4">
-            <Label htmlFor="firstName" >Referral Link (optional)</Label>
-            <Input
-              id="sponsorEmail"
-              placeholder="Referral Link"
-              type="text"
-              value={formData.sponsorEmail}
-            />
-            {errors.sponsorEmail && <p className="text-red-500 text-sm">{errors.sponsorEmail}</p>}
-          </LabelInputContainer>
+        
         {/* </div> */}
-        {/* <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4"> */}
-          <LabelInputContainer className="mb-4">
+        <div className="md:flex ">
+          <LabelInputContainer className="mb-4 w-full">
             <Label htmlFor="firstName">First Name</Label>
             <Input
+            
               id="firstName"
               placeholder="Enter First Name"
               type="text"
@@ -161,7 +153,7 @@ export default function Register() {
             />
             {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
           </LabelInputContainer>
-          <LabelInputContainer className="mb-4">
+          <LabelInputContainer className="mb-4 w-full">
             <Label htmlFor="lastName">Last Name</Label>
             <Input
               id="lastName"
@@ -172,9 +164,10 @@ export default function Register() {
             />
             {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
           </LabelInputContainer>
-        {/* </div> */}
+        </div>
 
-        <LabelInputContainer className="mb-4">
+<div className="md:flex">
+<LabelInputContainer className="mb-4 w-full"> 
           <Label htmlFor="dob">Date of Birth</Label>
           <Input
             id="dob"
@@ -185,9 +178,7 @@ export default function Register() {
           {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
         </LabelInputContainer>
 
-        
-
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className="mb-4 w-full">
           <Label htmlFor="number">Phone Number</Label>
           <Input
             id="number"
@@ -198,8 +189,10 @@ export default function Register() {
           />
           {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
         </LabelInputContainer>
+</div>
 
-        <LabelInputContainer className="mb-4">
+  <div className=" md:flex">
+  <LabelInputContainer className="mb-4 w-full">
           <Label htmlFor="email">Email Address</Label>
           <Input
             id="email"
@@ -210,7 +203,7 @@ export default function Register() {
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className="mb-4 w-full">
           <Label htmlFor="email">Verify Email Address By OTP</Label>
           <div className="flex w-full">
           <Input
@@ -219,7 +212,7 @@ export default function Register() {
             type="text"
             value={enteredOTP}
             onChange={(e) => setEnteredOTP(e.target.value)}
-            className=""
+            className="w-[300px] md:w-[360px]"
           />
           <button onClick={handleSendOTP} disabled={otploading} className="bg-blue-900 text-white px-2 rounded ml-2 text md:text-lg font-[600]">
             {otploading ? 'Sending..' : 'Send OTP'}
@@ -227,9 +220,11 @@ export default function Register() {
           </div>
           {errors.enteredOTP && <p className="text-red-500 text-sm">{errors.enteredOTP}</p>}
         </LabelInputContainer>
+  </div>
 
        
-        <LabelInputContainer className="mb-4">
+<div className="md:flex">
+<LabelInputContainer className="mb-4 w-full">
           <Label htmlFor="password">Password</Label>
           <Input
             id="password"
@@ -241,20 +236,20 @@ export default function Register() {
           {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
         </LabelInputContainer>
 
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            id="confirmPassword"
-            placeholder="Confirm Password"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
-        </LabelInputContainer>
+        <LabelInputContainer className="mb-4 w-full">
+            <Label htmlFor="firstName" >Referral Code (optional)</Label>
+            <Input
+              id="sponsorEmail"
+              placeholder="Referral Link"
+              type="text"
+              value={formData.sponsorEmail}
+            />
+            {errors.sponsorEmail && <p className="text-red-500 text-sm">{errors.sponsorEmail}</p>}
+          </LabelInputContainer>
+</div>
 
-        <button
-          className={cn("py-3 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-blue-900", {
+        <button 
+          className={cn("py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-blue-900", {
             " cursor-not-allowed": loading,
           })}
           type="submit"

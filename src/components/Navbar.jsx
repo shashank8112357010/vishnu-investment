@@ -29,11 +29,11 @@ export default function Navbar() {
         <div className="inline-flex items-center space-x-2">
           <div className="text-xl">
             {/* Responsive Logo */}
-            <img
+           <Link to='/'> <img
               src={logo}
               alt="Trust Bost Logo"
               className="w-16 h-10 sm:w-20 sm:h-14 lg:w-24 lg:h-16  " // Adjusting width/height based on screen size
-            />
+            /></Link>
           </div>
         </div>
 

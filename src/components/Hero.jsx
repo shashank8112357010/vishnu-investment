@@ -8,9 +8,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import bgImage from '../assets/bg30.jpg'; // Adjust path as needed
-import mapimage1 from '../assets/mpa1.png'
+import mapimage1 from '../assets/trustbot banner image.png'
 import bg from '../assets/bg32.jpg'
-import mapimage2 from '../assets/home.png'
+import mapimage2 from '../assets/trustbot banner image.png'
 import mapimage3 from '../assets/map3.png'
 import mapimage4 from '../assets/map4.png'
 import mapimage5 from '../assets/map5.png'
@@ -21,7 +21,7 @@ import futureimage3 from '../assets/feature-3.png'
 import futureimage4 from '../assets/feature-4.png'
 import futureimage5 from '../assets/feature-5.png'
 import futureimage6 from '../assets/feature-6.png'
-import traid from '../assets/traid.jpg'
+import traid from '../assets/trustbot banner.png'
 import blogimage1 from '../assets/blog1.jpg'
 import rocket from '../assets/rocket.gif'
 
@@ -70,19 +70,18 @@ export default function Hero() {
     <>
     {/* ///////////////////// Banner Section Start///////////////////////////////////////// */}
     <div
-      className=' bg-cover bg-center p-10 md:p-20 flex flex-col md:flex-row items-center justify-center'
-      style={{ backgroundImage: `url(${bgImage})` }}
+      className=' bg-cover bg-center bg-black p-10 md:py-20 flex flex-col md:flex-row items-center justify-center'
+      
     >
-      <div className='md:w-[50%] w-full mb-8 md:mb-0 mt-9'>
-        <h1 className='text-[32px] md:text-[56px] text-white customeFontFamily leading-tight'>
-          Invest in Forex, Crypto and Commodity market way to trade
+      <div className='md:w-[60%] w-full mb-8 md:mb-0 mt-9'>
+        <h1 className='text-[32px] font-bold md:text-[60px] text-white customeFontFamily leading-tight'>
+          Invest in Forex, Crypto, and Commodity Market 
         </h1>
-        <p className='text-white text-[16px] md:text-[18px] mt-4'>
-          Welcome to [Trust Bot] your gateway to financial freedom through the exciting world of forex trading. At [Trust Bot] we believe that everyone has the potential to achieve financial success with the right guidance and resources. Our comprehensive programs and supportive community are designed to help you navigate the forex market with confidence and skill.
+        <p className='text-gray-400 text-[16px] md:text-[18px] mt-4'>
+        Welcome to Trust Bot, your gateway to financial freedom through the exciting world of forex trading. At Trust Bot, we believe that everyone has the potential to achieve financial success with the right guidance and resources. Our comprehensive programs and supportive community are designed to help you navigate the forex market with confidence and skill.
         </p>
         <div className='flex gap-3 mt-6'>
-          <button className='btn btn-secondary px-4 uppercase'>Learn More</button>
-          <button className='btn btn-secondary px-4 uppercase'>Contact Us</button>
+          <button className='btn bg-[#FF8906] text-white font-bold hover:bg-[#ff8800e1] px-4 uppercase'>Learn More</button>
         </div>
       </div>
       <div className='md:w-[50%] w-full ml-'>
@@ -103,8 +102,8 @@ export default function Hero() {
         We Believe & Live in Reality
         <RiDoubleQuotesR className='inline ms-8 md:text-[50px] text-[#404040]' />
       </p>
-      <p className='w-full md:w-[65%] text-[14px] md:text-[16px] font-semibold mt-5 md:mt-10 leading-6 mx-auto'>
-        We are happy to inform you that you all are not just our clients but also our business partners. Together we will make good profits in the global market. Join us at [Trust Bot] where we are committed to empowering the Forex and Commodity markets with cutting-edge solutions and unwavering dedication to our customers.
+      <p className='w-full md:w-[65%] text-[14px] text-gray-400 md:text-[18px] font-semibold mt-5 md:mt-10 leading-6 mx-auto'>
+        We are happy to inform you that you all are not just our clients but also our business partners. Together we will make good profits in the global market. Join us at Trust Bot where we are committed to empowering the Forex and Commodity markets with cutting-edge solutions and unwavering dedication to our customers.
       </p>
     </div>
   </div>
@@ -117,10 +116,10 @@ export default function Hero() {
   <div className='workpart-subcontainer text-center pt-20 text-3xl font-bold text-white flex flex-col items-center justify-start relative'>
     {/* <p className='company-text absolute top-[50%] transform -translate-y-1/2 -right-20 text-gray-500'>Company Name</p> */}
     <h1 className='text-3xl md:text-4xl'>
-      WHAT IS [Tust Bot] & <span className='text-[#6272F7]'>HOW IT WORKS?</span>
+      WHAT IS Tust Bot & <span className='text-[#6272F7]'>HOW IT WORKS?</span>
     </h1>
-    <p className='mt-10 text-xl font-medium italic w-full md:w-[50%] mx-auto'>
-      Join us at [Tust Bot] where we are committed to empowering the Forex and Commodity markets with cutting-edge solutions and unwavering dedication to our customers.
+    <p className='mt-10 text-xl text-gray-400 font-medium italic w-full md:w-[50%] mx-auto'>
+      Join us at Tust Bot where we are committed to empowering the Forex and Commodity markets with cutting-edge solutions and unwavering dedication to our customers.
     </p>
     <div className='w-full flex flex-col md:flex-row items-center justify-center mt-16 px-5 md:px-20'>
       <div className='w-full md:w-[50%]'>
@@ -128,12 +127,12 @@ export default function Hero() {
       </div>
       <div className='w-full md:w-[50%] md:pe-[50px] mt-5 md:mt-0'>
         <h1 className='text-3xl md:text-4xl text-left'>We’ve built this platform to deal in Forex and Commodity market.</h1>
-        <p className='mt-3 text-lg font-medium text-left'>Welcome to [Tust Bot] where we power the Forex and Commodity market with innovative and reliable solutions for our customers. Our mission is to achieve mutual success with our clients in the global market, built on a foundation of Trust and Commitment.</p>
-        <p className='mt-3 text-base font-medium text-left'>
-          <FaCircleCheck className='inline me-3' /> We Believe & Live in Reality.
+        <p className='mt-3 text-lg font-medium text-left text-gray-400'>Welcome to Tust Bot where we power the Forex and Commodity market with innovative and reliable solutions for our customers. Our mission is to achieve mutual success with our clients in the global market, built on a foundation of Trust and Commitment.</p>
+        <p className='mt-3 text-base font-medium text-left text-gray-400'>
+          <FaCircleCheck className='inline me-3 text-gray-400' /> We Believe & Live in Reality.
         </p>
-        <p className='mt-3 text-base font-medium text-left'>
-          <FaCircleCheck className='inline me-3' /> Providing help for your transactions with full support 24/7.
+        <p className='mt-3 text-base font-medium text-left text-gray-400'>
+          <FaCircleCheck className='inline me-3 text-gray-400' /> Providing help for your transactions with full support 24/7.
         </p>
       </div>
     </div>
@@ -146,7 +145,7 @@ export default function Hero() {
 
     <div className='w-full bg-[#1f222b] pt-12 flex flex-col items-center pb-10'>
   <h1 className='text-4xl text-white text-center font-bold'>
-    [Tust Bot] <span className='text-[#6272F7]'>Use these 6 point in roadmap section</span>
+    Tust Bot <span className='text-[#6272F7]'>Use these 6 point in roadmap section</span>
   </h1>
   <div className='w-full flex flex-col md:flex-row mt-20 px-5 md:px-20'>
     <div className='w-full md:w-1/2'>
@@ -233,54 +232,54 @@ export default function Hero() {
     {/* /////////////////////////////////////[Company Name] BEST FEATURES Section Start//////////////////////////////// */}
     <div className='w-full h-auto bg-black px-[80px] pb-14'>
     <div className='pt-10'>
-        <h1 className='text-4xl text-white text-center font-bold'>[Trust Bot] <span className='text-[#6272F7]'>BEST FEATURES</span></h1>
-        <p className='text-white text-[18px] text-center'>[Trust Bot] provides a Safe & Secure, Better Bonus, and Easy to access platform for customers.</p>
+        <h1 className='text-4xl text-white text-center font-bold'><span className='text-[#6272F7]'>BEST FEATURES</span></h1>
+        <p className='text-gray-400 text-[18px] text-center'>Trust Bot provides a Safe & Secure, Better Bonus, and Easy to access platform for customers.</p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card  cardbackgroundcontainer">
+                <div className="card-body cardbackground p-3 flex flex-col justify-center items-center text-white">
                     <img src={futureimage1} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-2xl font-bold">Effortless & convenient
+                    <h5 className="card-title text-xl font-bold">Effortless & convenient
                     </h5>
-                    <p className="card-text text-center"> Flexible withdrawals 24/7   <br />working  days.</p>
+                    <p className="card-text text-center"> Flexible withdrawals 24/7 working  days.</p>
                 </div>
             </div>
         </div>
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card h- cardbackgroundcontainer">
+                <div className="card-body cardbackground p- flex flex-col justify-center items-center text-white">
                     <img src={futureimage2} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-3xl font-bold">Card title</h5>
+                    <h5 className="card-title text-xl font-bold">Return On Investment</h5>
                     <p className="card-text text-center">Bot service Get upto 22-30% every month.</p>
                 </div>
             </div>
         </div> 
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card cardbackgroundcontainer">
+                <div className="card-body cardbackground p-3 flex flex-col justify-center items-center text-white">
                     <img src={futureimage3} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-3xl font-bold">Invest your way
+                    <h5 className="card-title text-xl font-bold">Easy investments
                     </h5>
                     <p className="card-text text-center">Easy investments
-                    start <br /> in  at  ₹5000</p>
+                    start in  at  ₹5000</p>
                 </div>
             </div>
         </div>
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card  cardbackgroundcontainer">
+                <div className="card-body cardbackground p-3 flex flex-col justify-center items-center text-white">
                     <img src={futureimage4} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-3xl font-bold">Card title</h5>
+                    <h5 className="card-title text-xl font-bold">Referral Income</h5>
                     <p className="card-text text-center">Referral commission Get instant Referral commisson upto 18%.</p>
                 </div>
             </div>
         </div>
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card  cardbackgroundcontainer">
+                <div className="card-body cardbackground p-3 flex flex-col justify-center items-center text-white">
                     <img src={futureimage5} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-3xl font-bold">No extra charges
+                    <h5 className="card-title text-xl font-bold">No extra charges
                     </h5>
                     <p className="card-text text-center">zero commission, <br />
                     zero withdrawal fees.</p>
@@ -288,11 +287,11 @@ export default function Hero() {
             </div>
         </div>
         <div className="col">
-            <div className="card h-100 cardbackgroundcontainer">
-                <div className="card-body cardbackground p-5 flex flex-col justify-center items-center text-white">
+            <div className="card cardbackgroundcontainer">
+                <div className="card-body cardbackground p-3 flex flex-col justify-center items-center text-white">
                     <img src={futureimage6} alt="" width='60px' className='cardimagebackground p-3' />
-                    <h5 className="card-title text-3xl font-bold">Safe & secure</h5>
-                    <p className="card-text text-center">Secured investments with
+                    <h5 className="card-title text-xl font-bold">Safe & secure</h5>
+                    <p className="card-text text-center text-gray-400">Secured investments with
                     decentralized payment systemr.</p>
                 </div>
             </div>
@@ -308,7 +307,7 @@ export default function Hero() {
     <div className='w-full h-auto p-10 md:p-20'>
         <div className='flex flex-col items-center gap-9'>
             <h1 className='text-4xl text-white text-center font-bold'>BENEFITS FOREX & COMMODITY</h1>
-            <p className='text-white text-[18px] text-center w-full md:w-[70%]'>
+            <p className='text-gray-400 text-[18px] text-center w-full md:w-[70%]'>
                 A Forex & Commodity, Forex-currency or Forex is a digital currency designed to work as a medium of exchange through a decentralized network that is not reliant on any central authority, such as a government or bank, to uphold or maintain it.
             </p>
         </div>
