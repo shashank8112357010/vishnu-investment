@@ -8,6 +8,8 @@ import { Label } from "./designComponents/Label.jsx";
 import { Input } from "./designComponents/Input.jsx";
 import Navbar from "./Navbar.jsx";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export default function Register() {
   let navigation = useNavigate();
 
@@ -73,7 +75,7 @@ export default function Register() {
       const otp = generateOTP();
 
       try {
-        await axios.post('https://actl.co.in/vishnu/verifyotp', { email, otp });
+        await axios.post(`${API_URL}/verifyotp`, { email, otp });
         alert('OTP has been sent to your email');
       } catch (err) {
         console.error('Error sending OTP:', err);
