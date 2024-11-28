@@ -14,6 +14,27 @@ const WithdrawalHistory= () => {
     console.log({ status, fromDate, toDate });
   };
 
+  let tableData=[
+    {
+      id:'1',
+      withdrawalMethod:'Bank Account',
+      amount:'12345',
+      requestData:'00/00/000',
+      approvedDate:'00/00/000',
+      status:'Approved'
+
+    },
+    {
+      id:'2',
+      withdrawalMethod:'Bank Account',
+      amount:'12345',
+      requestData:'00/00/000',
+      approvedDate:'00/00/000',
+      status:'Pending'
+
+    }
+  ]
+
   return (
     <div className="min-h-screen background-color border rounded-xl text-white p-4 flex flex-col items-center">
       {/* Header */}
@@ -31,7 +52,6 @@ const WithdrawalHistory= () => {
             >
                 <option value="Select"> Select Status</option>
               <option value="Approved">Approved</option>
-              <option value="Declined">Declined</option>
               <option value="Pending">Pending</option>
             </select>
           </div>
@@ -81,27 +101,38 @@ const WithdrawalHistory= () => {
             <thead>
               <tr className="bg- text-white">
                 <th className="p-4 border-b border-gray-500">Sr. No.</th>
-                <th className="p-4 border-b border-gray-500">Payment type</th>
                 <th className="p-4 border-b border-gray-500">Withdrawal Method</th>
-                <th className="p-4 border-b border-gray-500">Amount$</th>
-                <th className="p-4 border-b border-gray-500">Charges</th>
-                <th className="p-4 border-b border-gray-500">Withdrable $</th>
+                <th className="p-4 border-b border-gray-500">Amount</th>
                 <th className="p-4 border-b border-gray-500">Request Date</th>
                 <th className="p-4 border-b border-gray-500">Approved Date</th>
-                <th className="p-4 border-b border-gray-500">Reason</th>
                 <th className="p-4 border-b border-gray-500">Status</th>
               </tr>
             </thead>
             <tbody>
               {/* If no results found */}
-              <tr className="text-center text-gray-400">
-                <td className="p-4" colSpan="1">Result Not Found</td>
-              </tr>
+             {
+              tableData && tableData.length > 0 ? 
+              tableData.map((item,index)=>(
+                <tr key={index} className=''>
+                  <td>{item.id}</td>
+                  <td>{item.withdrawalMethod}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.requestData}</td>
+                  <td>{item.approvedDate}</td>
+                  <td className={item.status==='Approved'?"text-green-800 bg-green-400 inline px-2 py-[2px] rounded":"text-red-800 bg-red-400 inline px-2 py-[2px] rounded"}>{item.status}</td>
+                </tr>
+              )):
+              <tr>
+              <td colSpan="6" className="text-center text-gray-500 py-4">
+                No data available
+              </td>
+            </tr>
+             }
 
               {/* Total Amount Row */}
               <tr className="bg-gray-700 text-white">
-                <td className="p-4 font-bold border-t border-gray-500">Total Amount</td>
-                <td className="p-4 border-t border-gray-500" colSpan="9">(0.00 ₹) </td>
+                <td className="p-4 font-bold border-t border-gray-500" colSpan='3'>Total Amount</td>
+                <td className="p-4 border-t border-gray-500 text-right" colSpan="3">(0.00 ₹) </td>
                 
               </tr>
             </tbody>

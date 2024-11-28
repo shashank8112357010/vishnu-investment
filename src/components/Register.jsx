@@ -6,13 +6,15 @@ import { cn } from "../lib/utils.js";
 import axios from "axios";
 import { Label } from "./designComponents/Label.jsx";
 import { Input } from "./designComponents/Input.jsx";
-import Navbar from "./Navbar.jsx";
+// import Navbar from "./Navbar.jsx";
+import { IoEyeSharp } from "react-icons/io5";
+import { IoEyeOffSharp } from "react-icons/io5";
 
 const API_URL = import.meta.env.VITE_API_URL
 
 export default function Register() {
   let navigation = useNavigate();
-
+  const [showpassword,setShowPassword]=useState(false)
   const [generatedOTP, setGeneratedOTP] = useState('');
   const [enteredOTP, setEnteredOTP] = useState('');
   const [otploading, setotpLoading] = useState(false);
@@ -110,7 +112,7 @@ export default function Register() {
       if (enteredOTP === generatedOTP) {
         let result = await axios.get(`https:///actl.co.in/vishnu/verifyEmail/${formData.email}`);
         if (result.data) {
-          await axios.post("https:///actl.co.in/vishnu/saveUser", formDataToSend, {
+          await axios.post(`${API_URL}/register`, formDataToSend, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
@@ -224,20 +226,24 @@ export default function Register() {
 
        
 <div className="md:flex">
-<LabelInputContainer className="mb-4 w-full">
+<LabelInputContainer className="mb-4 w-full relative">
           <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             placeholder="Password"
-            type="password"
+            type={showpassword?'text':'password'}
             value={formData.password}
             onChange={handleChange}
+            
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+          {showpassword ? <IoEyeSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={()=>setShowPassword(!showpassword)}/>: <IoEyeOffSharp  className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={()=>setShowPassword(!showpassword)}/>}
+          
         </LabelInputContainer>
 
+
         <LabelInputContainer className="mb-4 w-full">
-            <Label htmlFor="firstName" >Referral Code (optional)</Label>
+            <Label htmlFor="referralCode" >Referral Code (optional)</Label>
             <Input
               id="sponsorEmail"
               placeholder="Referral Link"
