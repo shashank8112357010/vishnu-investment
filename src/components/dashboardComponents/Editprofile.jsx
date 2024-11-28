@@ -4,9 +4,6 @@ import React, { useState } from 'react';
 const Editprofile = () => {
   // State for form inputs and uploads
   const [profileImage, setProfileImage] = useState(null);
-  const [kycDoc1, setKycDoc1] = useState(null);
-  const [kycDoc2, setKycDoc2] = useState(null);
-  const [otp, setOtp] = useState('');
   const [bankDetails, setBankDetails] = useState({
     holderName: '',
     accountNumber: '',
@@ -18,11 +15,13 @@ const Editprofile = () => {
     upiId: '',
   });
 
+  function handleChange(){
+
+  }
+
   // Handlers for file upload
   const handleProfileImageChange = (e) => setProfileImage(URL.createObjectURL(e.target.files[0]));
-  const handleKycDoc1Change = (e) => setKycDoc1(URL.createObjectURL(e.target.files[0]));
-  const handleKycDoc2Change = (e) => setKycDoc2(URL.createObjectURL(e.target.files[0]));
-
+  
   return (
     <div className="p-5">
       {/* Profile Section */}
@@ -59,72 +58,25 @@ const Editprofile = () => {
           {/* User ID and Full Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-medium">User ID</label>
-              <input type="text" value="12345" readOnly className="w-full p-2 border rounded-lg" />
+              <label className="block font-medium">Full Name</label>
+              <input type="text" value="User Name" onChange={handleChange} className="w-full text-black p-2 border rounded-lg" />
             </div>
             <div>
-              <label className="block font-medium">Full Name</label>
-              <input type="text" value="User Name" className="w-full p-2 border rounded-lg" />
+              <label className="block font-medium">Email ID</label>
+              <input type="email" value="user@example.com" className="w-full text-black p-2 border rounded-lg" />
             </div>
           </div>
 
           {/* Email and Mobile */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-medium">Email ID</label>
-              <input type="email" value="user@example.com" className="w-full p-2 border rounded-lg" />
-            </div>
-            <div>
               <label className="block font-medium">Mobile Number</label>
-              <input type="tel" placeholder="Enter your mobile number" className="w-full p-2 border rounded-lg" />
+              <input type="tel" placeholder="Enter your mobile number" className="w-full text-black p-2 border rounded-lg" />
             </div>
-          </div>
-
-          {/* DOB and Mother's Name */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block font-medium">Date of Birth</label>
-              <input type="date" className="w-full p-2 border rounded-lg" />
+              <input type="date" className="w-full text-black p-2 border rounded-lg" />
             </div>
-            <div>
-              <label className="block font-medium">Mother's Name</label>
-              <input type="text" placeholder="Enter mother's name" className="w-full p-2 border rounded-lg" />
-            </div>
-          </div>
-
-          {/* KYC Document Upload */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">KYC Document 1</label>
-              <input type="file" onChange={handleKycDoc1Change} />
-              {kycDoc1 && <img src={kycDoc1} alt="KYC Doc 1" className="w-full mt-2 h-16 object-cover" />}
-            </div>
-            <div>
-              <label className="block font-medium">KYC Document 2</label>
-              <input type="file" onChange={handleKycDoc2Change} />
-              {kycDoc2 && <img src={kycDoc2} alt="KYC Doc 2" className="w-full mt-2 h-16 object-cover" />}
-            </div>
-          </div>
-
-          {/* Document Number and Address */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">Document Number</label>
-              <input type="text" placeholder="Enter document number" className="w-full p-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block font-medium">Address</label>
-              <input type="text" placeholder="Enter your address" className="w-full p-2 border rounded-lg" />
-            </div>
-          </div>
-
-          {/* OTP Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">Enter OTP</label>
-              <input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} className="w-full p-2 border rounded-lg" />
-            </div>
-            <button type="button" className="mt-6 bg-green-500 text-white p-2 rounded-lg">Send OTP</button>
           </div>
 
           {/* Update and Edit Buttons */}
@@ -143,11 +95,11 @@ const Editprofile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block font-medium">Holder Name</label>
-              <input type="text" placeholder="Enter Holder Name" className="w-full p-2 border rounded-lg" />
+              <input type="text" placeholder="Enter Holder Name" className="w-full p-2 border rounded-lg text-black" />
             </div>
             <div>
               <label className="block font-medium">A/c Number</label>
-              <input type="text" placeholder="Enter A/c Number" className="w-full p-2 border rounded-lg" />
+              <input type="text" placeholder="Enter A/c Number" className="w-full text-black p-2 border rounded-lg" />
             </div>
           </div>
 
@@ -155,11 +107,11 @@ const Editprofile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block font-medium">IFSC Code</label>
-              <input type="text" placeholder="Enter IFSC Code" className="w-full p-2 border rounded-lg" />
+              <input type="text" placeholder="Enter IFSC Code" className="w-full text-black p-2 border rounded-lg" />
             </div>
             <div>
               <label className="block font-medium">Bank Name</label>
-              <select className="w-full p-2 border rounded-lg">
+              <select className="w-full p-2 border rounded-lg text-black">
                 <option>Select Bank</option>
                 <option>SBI</option>
                 <option>HDFC</option>
@@ -182,11 +134,11 @@ const Editprofile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block font-medium">UPI Name</label>
-              <input type="text" placeholder="Enter UPI Name" className="w-full p-2 border rounded-lg" />
+              <input type="text" placeholder="Enter UPI Name" className="w-full text-black p-2 border rounded-lg" />
             </div>
             <div>
               <label className="block font-medium">UPI ID</label>
-              <input type="text" placeholder="Enter UPI ID" className="w-full p-2 border rounded-lg" />
+              <input type="text" placeholder="Enter UPI ID" className="w-full text-black p-2 border rounded-lg" />
             </div>
           </div>
 

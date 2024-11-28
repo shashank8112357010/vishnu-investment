@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { IoEyeSharp } from "react-icons/io5";
+import { IoEyeOffSharp } from "react-icons/io5";
 
 export default function Login() {
+  let [showPass, setShowPass] =useState(false)
+  let [data,setData]=useState({
+    email:"",
+    password:""
+  })
+
   return (
     <div>
        <div>
@@ -14,11 +22,13 @@ export default function Login() {
                 <div className='w-full h-auto  '>
                 <form  className='flex flex-col items-center p-5'>
                         <div className='w-full md:flex items-center justify-center '>
-                            <input type="text" placeholder='Enter User ID' className=' w-full md:w-full h-[38px] px-3 text-xl font-medium border rounded mb-3 md:mb-0 bg-[#27272A]' name='sponsorId '/>
+                            <input type="text" placeholder='Enter User ID' className=' w-full md:w-full h-[38px] px-3 text-xl font-medium border rounded mb-3 md:mb-0 bg-[#27272A]' name='sponsorId ' onChange{(e)=>setDta(e.target.value)}/>
                             
                         </div>
-                        <div className='w-full md:flex  items-center justify-center'>
-                            <input type="text" placeholder='Enter Password' className=' w-full md:w-full h-[38px] px-3 text- font-medium border rounded mb-3 md:mb-0 bg-[#27272A] ' name='sponsorId '/>
+                        <div className='w-full md:flex  items-center justify-center relative'>
+                            <input type={showPass ? "text":"password"} placeholder='Enter Password' className=' w-full md:w-full h-[38px] px-3 text- font-medium border rounded mb-3 md:mb-0 bg-[#27272A] text-white' name='sponsorId '/>
+                           {showPass ? <IoEyeSharp className='absolute text-white top-[20%] right-2 cursor-pointer' onClick={()=>setShowPass(!showPass)}/>: <IoEyeOffSharp  className='absolute text-white top-[20%] right-2 cursor-pointer' onClick={()=>setShowPass(!showPass)}/>
+                           }
                         </div>
                         <button value='submit' name='submit' className='bg-blue-800 text-white px-3 py-2 text-md uppercase font-bold rounded hover:bg-slate-900'>Submit</button>
                         </form>

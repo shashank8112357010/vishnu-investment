@@ -12,6 +12,10 @@ import ClientDashboard from './ClientDashboard.jsx'
 import Dashboard from './components/dashboardComponents/Dashboard.jsx'
 import Editprofile from './components/dashboardComponents/Editprofile.jsx'
 import ChangePassword from './components/dashboardComponents/ChangePassword.jsx'
+import Deposit from './components/dashboardComponents/Deposit.jsx'
+import DepositHistory from './components/dashboardComponents/DepositHistory.jsx'
+import Withdrawal from './components/dashboardComponents/Withdrawal.jsx'
+import WithdrawalHistory from './components/dashboardComponents/WithdrawalHistory.jsx'
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +31,10 @@ const router=createBrowserRouter(
     <Route path="/dashboard/" element={<Dashboard/>}/>
     <Route path='/dashboard/editprofile' element={<Editprofile/>}/>
     <Route path='/dashboard/changepassword' element={<ChangePassword/>}/>
+    <Route path='/dashboard/deposit' element={<Deposit/>}/>
+    <Route path='/dashboard/deposithistory' element={<DepositHistory/>}/>
+    <Route path='/dashboard/withdrawal' element={<Withdrawal/>}/>
+    <Route path='/dashboard/withdrawalhistory' element={<WithdrawalHistory/>}/>
 
     </Route>
     </>
