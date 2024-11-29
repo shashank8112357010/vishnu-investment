@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // API Base URL
-const API_URL = import.meta.env.VITE_API_URL
+// const API_URL = import.meta.env.VITE_API_URL
+const API_URL = "https://actl.co.in/vishnu"
 
 // Create Axios instance
 const apiClient = axios.create({

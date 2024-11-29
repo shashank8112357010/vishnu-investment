@@ -56,22 +56,22 @@ export default function Dashboard() {
         <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex">
           <div className='w-[40%] text:xl md:text-xl font-semibold'> 
             <p>User Name</p>
-            <p>User Id</p>
-            <p>Sponsor Name</p>
-            <p>Sponsor ID</p>
+            <p>User Email</p>
+            <p>Referral Email</p>
+            
           </div>
           <div className='w-1/2 text:xl md:text-xl font-semibold'> 
             <p>: User Name</p>
             <p>: User Id</p>
-            <p>: Sponsor Name</p>
-            <p>: Sponsor ID</p>
+            <p>: Referral Id</p>
+            
           </div>
         </div>
 
         {/* Second Card with Search Field */}
         <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
-          <h2 className="text-md font-bold mb-4">Referral Program  :  Earn a stable income by</h2>
-          <p className="text-lg font-bold mb-4">
+          <h2 className="text-md font-bold ">Referral Program  :  Earn a stable income by</h2>
+          <p className="text-lg font-bold">
           introducing clients to Enter Company Name
           </p>
           <div className='w-full h-10  bg-gray-200 rounded-full flex items-center text-black text-xl font-bold justify-between overflow-hidden border'>
