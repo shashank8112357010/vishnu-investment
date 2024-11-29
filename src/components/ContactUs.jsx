@@ -27,7 +27,7 @@ const ContactUs = () => {
       {/* Outer container with background color change */}
       <div className="  background-color welcome-boxcontainer  md:p-16 lg:p-24">
         {/* Heading and paragraph */}
-        <h1 className="text-2xl md:text-4xl font-bold text-center mb-6 mt-8 md:mt-16 lg:mt-16 text-white">
+        <h1 className="text-2xl md:text-4xl font-bold text-center mb-6 pt-16 md:mt-16 lg:mt-16 text-white">
           Let's Connect and Get to Know Each Other
         </h1>
         <p className="text-center text-sm md:text-lg mb-10 text-white">
@@ -147,7 +147,7 @@ const ContactUs = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#2735ff] text-white py-3 px-6 rounded-lg hover:bg-[#6257f8] transition duration-300"
+                className="w-full bg-black  text-white py-3 px-6 rounded-lg transition duration-300"
               >
                 Submit
               </button>

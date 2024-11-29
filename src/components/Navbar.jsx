@@ -6,9 +6,9 @@ import { Menu, X } from 'lucide-react'
 import logo from '../assets/trustt.png'
 
 const menuItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact Us', href: '/contactus' },
+  { name: 'Home', to: '/' },
+  { name: 'About', to: '/about' },
+  { name: 'Contact Us', to: '/contactus' },
 ]
 
 export default function Navbar() {
@@ -23,7 +23,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative w-full bg-white h-16">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4  sm:px-6 lg:px-8">
         {/* Logo Section */}
         <div className="inline-flex items-center space-x-2">
@@ -76,14 +76,14 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
+          <div className="absolute inset-x-0 top-0  z-50 origin-top-right transform p-2 transition lg:hidden">
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-5 pb-6 pt-5">
               <div className="flex items-center justify-between">
                 {/* Mobile Logo */}
                 <div className="inline-flex items-center space-x-2">
                   <div className="text-xl text-black">
-                    <img src={logo} alt="Logo" className='w-20 h-16' />
+                    <img src={logo} alt="Logo" className='w-24 h-24' />
                   </div>
                 </div>
                 {/* Close Menu Button */}
@@ -103,7 +103,7 @@ export default function Navbar() {
                   {menuItems.map((item) => (
                     <Link
                       key={item.name}
-                      to={item.href}
+                      to={item.to}
                       onClick={closeMenu} // Close menu on item click
                       className="uppercase text-black flex items-center justify-center p-3 text-sm font-semibold hover:bg-gray-50" // Centering the items
                     >
@@ -116,16 +116,16 @@ export default function Navbar() {
               </div>
         
               {/* Mobile Login/Register Buttons */}
-              <div className="mt-6 flex flex-col items-center space-y-2"> {/* Space between buttons */}
+              <div className="mt-6 flex flex-col items-center justify-center space-y-2"> {/* Space between buttons */}
                 <Link
                   to='/login'
-                  className="w-full uppercase rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  className="w-full uppercase text-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
                   Login
                 </Link>
                 <Link
                   to='/register'
-                  className="w-full uppercase rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  className="w-full uppercase rounded-md text-center bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
                   Register
                 </Link>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 import { cn } from "../lib/utils.js";
 import axios from "axios";
@@ -9,21 +9,21 @@ import { Input } from "./designComponents/Input.jsx";
 
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { RegisterUser } from "../services/api.service.js";
 import Loader from "./Loader.jsx";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
   let navigation = useNavigate();
-  const [showpassword, setShowPassword] = useState(false)
-  const [generatedOTP, setGeneratedOTP] = useState('');
-  const [enteredOTP, setEnteredOTP] = useState('');
+  const [showpassword, setShowPassword] = useState(false);
+  const [generatedOTP, setGeneratedOTP] = useState("");
+  const [enteredOTP, setEnteredOTP] = useState("");
   const [otploading, setotpLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    sponsorEmail: "",
+    referralCode: "",
     firstName: "",
     lastName: "",
     dob: "",
@@ -40,147 +40,71 @@ export default function Register() {
     return otp;
   };
 
-  // const validate = () => {
-  //   let newErrors = {};
-
-  //   if (!formData.firstName) newErrors.firstName = "First name is required";
-  //   if (!formData.lastName) newErrors.lastName = "Last name is required";
-  //   if (!formData.dob) newErrors.dob = "Date of Birth is required";
-  //   if (!formData.number) newErrors.number = "Phone number is required";
-  //   if (!formData.email) {
-  //     newErrors.email = "Email is required";
-  //   } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-  //     newErrors.email = "Email address is invalid";
-  //   }
-  //   // if (!enteredOTP) newErrors.enteredOTP = "Fill OTP";
-
-  //   if (!formData.password) newErrors.password = "Password is required";
-
-  //   return "";
-  // };
-
   const handleChange = (e) => {
-    // const { id, value, files } = e.target;
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
-
-
-    // if (files) {
-    //   setFormData((prev) => ({ ...prev, [id]: files[0] }));
-    // } else {
-    //   setFormData((prev) => ({ ...prev, [id]: value }));
-    // }
   };
 
   const handleSendOTP = async () => {
-    let email = formData.email;
-    if (email) {
-      setotpLoading(true);
-      const otp = generateOTP();
+  //   let email = formData.email;
+  //   if (email) {
+  //     setotpLoading(true);
+  //     const otp = generateOTP();
 
-      try {
-        await axios.post(`${API_URL}/verifyotp`, { email, otp });
-        alert('OTP has been sent to your email');
-      } catch (err) {
-        console.error('Error sending OTP:', err);
-        alert('Failed to send OTP');
-      } finally {
-        setotpLoading(false);
-      }
-    } else {
-      alert("Please Enter Email");
-    }
+  //     try {
+  //       await axios.post(`${API_URL}/verifyotp`, { email, otp });
+  //       alert("OTP has been sent to your email");
+  //     } catch (err) {
+  //       console.error("Error sending OTP:", err);
+  //       alert("Failed to send OTP");
+  //     } finally {
+  //       setotpLoading(false);
+  //     }
+  //   } else {
+  //     alert("Please Enter Email");
+  //   }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validate()) {
-  //     return;
-  //   }
-
-  //   const formDataToSend = new FormData();
-  //   Object.keys(formData).forEach((key) => {
-  //     if (key === 'documentFrontFile' || key === 'documentBackFile') {
-  //       if (formData[key] instanceof File) {
-  //         formDataToSend.append(key, formData[key]);
-  //       }
-  //     } else {
-  //       formDataToSend.append(key, formData[key]);
-  //     }
-  //   });
-
-  //   try {
-  //     setLoading(true);
-  //     if (enteredOTP === generatedOTP) {
-  //       let result = await axios.get(`https:///actl.co.in/vishnu/verifyEmail/${formData.email}`);
-  //       if (result.data) {
-  //         await axios.post(`${API_URL}/register`, formDataToSend, {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data"
-  //           }
-  //         });
-  //         navigation('/login');
-  //       } else {
-  //         alert("Email Already Registered..!");
-  //       }
-  //     } else {
-  //       alert("Invalid OTP");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
-
-    setLoading(true)
+    setLoading(true);
 
     e.preventDefault();
 
-    // if (!validate()) {
-    //   toast.error("Please fill all required fields correctly.");
-    //   return;
-    // }
-
-  await  RegisterUser(formData).then((res) => {
-      console.log(res)
-      setLoading(false)
-    }).catch((err) => {
-      setLoading(false)
-      console.log(err)
-      toast.error(err?.response.data?.message)
-    })
+    await RegisterUser(formData)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        navigation("/login");
+        toast.success(res.response.data.message);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        toast.error(err?.response.data?.message);
+      });
   };
 
-
-
-
   return (
-    <div className="bg-black py-10 object-center w-full flex justify-center flex-col items-center gap-5">
-      <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input border bg-[#0D0B1A] backdrop-blur-xl mt-[100px]">
+    <div className="bg-gray-100 py-10 object-center w-full flex justify-center flex-col items-center gap-5">
+      <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input border bg-white backdrop-blur-xl mt-[100px]">
         <div className="w-full flex flex-col items-center">
           <img src="/group-3-13@2x.png" className="w-32" alt="" />
-          <h2 className="text-white font-semibold font-lora text-3xl tracking-wider text-center">Registration Form</h2>
+          <h2 className="text-black font-semibold font-lora text-3xl tracking-wider text-center">
+            Registration Form
+          </h2>
         </div>
-      
-        <form className="my-10" onSubmit={handleSubmit}>
-          {/* <div className="flex "> */}
 
-          {/* </div> */}
+        <form className="my-10" onSubmit={handleSubmit}>
           <div className="md:flex ">
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="firstName">First Name</Label>
               <Input
-
                 id="firstName"
                 placeholder="Enter First Name"
                 type="text"
                 value={formData.firstName}
                 onChange={handleChange}
               />
-
             </LabelInputContainer>
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="lastName">Last Name</Label>
@@ -191,7 +115,6 @@ export default function Register() {
                 value={formData.lastName}
                 onChange={handleChange}
               />
-
             </LabelInputContainer>
           </div>
 
@@ -204,7 +127,6 @@ export default function Register() {
                 value={formData.dob}
                 onChange={handleChange}
               />
-
             </LabelInputContainer>
 
             <LabelInputContainer className="mb-4 w-full">
@@ -216,7 +138,6 @@ export default function Register() {
                 value={formData.number}
                 onChange={handleChange}
               />
-
             </LabelInputContainer>
           </div>
 
@@ -230,7 +151,6 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
               />
-
             </LabelInputContainer>
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="email">Verify Email Address By OTP</Label>
@@ -243,14 +163,16 @@ export default function Register() {
                   onChange={(e) => setEnteredOTP(e.target.value)}
                   className="w-[300px] md:w-[360px]"
                 />
-                <button onClick={handleSendOTP} disabled={otploading} className="bg-blue-900 text-white px-2 rounded ml-2 text md:text-lg font-[600]">
-                  {otploading ? 'Sending..' : 'Send OTP'}
+                <button
+                  onClick={handleSendOTP}
+                  disabled={otploading}
+                  className="bg-black text-white px-2 rounded ml-2 text md:text-lg font-[600]"
+                >
+                  {otploading ? "Sending.." : "Send OTP"}
                 </button>
               </div>
-
             </LabelInputContainer>
           </div>
-
 
           <div className="md:flex">
             <LabelInputContainer className="mb-4 w-full relative">
@@ -258,42 +180,50 @@ export default function Register() {
               <Input
                 id="password"
                 placeholder="Password"
-                type={showpassword ? 'text' : 'password'}
+                type={showpassword ? "text" : "password"}
                 value={formData.password}
                 onChange={handleChange}
-
               />
-
-              {showpassword ? <IoEyeSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={() => setShowPassword(!showpassword)} /> : <IoEyeOffSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={() => setShowPassword(!showpassword)} />}
-
+              {showpassword ? (
+                <IoEyeOffSharp
+                  className="absolute text-black top-[45%] right-2 cursor-pointer"
+                  onClick={() => setShowPassword(!showpassword)}
+                />
+              ) : (
+                < IoEyeSharp
+                  className="absolute text-black top-[45%] right-2 cursor-pointer"
+                  onClick={() => setShowPassword(!showpassword)}
+                />
+              )}
             </LabelInputContainer>
 
-
             <LabelInputContainer className="mb-4 w-full">
-              <Label htmlFor="referralCode" >Referral Code (optional)</Label>
+              <Label htmlFor="referralCode">Referral Code (optional)</Label>
               <Input
-                id="sponsorEmail"
+                id="referralCode"
                 placeholder="Referral Link"
                 type="text"
-                value={formData.sponsorEmail}
+                value={formData.referralCode}
+                onChange={handleChange}
               />
-
             </LabelInputContainer>
           </div>
 
           <button
-            className={cn("py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-blue-900", {
-              " cursor-not-allowed": loading,
-            })}
+            className={cn(
+              "py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-black",
+              {
+                "cursor-not-allowed": loading,
+              }
+            )}
             type="submit"
             disabled={loading}
           >
-            {loading ? <Loader  color="white" size={"6"} /> : "Submit hey"}
+            {loading ? <Loader color="white" size={"6"} /> : "Submit"}
           </button>
         </form>
       </div>
     </div>
-
   );
 }
 

@@ -19,9 +19,9 @@ export default function Dashboard() {
     setData(result.data[0])
   }
   // console.log(data.selfDeposit)
-  useEffect(()=>{
-    getData()
-  },[])
+  // useEffect(()=>{
+  //   getData()
+  // },[])
 
 
 

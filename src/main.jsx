@@ -18,6 +18,8 @@ import Withdrawal from './components/dashboardComponents/Withdrawal.jsx'
 import WithdrawalHistory from './components/dashboardComponents/WithdrawalHistory.jsx'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
+import ForgotPassword from './components/ForgotPasword.jsx'
+import ResetPassword from './components/ResetPassword.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +31,8 @@ const router = createBrowserRouter(
         <Route path='/contactus' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/forgot-password' element={<ForgotPassword/>}/>
+        <Route path='/reset-password' element={<ResetPassword/>}/>
       </Route>
       <Route path='/dashboard' element={<ClientDashboard />}>
         <Route path="/dashboard/" element={<Dashboard />} />
