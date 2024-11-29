@@ -17,7 +17,6 @@ import DepositHistory from './components/dashboardComponents/DepositHistory.jsx'
 import Withdrawal from './components/dashboardComponents/Withdrawal.jsx'
 import WithdrawalHistory from './components/dashboardComponents/WithdrawalHistory.jsx'
 import { ToastContainer } from 'react-toastify'
-
 import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter(

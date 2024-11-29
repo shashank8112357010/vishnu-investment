@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { cn } from "../lib/utils.js";
 import axios from "axios";
@@ -11,12 +11,13 @@ import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import { RegisterUser } from "../services/api.service.js";
+import Loader from "./Loader.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL
 
 export default function Register() {
   let navigation = useNavigate();
-  const [showpassword,setShowPassword]=useState(false)
+  const [showpassword, setShowPassword] = useState(false)
   const [generatedOTP, setGeneratedOTP] = useState('');
   const [enteredOTP, setEnteredOTP] = useState('');
   const [otploading, setotpLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function Register() {
     firstName: "",
     lastName: "",
     dob: "",
-    number: "",
+    phone: "",
     email: "",
     password: "",
   });
@@ -52,9 +53,9 @@ export default function Register() {
   //     newErrors.email = "Email address is invalid";
   //   }
   //   // if (!enteredOTP) newErrors.enteredOTP = "Fill OTP";
-    
+
   //   if (!formData.password) newErrors.password = "Password is required";
-   
+
   //   return "";
   // };
 
@@ -62,7 +63,7 @@ export default function Register() {
     // const { id, value, files } = e.target;
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
- 
+
 
     // if (files) {
     //   setFormData((prev) => ({ ...prev, [id]: files[0] }));
@@ -133,158 +134,166 @@ export default function Register() {
   // };
 
   const handleSubmit = async (e) => {
+
+    setLoading(true)
+
     e.preventDefault();
-  
+
     // if (!validate()) {
     //   toast.error("Please fill all required fields correctly.");
     //   return;
     // }
-  
-    RegisterUser(formData).then((res)=>{
+
+  await  RegisterUser(formData).then((res) => {
       console.log(res)
-    }).catch((err)=>{
-      console.log(err.response.data.error)
+      setLoading(false)
+    }).catch((err) => {
+      setLoading(false)
+      console.log(err)
+      toast.error(err?.response.data?.message)
     })
   };
-  
-  
-  
+
+
+
 
   return (
-   <div className="bg-black py-10 object-center w-full flex justify-center flex-col items-center gap-5">
-     <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input border bg-[#0D0B1A] backdrop-blur-xl mt-[100px]">
-      <div className="w-full flex flex-col items-center">
-        <img src="/group-3-13@2x.png" className="w-32" alt="" />
-        <h2 className="text-white font-semibold font-lora text-3xl tracking-wider text-center">Registration Form</h2>
-      </div>
-      <form className="my-10" onSubmit={handleSubmit}>
-        {/* <div className="flex "> */}
-        
-        {/* </div> */}
-        <div className="md:flex ">
-          <LabelInputContainer className="mb-4 w-full">
-            <Label htmlFor="firstName">First Name</Label>
-            <Input
-            
-              id="firstName"
-              placeholder="Enter First Name"
-              type="text"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-          
-          </LabelInputContainer>
-          <LabelInputContainer className="mb-4 w-full">
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              placeholder="Enter Last Name"
-              type="text"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-           
-          </LabelInputContainer>
+    <div className="bg-black py-10 object-center w-full flex justify-center flex-col items-center gap-5">
+      <div className="w-[95%] md:w-3/4 mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input border bg-[#0D0B1A] backdrop-blur-xl mt-[100px]">
+        <div className="w-full flex flex-col items-center">
+          <img src="/group-3-13@2x.png" className="w-32" alt="" />
+          <h2 className="text-white font-semibold font-lora text-3xl tracking-wider text-center">Registration Form</h2>
         </div>
+      
+        <form className="my-10" onSubmit={handleSubmit}>
+          {/* <div className="flex "> */}
 
-<div className="md:flex">
-<LabelInputContainer className="mb-4 w-full"> 
-          <Label htmlFor="dob">Date of Birth</Label>
-          <Input
-            id="dob"
-            type="date"
-            value={formData.dob}
-            onChange={handleChange}
-          />
-        
-        </LabelInputContainer>
+          {/* </div> */}
+          <div className="md:flex ">
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
 
-        <LabelInputContainer className="mb-4 w-full">
-          <Label htmlFor="number">Phone Number</Label>
-          <Input
-            id="number"
-            placeholder="123-456-7890"
-            type="tel"
-            value={formData.number}
-            onChange={handleChange}
-          />
-         
-        </LabelInputContainer>
-</div>
+                id="firstName"
+                placeholder="Enter First Name"
+                type="text"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
 
-  <div className=" md:flex">
-  <LabelInputContainer className="mb-4 w-full">
-          <Label htmlFor="email">Email Address</Label>
-          <Input
-            id="email"
-            placeholder="Enter Email Address"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4 w-full">
-          <Label htmlFor="email">Verify Email Address By OTP</Label>
-          <div className="flex w-full">
-          <Input
-            id="enteredOTP"
-            placeholder="Enter OTP"
-            type="text"
-            value={enteredOTP}
-            onChange={(e) => setEnteredOTP(e.target.value)}
-            className="w-[300px] md:w-[360px]"
-          />
-          <button onClick={handleSendOTP} disabled={otploading} className="bg-blue-900 text-white px-2 rounded ml-2 text md:text-lg font-[600]">
-            {otploading ? 'Sending..' : 'Send OTP'}
-          </button>
+            </LabelInputContainer>
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                placeholder="Enter Last Name"
+                type="text"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+
+            </LabelInputContainer>
           </div>
-          
-        </LabelInputContainer>
-  </div>
 
-       
-<div className="md:flex">
-<LabelInputContainer className="mb-4 w-full relative">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            placeholder="Password"
-            type={showpassword?'text':'password'}
-            value={formData.password}
-            onChange={handleChange}
-            
-          />
-        
-          {showpassword ? <IoEyeSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={()=>setShowPassword(!showpassword)}/>: <IoEyeOffSharp  className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={()=>setShowPassword(!showpassword)}/>}
-          
-        </LabelInputContainer>
+          <div className="md:flex">
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="dob">Date of Birth</Label>
+              <Input
+                id="dob"
+                type="date"
+                value={formData.dob}
+                onChange={handleChange}
+              />
+
+            </LabelInputContainer>
+
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="number">Phone Number</Label>
+              <Input
+                id="phone"
+                placeholder="123-456-7890"
+                type="tel"
+                value={formData.number}
+                onChange={handleChange}
+              />
+
+            </LabelInputContainer>
+          </div>
+
+          <div className=" md:flex">
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                placeholder="Enter Email Address"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+
+            </LabelInputContainer>
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="email">Verify Email Address By OTP</Label>
+              <div className="flex w-full">
+                <Input
+                  id="enteredOTP"
+                  placeholder="Enter OTP"
+                  type="text"
+                  value={enteredOTP}
+                  onChange={(e) => setEnteredOTP(e.target.value)}
+                  className="w-[300px] md:w-[360px]"
+                />
+                <button onClick={handleSendOTP} disabled={otploading} className="bg-blue-900 text-white px-2 rounded ml-2 text md:text-lg font-[600]">
+                  {otploading ? 'Sending..' : 'Send OTP'}
+                </button>
+              </div>
+
+            </LabelInputContainer>
+          </div>
 
 
-        <LabelInputContainer className="mb-4 w-full">
-            <Label htmlFor="referralCode" >Referral Code (optional)</Label>
-            <Input
-              id="sponsorEmail"
-              placeholder="Referral Link"
-              type="text"
-              value={formData.sponsorEmail}
-            />
-           
-          </LabelInputContainer>
-</div>
+          <div className="md:flex">
+            <LabelInputContainer className="mb-4 w-full relative">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                placeholder="Password"
+                type={showpassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
 
-        <button 
-          className={cn("py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-blue-900", {
-            " cursor-not-allowed": loading,
-          })}
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </button>
-      </form>
+              />
+
+              {showpassword ? <IoEyeSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={() => setShowPassword(!showpassword)} /> : <IoEyeOffSharp className='absolute text-white top-[45%] right-2 cursor-pointer' onClick={() => setShowPassword(!showpassword)} />}
+
+            </LabelInputContainer>
+
+
+            <LabelInputContainer className="mb-4 w-full">
+              <Label htmlFor="referralCode" >Referral Code (optional)</Label>
+              <Input
+                id="sponsorEmail"
+                placeholder="Referral Link"
+                type="text"
+                value={formData.sponsorEmail}
+              />
+
+            </LabelInputContainer>
+          </div>
+
+          <button
+            className={cn("py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-blue-900", {
+              " cursor-not-allowed": loading,
+            })}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? <Loader  color="white" size={"6"} /> : "Submit hey"}
+          </button>
+        </form>
+      </div>
     </div>
-   </div>
+
   );
 }
 
