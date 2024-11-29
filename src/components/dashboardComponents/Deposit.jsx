@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 
 const Deposit = () => {
   const [depositMethod, setDepositMethod] = useState(""); // State for deposit method
@@ -128,7 +128,7 @@ const Deposit = () => {
       </form>
 
       {/* Toast Container */}
-      <ToastContainer position="top-center" autoClose={3000} />
+     
     </div>
   );
 };

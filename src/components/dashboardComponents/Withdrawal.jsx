@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 
 const Withdrawal = () => {
   const [transactionType, setTransactionType] = useState("");
@@ -132,8 +132,6 @@ const Withdrawal = () => {
         </button>
       </div>
 
-      {/* Toast Container */}
-      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

@@ -16,33 +16,37 @@ import Deposit from './components/dashboardComponents/Deposit.jsx'
 import DepositHistory from './components/dashboardComponents/DepositHistory.jsx'
 import Withdrawal from './components/dashboardComponents/Withdrawal.jsx'
 import WithdrawalHistory from './components/dashboardComponents/WithdrawalHistory.jsx'
+import { ToastContainer } from 'react-toastify'
 
-const router=createBrowserRouter(
+import "react-toastify/dist/ReactToastify.css";
+
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-    <Route path='' element={<App/>}>
-      <Route path='/' element={<Hero/>}/>
-      <Route path='/about' element={<AboutUs/>}/> 
-      <Route path='/contactus' element={<ContactUs/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/register' element={<Register/>}/>
-    </Route>
-    <Route path='/dashboard' element={<ClientDashboard/>}>
-    <Route path="/dashboard/" element={<Dashboard/>}/>
-    <Route path='/dashboard/editprofile' element={<Editprofile/>}/>
-    <Route path='/dashboard/changepassword' element={<ChangePassword/>}/>
-    <Route path='/dashboard/deposit' element={<Deposit/>}/>
-    <Route path='/dashboard/deposithistory' element={<DepositHistory/>}/>
-    <Route path='/dashboard/withdrawal' element={<Withdrawal/>}/>
-    <Route path='/dashboard/withdrawalhistory' element={<WithdrawalHistory/>}/>
 
-    </Route>
+      <Route path='' element={<App />}>
+        <Route path='/' element={<Hero />} />
+        <Route path='/about' element={<AboutUs />} />
+        <Route path='/contactus' element={<ContactUs />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+      </Route>
+      <Route path='/dashboard' element={<ClientDashboard />}>
+        <Route path="/dashboard/" element={<Dashboard />} />
+        <Route path='/dashboard/editprofile' element={<Editprofile />} />
+        <Route path='/dashboard/changepassword' element={<ChangePassword />} />
+        <Route path='/dashboard/deposit' element={<Deposit />} />
+        <Route path='/dashboard/deposithistory' element={<DepositHistory />} />
+        <Route path='/dashboard/withdrawal' element={<Withdrawal />} />
+        <Route path='/dashboard/withdrawalhistory' element={<WithdrawalHistory />} />
+      </Route>
     </>
   )
 )
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <ToastContainer />
+    <RouterProvider router={router} />
   </StrictMode>,
 )
