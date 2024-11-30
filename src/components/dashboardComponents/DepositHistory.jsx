@@ -20,22 +20,7 @@ const DepositHistory = () => {
   // };
 
   // let tableHeadingData=['Id','A/c Number','Amount','Status']
-  let tableData = [
-    {
-      id: '1',
-      acNumber: '123456789',
-      amount: 1234567890,
-      status: 'Done'
-    },
-    {
-      id: '1',
-      acNumber: '123456789',
-      amount: 1234567890,
-      status: 'Failed'
-    }
-  ]
-
-
+ 
 
   useEffect(() => {
     getDepositHistory().then((res) => {
@@ -55,7 +40,7 @@ const DepositHistory = () => {
       {/* Results Section */}
       <div className="w-full max-w-6xl background-color p-6 rounded-xl shadow-xl mb-6">
         <h3 className="text-2xl font-bold mb-6 text-white">Request History</h3>
-        <table className="w-full">
+        <table className="w-full table-auto">
           <tr>
             {/* {tableHeadingData.map((item)=>( <th>{item}</th>))} */}
 

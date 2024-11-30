@@ -7,17 +7,20 @@ import { FaAward } from "react-icons/fa6";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
 
-import axios from 'axios'
+import { getUserStats } from '../../services/api.service';
 
 
 export default function Dashboard() {
   
   let [data,setData] = useState('')
 
-  async function getData() {
-    let result=await axios.get('http://localhost:3000/api/getData')
-    setData(result.data[0])
-  }
+useEffect(()=>{
+  getUserStats().then((res)=>{
+    console.log(res)
+  }).catch((err)=>{
+    console.log(err)
+  })
+},[])
   
 
 

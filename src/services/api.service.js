@@ -47,3 +47,7 @@ export const sendOtp = (data) => {
 export const getDepositHistory = () => {
     return apiClient.get("/fetchdeposit");
 };
+export const getUserStats= () => {
+    return apiClient.get("/userstats");
+};
+
