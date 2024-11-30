@@ -1,16 +1,12 @@
-"use client";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { cn } from "../lib/utils.js";
 import axios from "axios";
+import { cn } from "../lib/utils.js";
 import { Label } from "./designComponents/Label.jsx";
 import { Input } from "./designComponents/Input.jsx";
-
-import { IoEyeSharp } from "react-icons/io5";
-import { IoEyeOffSharp } from "react-icons/io5";
+import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import { RegisterUser } from "../services/api.service.js";
+import { RegisterUser, sendOtp } from "../services/api.service.js";
 import Loader from "./Loader.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -30,45 +26,35 @@ export default function Register() {
     phone: "",
     email: "",
     password: "",
+    otp: "",
   });
 
   const [loading, setLoading] = useState(false);
-
-  const generateOTP = () => {
-    const otp = Math.floor(100000 + Math.random() * 999999).toString();
-    setGeneratedOTP(otp);
-    return otp;
-  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSendOTP = async () => {
-  //   let email = formData.email;
-  //   if (email) {
-  //     setotpLoading(true);
-  //     const otp = generateOTP();
-
-  //     try {
-  //       await axios.post(`${API_URL}/verifyotp`, { email, otp });
-  //       alert("OTP has been sent to your email");
-  //     } catch (err) {
-  //       console.error("Error sending OTP:", err);
-  //       alert("Failed to send OTP");
-  //     } finally {
-  //       setotpLoading(false);
-  //     }
-  //   } else {
-  //     alert("Please Enter Email");
-  //   }
+  const handleSendOTP = async (res) => {
+    if(formData.email){
+      await sendOtp(formData)
+    }else{
+      console.log(res)
+      toast.error(res?.response?.data)
+    }
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
-
     e.preventDefault();
+
+    // Add OTP validation if needed
+    if (formData.otp !== enteredOTP) {
+      toast.error("Invalid OTP");
+      setLoading(false);
+      return;
+    }
 
     await RegisterUser(formData)
       .then((res) => {
@@ -130,18 +116,18 @@ export default function Register() {
             </LabelInputContainer>
 
             <LabelInputContainer className="mb-4 w-full">
-              <Label htmlFor="number">Phone Number</Label>
+              <Label htmlFor="phone">Phone Number</Label>
               <Input
                 id="phone"
                 placeholder="123-456-7890"
                 type="tel"
-                value={formData.number}
+                value={formData.phone}
                 onChange={handleChange}
               />
             </LabelInputContainer>
           </div>
 
-          <div className=" md:flex">
+          <div className="md:flex">
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="email">Email Address</Label>
               <Input
@@ -153,7 +139,7 @@ export default function Register() {
               />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4 w-full">
-              <Label htmlFor="email">Verify Email Address By OTP</Label>
+              <Label htmlFor="enteredOTP">Verify Email Address By OTP</Label>
               <div className="flex w-full">
                 <Input
                   id="enteredOTP"
@@ -190,7 +176,7 @@ export default function Register() {
                   onClick={() => setShowPassword(!showpassword)}
                 />
               ) : (
-                < IoEyeSharp
+                <IoEyeSharp
                   className="absolute text-black top-[45%] right-2 cursor-pointer"
                   onClick={() => setShowPassword(!showpassword)}
                 />

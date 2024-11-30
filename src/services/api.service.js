@@ -38,3 +38,9 @@ export const depositPayment = async (data, file) => {
     }
 };
 
+
+// OTP 
+
+export const sendOtp = (data) => {
+    return apiClient.post("/sendOtp", data);
+};
