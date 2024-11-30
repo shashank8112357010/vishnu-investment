@@ -1,7 +1,6 @@
 import axios from "axios";
 
 // API Base URL
-// const API_URL = import.meta.env.VITE_API_URL
 const API_URL = "https://actl.co.in/vishnu"
 
 // Create Axios instance
@@ -20,6 +19,12 @@ apiClient.interceptors.request.use(
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
         }
+
+        // If the request is multipart/form-data, Axios will handle the content type automatically.
+        if (config.headers['Content-Type'] === 'multipart/form-data') {
+            delete config.headers['Content-Type']; // Allow Axios to set the correct Content-Type for multipart
+        }
+
         return config;
     },
     (error) => {
