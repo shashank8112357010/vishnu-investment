@@ -18,10 +18,7 @@ export default function Dashboard() {
     let result=await axios.get('http://localhost:3000/api/getData')
     setData(result.data[0])
   }
-  // console.log(data.selfDeposit)
-  // useEffect(()=>{
-  //   getData()
-  // },[])
+  
 
 
 

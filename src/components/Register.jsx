@@ -166,7 +166,7 @@ export default function Register() {
                 <button
                   onClick={handleSendOTP}
                   disabled={otploading}
-                  className="bg-black text-white px-2 rounded ml-2 text md:text-lg font-[600]"
+                  className="bg-black text-white px-2 rounded ml-2 text  font-[600]"
                 >
                   {otploading ? "Sending.." : "Send OTP"}
                 </button>

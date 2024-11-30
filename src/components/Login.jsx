@@ -25,13 +25,14 @@ export default function Login() {
       .then((res) => {
         console.log(res);
         setLoading(false);
+        localStorage.setItem('token',res?.data?.token )
+        toast.success(res?.data?.message);
         navigate('/dashboard')
-        toast.success(res.response.data.message);
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        toast.error(err.response.data.message);
+        toast.error(err?.response?.data.message);
       });
   };
 

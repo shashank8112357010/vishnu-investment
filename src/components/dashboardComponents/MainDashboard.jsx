@@ -1,9 +1,15 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Dashboard_SideBar from './Dashboard_SideBar'
 import Dashboard_Header from './Dashboard_Header'
 
-export default function Admin() {
+export default function MainDashboard() {
+  const navigate=useNavigate()
+  useEffect(()=>{
+if(!localStorage.getItem('token')){
+  navigate('/login')
+}
+  },[])
   return (
     <>
      <div className='w-full h-auto admin-bgcolor text-color flex'>

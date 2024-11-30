@@ -7,6 +7,7 @@ const Deposit = () => {
   const [network, setNetwork] = useState(""); // State for USDT network
   const [amount, setAmount] = useState(""); // State for USDT amount
 
+
   // Validate form fields
   const validateFields = () => {
     if (!depositMethod) return "Please select a deposit method.";
@@ -25,16 +26,13 @@ const Deposit = () => {
     const validationError = validateFields();
     if (validationError) {
       toast.error(validationError); // Show error notification
+    
     } else {
       toast.success("Request submitted successfully!"); // Show success notification
-      console.log({
-        depositMethod,
-        network: depositMethod === "USDT" ? network : "N/A",
-        amount,
-      });
+      console.log({depositMethod,network: depositMethod === "USDT" ? network : "N/A",amount,});
+      
     }
   };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       {/* Heading */}
@@ -123,13 +121,29 @@ const Deposit = () => {
                 Confirm Your Request
               </button>
             </div>
+            <>
+              <div>
+                <div>
+                <h1>Transfer On Below Address TRC20</h1>
+                <div>Binance Id <span>Copy</span></div>
+                </div>
+                <div>
+                <div>
+                  <label htmlFor="">Transection Image</label>
+                  <input type="file" name="" id="" />
+                </div>
+                <div>
+                  <label htmlFor="">Transection Image</label>
+                  <input type="file" name="" id="" />
+                </div>
+                </div>
+              </div>
+            </>
           </>
         )}
       </form>
 
-              <div>
-                hii
-              </div>
+              
      
     </div>
   );

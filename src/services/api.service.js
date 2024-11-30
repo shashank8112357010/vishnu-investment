@@ -10,3 +10,4 @@ export const RegisterUser = (data) => {
 export const LoginUser = (data) => {
     return apiClient.post("/login", data);
 };
+
