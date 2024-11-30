@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { depositPayment } from "../../services/api.service";
+
+
+import { useNavigate } from "react-router-dom"  
+import Loader from "../Loader";
 
 const Deposit = () => {
   const [depositMethod, setDepositMethod] = useState(""); // State for deposit method
@@ -8,6 +13,10 @@ const Deposit = () => {
   const [step, setStep] = useState(1); // Step to control form steps
   const [transactionImage, setTransactionImage] = useState(null); // For image upload
   const [transactionId, setTransactionId] = useState(""); // For transaction ID
+
+  const [loading , setloading ] = useState(false)
+
+  const navigate = useNavigate()
 
   // Validate form fields
   const validateFields = () => {
@@ -24,25 +33,50 @@ const Deposit = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationError = validateFields();
-    if (validationError) {
-      toast.error(validationError); // Show error notification
-    } else {
+    // const validationError = validateFields();
+    // if (validationError) {
+    //   toast.error(validationError); // Show error notification
+    // } else {
+    //   if (step === 1) {
+    //     setStep(2); // Move to the next step
+    //   } else if (step === 2) {
+    //     toast.success("Request submitted successfully!"); // Show success notification
+    //     console.log({
+    //       depositMethod,
+    //       network,
+    //       amount,
+    //       transactionImage,
+    //       transactionId,
+    //     }); // Log all data to console
+    //   }
+    // }
+
+
+
+    // api call for the deposit ====> 
       if (step === 1) {
         setStep(2); // Move to the next step
-      } else if (step === 2) {
-        toast.success("Request submitted successfully!"); // Show success notification
-        console.log({
-          depositMethod,
-          network,
-          amount,
-          transactionImage,
-          transactionId,
-        }); // Log all data to console
-      }
-    }
+        return true
+      } 
+
+      setloading(true)
+    let data = { amount, transactionId }
+    await depositPayment(data, transactionImage).then((res) => {
+      console.log(res);
+      toast.success(res?.message || "Deposit request submitted. Pending admin approval.")
+      navigate('/dashboard/deposithistory')
+    }).catch((err) => {
+      setloading(false)
+      toast.error("Something went wrong")
+      console.log(err);
+    })
+
+
+
+
+
   };
 
   const handleCopy = () => {
@@ -99,19 +133,19 @@ const Deposit = () => {
                   </select>
                 </div>
                 {/* Warning Message */}
-            <div className="bg-yellow-100 p-4 rounded mb-4">
-              <p className="font-bold text-red-600">
-                Important: Please verify the network before proceeding.
-              </p>
-              <ul className="list-disc pl-5 text-gray-800">
-                <li>Ensure you select the correct network (TRC20).</li>
-                <li>
-                  Incorrect network selection may lead to loss of funds.
-                  Double-check your wallet address.
-                </li>
-                <li>Transactions are typically processed within 15 minutes.</li>
-              </ul>
-            </div>
+                <div className="bg-yellow-100 p-4 rounded mb-4">
+                  <p className="font-bold text-red-600">
+                    Important: Please verify the network before proceeding.
+                  </p>
+                  <ul className="list-disc pl-5 text-gray-800">
+                    <li>Ensure you select the correct network (TRC20).</li>
+                    <li>
+                      Incorrect network selection may lead to loss of funds.
+                      Double-check your wallet address.
+                    </li>
+                    <li>Transactions are typically processed within 15 minutes.</li>
+                  </ul>
+                </div>
 
                 {/* Amount Section */}
                 <div className="grid grid-cols-2 gap-4">
@@ -187,7 +221,7 @@ const Deposit = () => {
             type="submit"
             className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
           >
-            {step === 1 ? "Confirm Your Request" : "Submit Your Request"}
+            {step === 1 ? "Confirm Your Request" : loading ? <Loader size={"6"} color={"white"} /> :  "Submit Your Request"}
           </button>
         </div>
       </form>

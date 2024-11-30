@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { cn } from "../lib/utils.js";
 import { Label } from "./designComponents/Label.jsx";
@@ -12,12 +12,11 @@ import Loader from "./Loader.jsx";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
+  const params = useParams()
   let navigation = useNavigate();
   const [showpassword, setShowPassword] = useState(false);
-  const [generatedOTP, setGeneratedOTP] = useState("");
   const [enteredOTP, setEnteredOTP] = useState("");
   const [otploading, setotpLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     referralCode: "",
     firstName: "",
@@ -29,16 +28,24 @@ export default function Register() {
     otp: "",
   });
 
+  console.log(params , "paramsparamsparamsparamsparamsparams");
   const [loading, setLoading] = useState(false);
+
+  useEffect(()=>{
+
+    if(params.ReferalCode)  setFormData((prev)=>({...prev , referralCode : params.ReferalCode}))
+  },[])
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+
+    console.log(otp);
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleSendOTP = async (res) => {
     if(formData.email){
-      await sendOtp(formData)
+      await sendOtp({email : formData?.email})
     }else{
       console.log(res)
       toast.error(res?.response?.data)
@@ -49,12 +56,7 @@ export default function Register() {
     setLoading(true);
     e.preventDefault();
 
-    // Add OTP validation if needed
-    if (formData.otp !== enteredOTP) {
-      toast.error("Invalid OTP");
-      setLoading(false);
-      return;
-    }
+
 
     await RegisterUser(formData)
       .then((res) => {
@@ -79,6 +81,7 @@ export default function Register() {
             Registration Form
           </h2>
         </div>
+      
 
         <form className="my-10" onSubmit={handleSubmit}>
           <div className="md:flex ">
@@ -142,15 +145,16 @@ export default function Register() {
               <Label htmlFor="enteredOTP">Verify Email Address By OTP</Label>
               <div className="flex w-full">
                 <Input
-                  id="enteredOTP"
+                  id="otp"
                   placeholder="Enter OTP"
                   type="text"
-                  value={enteredOTP}
-                  onChange={(e) => setEnteredOTP(e.target.value)}
+                  value={formData?.otp}
+                  onChange={handleChange}
                   className="w-[300px] md:w-[360px]"
                 />
                 <button
                   onClick={handleSendOTP}
+                  type="button"
                   disabled={otploading}
                   className="bg-black text-white px-2 rounded ml-2 text  font-[600]"
                 >
@@ -186,10 +190,11 @@ export default function Register() {
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="referralCode">Referral Code (optional)</Label>
               <Input
+              disabled={params.ReferalCode}
                 id="referralCode"
                 placeholder="Referral Link"
                 type="text"
-                value={formData.referralCode}
+                value={formData.referralCode }
                 onChange={handleChange}
               />
             </LabelInputContainer>

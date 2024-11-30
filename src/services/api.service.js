@@ -44,3 +44,6 @@ export const depositPayment = async (data, file) => {
 export const sendOtp = (data) => {
     return apiClient.post("/sendOtp", data);
 };
+export const getDepositHistory = () => {
+    return apiClient.get("/fetchdeposit");
+};
