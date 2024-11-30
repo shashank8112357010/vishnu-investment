@@ -9,6 +9,7 @@ import { FaWallet } from "react-icons/fa";
 import { BsBank2 } from "react-icons/bs";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import logo from '../../assets/trustt.png'
+import {toast} from "react-toastify"
 
 
 
@@ -65,7 +66,10 @@ export default function Dashboard_SideBar() {
 
 
                 {/* Signuot */}
-                <li><Link to='/login' onClick={()=>{localStorage.removeItem("token")}} className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl font-semibold'><RiLogoutCircleRLine  className='inline text-2xl' /> &nbsp;&nbsp;Signout</Link></li>
+                <li><Link to='/login' onClick={()=>{
+                    localStorage.removeItem("token");
+                    toast.success("User logged out")
+                }} className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl font-semibold'><RiLogoutCircleRLine  className='inline text-2xl' /> &nbsp;&nbsp;Signout</Link></li>
             </ul>
         </div>
     </div>
