@@ -8,6 +8,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { BsCashCoin } from "react-icons/bs";
 
 import { getUserStats } from '../../services/api.service';
+import { toast } from 'react-toastify';
 
 
 export default function Dashboard() {
@@ -40,6 +41,13 @@ export default function Dashboard() {
   }, [])
 
 
+  // Copy Link here
+
+  const handleCopy=()=>{
+    navigator.clipboard.writeText(data.referalLink)
+    toast.success('Text Copied')
+  }
+
 
 
   return (
@@ -71,28 +79,28 @@ export default function Dashboard() {
 
             {/* First Card */}
             <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex">
-              <div className='w-[40%] text:xl md:text-xl font-semibold'>
-                <p>User Name</p>
-                <p>User Email</p>
-                <p>Referral Email</p>
+              <div className=''>
+                <p>User Name : </p>
+                <p>User Email : </p>
+                <p className='mr-2'>Referral Email : </p>
               </div>
               
-              <div className='w-1/2 text:xl md:text-xl font-semibold'>
-                <p>:{data?.username}</p>
-                <p>: {data?.email}</p>
-                <p>: {data.referalEmail}</p>
+              <div className='w-1/2  '>
+                <p>{data?.username}</p> 
+                <p> {data?.email}</p>
+                <p> {data.referalEmail}</p>
               </div>
             </div>
 
             {/* Second Card with Search Field */}
             <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
-              <h2 className="text-md font-bold ">Referral Program  :  Earn a stable income by</h2>
-              <p className="text-lg font-bold">
+              <h2 className="text-md mb-1 ">Referral Program  :  Earn a stable income by</h2>
+              <p className="">
                 introducing clients to Enter Company Name
               </p>
-              <div className='w-full h-10  bg-gray-200 rounded-full flex items-center text-black text-xl font-bold justify-between overflow-hidden border'>
-                <p className='pl-5'>{data.referalLink}</p>
-                <p className='bg-black p-5 rounded-full text-white cursor-pointer'>Copy</p>
+              <div className='w-full h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black  justify-between overflow-hidden border'>
+                <p className='pl-5 w-[350px] h-5 inline-block overflow-hidden'>{data.referalLink}</p>
+                <p className='bg-black p-5 rounded-full text-white cursor-pointer' onClick={handleCopy}>Copy</p>
               </div>
             </div>
 
