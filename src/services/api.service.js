@@ -56,4 +56,7 @@ export const getUserStats= () => {
 export const changePassword= (data) => {
     return apiClient.post("/changepassword",data);
 };
+export const addBankDetail= (data) => {
+    return apiClient.post("/bank-details",data);
+};
 

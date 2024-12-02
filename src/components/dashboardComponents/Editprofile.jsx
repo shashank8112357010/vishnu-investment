@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { addBankDetail } from '../../services/api.service';
 
 
 const Editprofile = () => {
@@ -38,7 +40,59 @@ const Editprofile = () => {
     }
   };
 
- 
+
+  // Deposit Data
+
+  const [accountHolderName, setHolderName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [ifscCode, setIfscCode] = useState('');
+  const [bankName, setBankName] = useState('');
+
+  const validateFields = () => {
+    if (!accountHolderName || !accountNumber || !ifscCode || !bankName) {
+      toast.error('All fields are required!');
+      return false;
+    }
+
+    // Add more specific validation (e.g., account number length, IFSC code format)
+    if (accountNumber.length < 10 || accountNumber.length > 18) {
+      toast.error('Account number must be between 10 and 18 digits!');
+      return false;
+    }
+
+    if (!/^[A-Z|a-z]{4}\d{7}$/.test(ifscCode)) {
+      toast.error('Invalid IFSC code format!');
+      return false;
+    }
+
+    if (bankName === 'Select Bank') {
+      toast.error('Please select a valid bank!');
+      return false;
+    }
+
+    return true;
+  };
+  const handleDepositSubmit = (e) => {
+    e.preventDefault();
+    // console.log(holderName,accountNumber,ifscCode,bankName)
+    if (validateFields()) {
+      addBankDetail({bankName,accountNumber,ifscCode,accountHolderName}).then((res)=>{
+        console.log(res)
+        toast.success('Bank details added successfully!');
+        // Reset form
+        setHolderName('');
+        setAccountNumber('');
+        setIfscCode('');
+        setBankName('');
+      }).catch((err)=>{
+        console.log(err)
+        toast.error(err.response.data.message)
+      })
+    }
+  };
+
+
+
   return (
     <div className="p-5">
       {/* Profile Section */}
@@ -123,7 +177,7 @@ const Editprofile = () => {
               />
             </div>
             <div className="flex justify-end mt-4 space-x-4">
-            <button type="button" className="bg-green-500 text-white py-2 px-4 rounded-lg">Update</button>
+            <button type="button" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">Update</button>
             <button type="button" className="bg-gray-500 text-white py-2 px-4 rounded-lg">Edit</button>
           </div>
           </div>
@@ -135,42 +189,71 @@ const Editprofile = () => {
 
       {/* Add New Bank Details Section */}
       <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 mt-5 bank-details-section slide-in-up">
-        <h2 className="text-2xl font-bold mb-5 text-center">Add New Bank Detail</h2>
-        <form className="space-y-4">
-          {/* Holder Name and Account Number */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">Holder Name</label>
-              <input type="text" placeholder="Enter Holder Name" className="w-full p-2 border rounded-lg text-black" />
-            </div>
-            <div>
-              <label className="block font-medium">A/c Number</label>
-              <input type="text" placeholder="Enter A/c Number" className="w-full text-black p-2 border rounded-lg" />
-            </div>
+      <h2 className="text-2xl font-bold mb-5 text-center">Add New Bank Detail</h2>
+      <form className="space-y-4" onSubmit={handleDepositSubmit}>
+        {/* Holder Name and Account Number */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label className="block font-medium">Holder Name</label>
+            <input
+              type="text"
+              value={accountHolderName}
+              onChange={(e) => setHolderName(e.target.value)}
+              placeholder="Enter Holder Name"
+              className="w-full p-2 border rounded-lg text-black"
+            />
           </div>
+          <div>
+            <label className="block font-medium">A/c Number</label>
+            <input
+              type="text"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value)}
+              placeholder="Enter A/c Number"
+              className="w-full text-black p-2 border rounded-lg"
+            />
+          </div>
+        </div>
 
-          {/* IFSC Code and Bank Name */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">IFSC Code</label>
-              <input type="text" placeholder="Enter IFSC Code" className="w-full text-black p-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block font-medium">Bank Name</label>
-              <select className="w-full p-2 border rounded-lg text-black">
-                <option>Select Bank</option>
-                <option>SBI</option>
-                <option>HDFC</option>
-              </select>
-            </div>
+        {/* IFSC Code and Bank Name */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label className="block font-medium">IFSC Code</label>
+            <input
+              type="text"
+              value={ifscCode}
+              onChange={(e) => setIfscCode(e.target.value)}
+              placeholder="Enter IFSC Code"
+              className="w-full text-black p-2 border rounded-lg"
+            />
           </div>
+          <div>
+            <label className="block font-medium">Bank Name</label>
+            <select
+              value={bankName}
+              onChange={(e) => setBankName(e.target.value)}
+              className="w-full p-2 border rounded-lg text-black"
+            >
+              <option>Select Bank</option>
+              <option>SBI</option>
+              <option>HDFC</option>
+              <option>ICICI</option>
+              <option>Axis Bank</option>
+            </select>
+          </div>
+        </div>
 
-          {/* Process Request Button */}
-          <div className="flex justify-center mt-4">
-            <button type="button" className="bg-green-500 text-white py-2 px-4 rounded-lg">Process Request</button>
-          </div>
-        </form>
-      </div>
+        {/* Process Request Button */}
+        <div className="flex justify-center mt-4">
+          <button
+            type="submit"
+            className="bg-[#181D8D] text-white py-2 px-4 rounded-lg hover:bg-blue-800"
+          >
+            Process Request
+          </button>
+        </div>
+      </form>
+    </div>
 
       {/* Add Binance Account Section */}
       <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 mt-5 upi-details-section fade-in">
@@ -190,7 +273,7 @@ const Editprofile = () => {
 
           {/* Submit Button */}
           <div className="flex justify-center mt-4">
-            <button type="button" className="bg-green-500 text-white py-2 px-4 rounded-lg">Submit Request</button>
+            <button type="button" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">Submit Request</button>
           </div>
         </form>
       </div>
