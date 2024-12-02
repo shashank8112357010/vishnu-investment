@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function ForgotPassword() {
-  const API_URL = 'https://your-api-url.com'; // Replace with your API endpoint
-  const [email, setEmail] = useState('');
+   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate =useNavigate()
 
