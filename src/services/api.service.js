@@ -62,8 +62,21 @@ export const addBankDetail= (data) => {
 export const addBinanceDetail= (data) => {
     return apiClient.put("/binance-details",data);
 };
-export const addProfileDetail= () => {
-    return apiClient.put("/edit-profile");
+export const addProfileDetail= (data) => {
+    const formData = new FormData();
+    
+    // Append the required fields to the FormData object
+    formData.append("firstName", data.firstName);
+    formData.append("lastName", data.lastName);
+    formData.append("phone", data.phone);
+    formData.append("dob", data.dob);
+    formData.append("profilePic", data.profilePic);
+
+    return apiClient.put("/edit-profile"  , formData, {
+        headers: {
+            "Content-Type": "multipart/form-data", // This is optional as Axios will set it automatically
+        }
+    });
 };
 export const fatchProfileDetail= () => {
     return apiClient.get("/profile");

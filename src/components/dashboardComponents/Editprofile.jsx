@@ -20,14 +20,15 @@ const EditProfile = () => {
     email: "john.doe@example.com",
     phone: "9876543210",
     dob: "1990-01-01",
+    profilePic: null, // To hold the profile picture URL or base64 data
   });
 
   useEffect(() => {
     fatchProfileDetail()
       .then((res) => {
         setProfileData(res?.data?.profileData?.personalDetails);
-        setBankData(res?.data?.profileData?.bankDetails)
-        setBinanceData(res?.data?.profileData?.binanceDetails)
+        setBankData(res?.data?.profileData?.bankDetails);
+        setBinanceData(res?.data?.profileData?.binanceDetails);
       })
       .catch((err) => {
         console.log(err?.response?.data);
@@ -48,31 +49,41 @@ const EditProfile = () => {
     walletAddress: "BINANCE12345",
   });
 
+  // Handle profile image change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileData((prev) => ({
+      ...prev,
+      profilePic: file, // Save the base64 image data
+    }));
+   
+  };
 
-
-  
   // Profile Edit Handler
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProfileUpdate = (e) => {
+  const handleProfileUpdate = async(e) => {
     e.preventDefault();
-addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,email:profileData.email,phone:profileData.phone,dob:profileData.dob}).then((res)=>{
-  console.log(res)
+   await  addProfileDetail({
+      firstName: profileData.firstName,
+      lastName: profileData.lastName,
+      profilePic: profileData.profilePic, // Send the profilePic to the backend
+      phone: profileData.phone,
+      dob: profileData.dob,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-}).catch((err)=>{
-  console.log(err)
-})
-
-    // Add profile validation if necessary
     toast.success("Profile updated successfully!");
     setIsEditingProfile(false); // Exit edit mode
   };
-
-
-
 
   // Bank Edit Handler
   const handleBankChange = (e) => {
@@ -82,20 +93,22 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
 
   const handleBankUpdate = (e) => {
     e.preventDefault();
-    addBankDetail({bankName:bankData.bankName,accountNumber:bankData.accountNumber,ifscCode:bankData.ifscCode ,accountHolderName:bankData.accountHolderName}).then((res)=>{
-      console.log(res)
-    }).catch((err)=>{
-      console.log(err)
+    addBankDetail({
+      bankName: bankData.bankName,
+      accountNumber: bankData.accountNumber,
+      ifscCode: bankData.ifscCode,
+      accountHolderName: bankData.accountHolderName,
     })
-    // Add bank validation if necessary
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     toast.success("Bank details updated successfully!");
     setIsEditingBank(false); // Exit edit mode
   };
-
-
-
-
-
 
   // Binance Edit Handler
   const handleBinanceChange = (e) => {
@@ -115,7 +128,7 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
       .catch((err) => {
         console.log(err);
       });
-    // Add binance validation if necessary
+
     toast.success("Binance details updated successfully!");
     setIsEditingBinance(false); // Exit edit mode
   };
@@ -124,16 +137,20 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
     <div className="p-5">
       {/* Profile Section */}
       <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 profile-section fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">User Profile</h2>
+        <h2 className="text-2xl font-bold mb-5 text-center">User Profile...</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Profile Image */}
           <div className="flex flex-col items-center">
             <img
-              src={"https://via.placeholder.com/150"}
+              src={profileData.profilePic || "https://via.placeholder.com/150"}
               alt="Profile"
               className="rounded-full h-32 w-32 object-cover mb-4"
             />
-            <input type="file" className="mb-2" />
+            <input
+              type="file"
+              className="mb-2"
+              onChange={handleImageChange} // Trigger the image change handler
+            />
           </div>
           {/* Profile Information */}
           <div>
@@ -141,7 +158,6 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
             <div className="text-lg font-semibold">
               User Name {profileData?.firstName} {profileData?.lastName}
             </div>
-            {/* <div>User ID: {profileData.email}</div> */}
             <div>Email: {profileData?.email}</div>
             <div>Phone: {profileData.phone}</div>
             <div>
@@ -149,12 +165,9 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
               {(() => {
                 if (!profileData.dob) return "N/A";
 
-                // Create a Date object
                 const date = new Date(profileData.dob);
-
-                // Format to dd/mm/yyyy
                 const day = String(date.getDate()).padStart(2, "0");
-                const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+                const month = String(date.getMonth() + 1).padStart(2, "0");
                 const year = date.getFullYear();
 
                 return `${day}/${month}/${year}`;
@@ -211,22 +224,20 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
                 <input
                   type="email"
                   className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Email"
                   name="email"
-                  disabled
-                  onChange={handleProfileChange}
                   value={profileData.email}
+                  disabled
                 />
               </div>
               <div>
-                <label className="block font-medium">phone</label>
+                <label className="block font-medium">Phone</label>
                 <input
-                  type="tel"
+                  type="text"
                   className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter phone Number"
+                  placeholder="Enter Phone Number"
                   name="phone"
-                  onChange={handleProfileChange}
                   value={profileData.phone}
+                  onChange={handleProfileChange}
                 />
               </div>
             </div>
@@ -236,32 +247,28 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
               <input
                 type="date"
                 className="w-full p-2 border rounded-lg text-black"
-                onChange={handleProfileChange}
                 name="dob"
                 value={profileData.dob}
+                onChange={handleProfileChange}
               />
             </div>
 
-            <div className="flex justify-end mt-4 space-x-4">
-              <button
-                type="submit"
-                className="bg-[#181D8D] text-white py-2 px-4 rounded-lg"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsEditingProfile(false)}
-                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
-              >
-                Cancel
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="button-background-color text-white py-2 px-4 rounded-lg w-full"
+            >
+              Save Changes
+            </button>
           </form>
         </div>
       )}
 
-      {/* Bank Details Section */}
+
+
+  
+
+
+{/* Bank Details Section */}
       <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section fade-in">
         <h2 className="text-2xl font-bold mb-5 text-center">Bank Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -447,8 +454,18 @@ addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,
           </form>
         </div>
       )}
+
     </div>
   );
 };
 
 export default EditProfile;
+
+      
+
+
+
+
+
+
+
