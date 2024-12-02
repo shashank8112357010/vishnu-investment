@@ -51,3 +51,9 @@ export const getUserStats= () => {
     return apiClient.get("/userstats");
 };
 
+
+
+export const changePassword= (data) => {
+    return apiClient.post("/changepassword",data);
+};
+
