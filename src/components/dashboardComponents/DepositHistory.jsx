@@ -1,81 +1,86 @@
 import React, { useEffect, useState } from "react";
-import { getDepositHistory } from "../../services/api.service"
+import { getDepositHistory } from "../../services/api.service";
 
 const DepositHistory = () => {
-  // const [status, setStatus] = useState("Failed");
-  // const [fromDate, setFromDate] = useState("");
-  // const [toDate, setToDate] = useState("");
-  // const [image, setImage] = useState(null);
-
-  const [depositHistory, setDepositHistory] = useState([])
-
-  // const handleStatusChange = (e) => setStatus(e.target.value);
-  // const handleFromDateChange = (e) => setFromDate(e.target.value);
-  // const handleToDateChange = (e) => setToDate(e.target.value);
-  // const handleImageChange = (e) => setImage(e.target.files[0]);
-
-  // const handleSearch = () => {
-  //   // Add your search functionality here
-  //   console.log({ status, fromDate, toDate });
-  // };
-
-  // let tableHeadingData=['Id','A/c Number','Amount','Status']
- 
+  const [depositHistory, setDepositHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getDepositHistory().then((res) => {
+    getDepositHistory()
+      .then((res) => {
+        setDepositHistory(res?.data?.data || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching deposit history:", err);
+        setError("Failed to load deposit history.");
+        setLoading(false);
+      });
+  }, []);
 
-      setDepositHistory(res?.data?.data)
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }, [])
-  // let status=false
   return (
-    <div className="h-auto background-color border rounded-xl text-white p-4 flex flex-col items-center">
-      {/* Header */}
-   
+    <div className="min-h-screen p-6">
+      <div className="container mx-auto">
+        <h2 className="text-3xl font-bold text-center text-white-800 mb-8">Deposit History</h2>
 
-      {/* Results Section */}
-      <div className="w-full max-w-6xl background-color p-6 rounded-xl shadow-xl mb-6">
-        <h3 className="text-2xl font-bold mb-6 text-white">Request History</h3>
-        <table className="w-full table-auto">
-          <tr>
-            {/* {tableHeadingData.map((item)=>( <th>{item}</th>))} */}
-
-            {["Id" , "Date" , "Amount" , "Status"].map((item , index)=><th key={index}>{item}</th>)}
-         
-          </tr>
-
-
-
-          {depositHistory && depositHistory.length > 0 ? (
-            depositHistory.map((item, index) => (
-              <tr key={index}>
-                <td>{item?.transactionId}</td>
-                <td>{new Date(item?.date).toLocaleDateString() || "N/A"}</td>
-                <td>{item?.amount}</td>
-                <td
-                  className={
-                    item?.status === "approved"
-                      ? "text-green-800 bg-green-400 inline px-2 py-[2px] rounded"
-                      : item?.status === "approved" ? "text-red-800 bg-yellow-400 rounded inline px-2 py-[2px]" :
-                      "text-red-800 bg-red-400 rounded inline px-2 py-[2px]"
-                  }
-                >
-                  {item.status}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center text-gray-500 py-4">
-                No data available
-              </td>
-            </tr>
-          )}
-        </table>
+        {loading ? (
+          <div className="flex justify-center items-center h-40">
+            <span className="text-lg text-gray-600">Loading...</span>
+          </div>
+        ) : error ? (
+          <div className="flex justify-center items-center h-40">
+            <p className="text-red-500">{error}</p>
+          </div>
+        ) : depositHistory.length > 0 ? (
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <table className="min-w-full bg-white">
+              <thead className="bg-gray-800 text-white">
+                <tr>
+                  {["ID", "Date", "Amount", "Status"].map((item, index) => (
+                    <th
+                      key={index}
+                      className="py-3 px-4 text-left text-sm font-medium uppercase tracking-wider"
+                    >
+                      {item}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {depositHistory.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                  >
+                    <td className="py-3 px-4 text-sm text-gray-700">{item?.transactionId || "N/A"}</td>
+                    <td className="py-3 px-4 text-sm text-gray-700">
+                      {item?.date ? new Date(item?.date).toLocaleDateString() : "N/A"}
+                    </td>
+                    <td className="py-3 px-4 text-sm text-gray-700">${item?.amount || "0.00"}</td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`text-sm font-medium px-2 py-1 rounded ${
+                          item?.status === "approved"
+                            ? "bg-green-100 text-green-800"
+                            : item?.status === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {item?.status || "Unknown"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-40">
+            <p className="text-gray-500">No deposit history available.</p>
+          </div>
+        )}
       </div>
     </div>
   );
