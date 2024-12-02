@@ -78,7 +78,7 @@ export default function Dashboard() {
               <div className='w-1/2  '>
                 <p>{data?.username}</p> 
                 <p> {data?.email}</p>
-                <p> {data.referalEmail}</p>
+                <p> {data?.referalEmail}</p>
               </div>
             </div>
 
@@ -89,7 +89,7 @@ export default function Dashboard() {
                 introducing clients to Enter Company Name
               </p>
               <div className='w-full h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black  justify-between overflow-hidden border'>
-                <p className='pl-5 w-[350px] h-5 inline-block overflow-hidden'>{data.referalLink}</p>
+                <p className='pl-5 w-[350px] h-5 inline-block overflow-hidden'>{data?.referalLink}</p>
                 <p className='bg-black p-5 rounded-full text-white cursor-pointer' onClick={handleCopy}>Copy</p>
               </div>
             </div>

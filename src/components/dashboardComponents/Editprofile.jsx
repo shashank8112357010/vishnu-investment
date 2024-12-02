@@ -1,39 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { addBankDetail, addBinanceDetail, fatchProfileDetail } from "../../services/api.service";  // Assuming your API call for bank details
+import {
+  addBankDetail,
+  addBinanceDetail,
+  addProfileDetail,
+  fatchProfileDetail,
+} from "../../services/api.service"; // Assuming your API call for bank details
 
 // Profile Edit Component
 const EditProfile = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false); // Toggle for profile edit mode
   const [isEditingBank, setIsEditingBank] = useState(false); // Toggle for bank edit mode
   const [isEditingBinance, setIsEditingBinance] = useState(false); // Toggle for binance edit mode
-  
 
-  
   // Profile Data State
   const [profileData, setProfileData] = useState({
-    userId: "12345", 
-    fullName: "John Doe",
+    firstName: "John",
+    lastName: "Doe",
     email: "john.doe@example.com",
-    mobile: "9876543210",
+    phone: "9876543210",
     dob: "1990-01-01",
   });
 
-    useEffect(()=>{
-      fatchProfileDetail().then((res)=>{
-        // console.log(res?.data?.profileData?.bankDetails)
-        // console.log(res?.data?.profileData?.joiningDetails)
-        // console.log(res?.data?.profileData?.personalDetails)
-      }).catch((err)=>{
-        console.log(err?.response?.data)
+  useEffect(() => {
+    fatchProfileDetail()
+      .then((res) => {
+        setProfileData(res?.data?.profileData?.personalDetails);
+        setBankData(res?.data?.profileData?.bankDetails)
+        setBinanceData(res?.data?.profileData?.binanceDetails)
       })
-    },[])
-
-
-
-
-
-
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
+  }, []);
 
   // Bank Data State
   const [bankData, setBankData] = useState({
@@ -45,10 +44,13 @@ const EditProfile = () => {
 
   // Binance Data State
   const [binanceData, setBinanceData] = useState({
-    binanceEmail: "JohnBinance",
-    binanceAddress: "BINANCE12345",
+    accountEmail: "JohnBinance",
+    walletAddress: "BINANCE12345",
   });
 
+
+
+  
   // Profile Edit Handler
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -57,10 +59,20 @@ const EditProfile = () => {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
+addProfileDetail({firstName:profileData.firstName,lastName:profileData.lastName,email:profileData.email,phone:profileData.phone,dob:profileData.dob}).then((res)=>{
+  console.log(res)
+
+}).catch((err)=>{
+  console.log(err)
+})
+
     // Add profile validation if necessary
     toast.success("Profile updated successfully!");
-    setIsEditingProfile(false);  // Exit edit mode
+    setIsEditingProfile(false); // Exit edit mode
   };
+
+
+
 
   // Bank Edit Handler
   const handleBankChange = (e) => {
@@ -70,12 +82,15 @@ const EditProfile = () => {
 
   const handleBankUpdate = (e) => {
     e.preventDefault();
+    addBankDetail({bankName:bankData.bankName,accountNumber:bankData.accountNumber,ifscCode:bankData.ifscCode ,accountHolderName:bankData.accountHolderName}).then((res)=>{
+      console.log(res)
+    }).catch((err)=>{
+      console.log(err)
+    })
     // Add bank validation if necessary
     toast.success("Bank details updated successfully!");
-    setIsEditingBank(false);  // Exit edit mode
+    setIsEditingBank(false); // Exit edit mode
   };
-
-
 
 
 
@@ -90,14 +105,19 @@ const EditProfile = () => {
 
   const handleBinanceUpdate = (e) => {
     e.preventDefault();
-    addBinanceDetail({walletAddress:binanceData.binanceAddress,accountEmail : binanceData.binanceEmail}).then((res)=>{
-      console.log(res)
-    }).catch((err)=>{
-      console.log(err)
+    addBinanceDetail({
+      walletAddress: binanceData.walletAddress,
+      accountEmail: binanceData.accountEmail,
     })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // Add binance validation if necessary
     toast.success("Binance details updated successfully!");
-    setIsEditingBinance(false);  // Exit edit mode
+    setIsEditingBinance(false); // Exit edit mode
   };
 
   return (
@@ -118,11 +138,28 @@ const EditProfile = () => {
           {/* Profile Information */}
           <div>
             <h3 className="text-xl font-semibold mb-2">About</h3>
-            <div className="text-lg font-semibold">Username</div>
-            <div>User ID: {profileData.userId}</div>
-            <div>Email: {profileData.email}</div>
-            <div>Mobile: {profileData.mobile}</div>
-            <div>Date of Birth: {profileData.dob}</div>
+            <div className="text-lg font-semibold">
+              User Name {profileData?.firstName} {profileData?.lastName}
+            </div>
+            {/* <div>User ID: {profileData.email}</div> */}
+            <div>Email: {profileData?.email}</div>
+            <div>Phone: {profileData.phone}</div>
+            <div>
+              Date of Birth:{" "}
+              {(() => {
+                if (!profileData.dob) return "N/A";
+
+                // Create a Date object
+                const date = new Date(profileData.dob);
+
+                // Format to dd/mm/yyyy
+                const day = String(date.getDate()).padStart(2, "0");
+                const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+                const year = date.getFullYear();
+
+                return `${day}/${month}/${year}`;
+              })()}
+            </div>
 
             {/* Edit Button */}
             <button
@@ -139,29 +176,31 @@ const EditProfile = () => {
       {/* Edit Profile Form */}
       {isEditingProfile && (
         <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 personal-details-section fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">Edit Personal Details</h2>
+          <h2 className="text-2xl font-bold mb-5 text-center">
+            Edit Personal Details
+          </h2>
           <form className="space-y-4" onSubmit={handleProfileUpdate}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block font-medium">User Id</label>
+                <label className="block font-medium">First Name</label>
                 <input
                   type="text"
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border rounded-lg text-black"
                   placeholder="Enter User ID"
-                  name="userId"
+                  name="firstName"
                   onChange={handleProfileChange}
-                  value={profileData.userId}
+                  value={profileData.firstName}
                 />
               </div>
               <div>
-                <label className="block font-medium">Full Name</label>
+                <label className="block font-medium">Last Name</label>
                 <input
                   type="text"
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border rounded-lg text-black"
                   placeholder="Enter Full Name"
-                  name="fullName"
+                  name="lastName"
                   onChange={handleProfileChange}
-                  value={profileData.fullName}
+                  value={profileData.lastName}
                 />
               </div>
             </div>
@@ -171,22 +210,23 @@ const EditProfile = () => {
                 <label className="block font-medium">Email</label>
                 <input
                   type="email"
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border rounded-lg text-black"
                   placeholder="Enter Email"
                   name="email"
+                  disabled
                   onChange={handleProfileChange}
                   value={profileData.email}
                 />
               </div>
               <div>
-                <label className="block font-medium">Mobile</label>
+                <label className="block font-medium">phone</label>
                 <input
                   type="tel"
-                  className="w-full p-2 border rounded-lg"
-                  placeholder="Enter Mobile Number"
-                  name="mobile"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter phone Number"
+                  name="phone"
                   onChange={handleProfileChange}
-                  value={profileData.mobile}
+                  value={profileData.phone}
                 />
               </div>
             </div>
@@ -195,7 +235,7 @@ const EditProfile = () => {
               <label className="block font-medium">Date of Birth</label>
               <input
                 type="date"
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg text-black"
                 onChange={handleProfileChange}
                 name="dob"
                 value={profileData.dob}
@@ -203,7 +243,10 @@ const EditProfile = () => {
             </div>
 
             <div className="flex justify-end mt-4 space-x-4">
-              <button type="submit" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">
+              <button
+                type="submit"
+                className="bg-[#181D8D] text-white py-2 px-4 rounded-lg"
+              >
                 Save Changes
               </button>
               <button
@@ -255,7 +298,9 @@ const EditProfile = () => {
       {/* Edit Bank Details Form */}
       {isEditingBank && (
         <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">Edit Bank Details</h2>
+          <h2 className="text-2xl font-bold mb-5 text-center">
+            Edit Bank Details
+          </h2>
           <form className="space-y-4" onSubmit={handleBankUpdate}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
@@ -308,7 +353,10 @@ const EditProfile = () => {
             </div>
 
             <div className="flex justify-end mt-4 space-x-4">
-              <button type="submit" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">
+              <button
+                type="submit"
+                className="bg-[#181D8D] text-white py-2 px-4 rounded-lg"
+              >
                 Save Changes
               </button>
               <button
@@ -325,15 +373,17 @@ const EditProfile = () => {
 
       {/* Binance Account Section */}
       <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 binance-details-section fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">Binance Account Details</h2>
+        <h2 className="text-2xl font-bold mb-5 text-center">
+          Binance Account Details
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <h3 className="text-lg font-semibold">Email Id</h3>
-            <div>{binanceData.binanceEmail}</div>
+            <div>{binanceData.accountEmail}</div>
           </div>
           <div>
             <h3 className="text-lg font-semibold">Binance Address</h3>
-            <div>{binanceData.binanceAddress}</div>
+            <div>{binanceData.walletAddress}</div>
           </div>
         </div>
 
@@ -350,7 +400,9 @@ const EditProfile = () => {
       {/* Edit Binance Details Form */}
       {isEditingBinance && (
         <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 binance-details-section fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">Edit Binance Details</h2>
+          <h2 className="text-2xl font-bold mb-5 text-center">
+            Edit Binance Details
+          </h2>
           <form className="space-y-4" onSubmit={handleBinanceUpdate}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
@@ -359,8 +411,8 @@ const EditProfile = () => {
                   type="text"
                   className="w-full p-2 border rounded-lg text-black"
                   placeholder="Enter Binance Name"
-                  name="binanceEmail"
-                  value={binanceData.binanceEmail}
+                  name="accountEmail"
+                  value={binanceData.accountEmail}
                   onChange={handleBinanceChange}
                 />
               </div>
@@ -370,15 +422,18 @@ const EditProfile = () => {
                   type="text"
                   className="w-full p-2 border rounded-lg text-black"
                   placeholder="Enter Binance ID"
-                  name="binanceAddress"
-                  value={binanceData.binanceAddress}
+                  name="walletAddress"
+                  value={binanceData.walletAddress}
                   onChange={handleBinanceChange}
                 />
               </div>
             </div>
 
             <div className="flex justify-end mt-4 space-x-4">
-              <button type="submit" className="bg-[#181D8D] py-2 px-4 rounded-lg text-black">
+              <button
+                type="submit"
+                className="bg-[#181D8D] py-2 px-4 rounded-lg text-black"
+              >
                 Save Changes
               </button>
               <button

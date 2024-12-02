@@ -62,7 +62,9 @@ export const addBankDetail= (data) => {
 export const addBinanceDetail= (data) => {
     return apiClient.put("/binance-details",data);
 };
+export const addProfileDetail= () => {
+    return apiClient.put("/edit-profile");
+};
 export const fatchProfileDetail= () => {
     return apiClient.get("/profile");
 };
-
