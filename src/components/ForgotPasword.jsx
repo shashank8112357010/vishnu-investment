@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Loader';
 import { useNavigate } from 'react-router-dom';
 
-
 function ForgotPassword() {
-  const API_URL = 'https://your-api-url.com'; // Replace with your API endpoint
+   const API_URL = "https://actl.co.in/vishnu"
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate =useNavigate()
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
+    // Input validation
     if (!email) {
       toast.error('Please enter your email address.');
       return;
     }
-
     if (!/\S+@\S+\.\S+/.test(email)) {
       toast.error('Please enter a valid email address.');
       return;
@@ -28,10 +27,13 @@ function ForgotPassword() {
       setLoading(true);
       await axios.post(`${API_URL}/forgot-password`, { email });
       toast.success('Password reset link has been sent to your email.');
-      navigate('/reset-password')
     } catch (error) {
       console.error('Error sending password reset link:', error);
-      toast.error('Failed to send the reset link. Please try again.');
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Failed to send the reset link. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -40,10 +42,10 @@ function ForgotPassword() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white border rounded-lg shadow-md">
-        <h2 className="text-xl font-bold text-center ">Forgot Password</h2>
+        <h2 className="text-xl font-bold text-center text-gray-800">Forgot Password</h2>
         <form onSubmit={handleForgotPassword} className="mt-6">
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium ">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email Address
             </label>
             <input
@@ -51,18 +53,18 @@ function ForgotPassword() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 mt-2  border rounded-md focus:outline-none focus:ring focus:ring-blue-400 justify-between"
+              className="w-full px-4 py-2 mt-2 bg-gray-100 border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
               placeholder="Enter your email"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 text-white bg-black ${
-              loading ?<Loader color="white" size={"6"} />: 'Submit'
+            className={`w-full px-4 py-2 text-white bg-black rounded-md ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
-            {loading ? <Loader color="white" size={"6"}/> : 'Send Reset Link'}
+            {loading ? <Loader color="white" size="6" /> : 'Send Reset Link'}
           </button>
         </form>
         <p className="mt-4 text-sm text-center text-gray-600">
