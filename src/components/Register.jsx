@@ -63,12 +63,12 @@ export default function Register() {
         console.log(res);
         setLoading(false);
         navigation("/login");
-        toast.success(res.response.data.message);
+        toast.success(res?.response?.data?.message || `${formData.firstName} Registered Successfully `);
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        toast.error(err?.response.data?.message);
+        toast.error(err?.response?.data?.message || "Something went wrong");
       });
   };
 
