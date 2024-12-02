@@ -57,6 +57,12 @@ export const changePassword= (data) => {
     return apiClient.post("/changepassword",data);
 };
 export const addBankDetail= (data) => {
-    return apiClient.post("/bank-details",data);
+    return apiClient.put("/bank-details",data);
+};
+export const addBinanceDetail= (data) => {
+    return apiClient.put("/binance-details",data);
+};
+export const fatchProfileDetail= () => {
+    return apiClient.get("/profile");
 };
 

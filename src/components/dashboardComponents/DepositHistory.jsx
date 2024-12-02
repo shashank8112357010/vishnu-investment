@@ -51,7 +51,7 @@ const DepositHistory = () => {
                 {depositHistory.map((item, index) => (
                   <tr
                     key={index}
-                    className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                    className={`${index % 2 === 0 ? "bg-gray-50 " : "bg-white "}border-t-2 `}
                   >
                     <td className="py-3 px-4 text-sm text-gray-700">{item?.transactionId || "N/A"}</td>
                     <td className="py-3 px-4 text-sm text-gray-700">

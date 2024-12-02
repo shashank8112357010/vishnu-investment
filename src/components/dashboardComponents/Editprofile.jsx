@@ -1,102 +1,109 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { addBankDetail } from '../../services/api.service';
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { addBankDetail, addBinanceDetail, fatchProfileDetail } from "../../services/api.service";  // Assuming your API call for bank details
 
+// Profile Edit Component
+const EditProfile = () => {
+  const [isEditingProfile, setIsEditingProfile] = useState(false); // Toggle for profile edit mode
+  const [isEditingBank, setIsEditingBank] = useState(false); // Toggle for bank edit mode
+  const [isEditingBinance, setIsEditingBinance] = useState(false); // Toggle for binance edit mode
+  
 
-const Editprofile = () => {
-  const [formValues, setFormValues] = useState({
-    userId: "",
-    fullName: "",
-    email: "",
-    mobile: "",
-    dob: "",
+  
+  // Profile Data State
+  const [profileData, setProfileData] = useState({
+    userId: "12345", 
+    fullName: "John Doe",
+    email: "john.doe@example.com",
+    mobile: "9876543210",
+    dob: "1990-01-01",
   });
-  const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formValues.userId.trim()) newErrors.userId = "User ID is required.";
-    if (!formValues.fullName.trim()) newErrors.fullName = "Full Name is required.";
-    if (!formValues.email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formValues.email))
-      newErrors.email = "Enter a valid email address.";
-    if (!formValues.mobile.trim() || !/^\d{10}$/.test(formValues.mobile))
-      newErrors.mobile = "Enter a valid 10-digit mobile number.";
-    if (!formValues.dob.trim()) newErrors.dob = "Date of Birth is required.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      alert("Form submitted successfully!");
-      // Perform update logic here
-    }
-  };
-
-
-  // Deposit Data
-
-  const [accountHolderName, setHolderName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [ifscCode, setIfscCode] = useState('');
-  const [bankName, setBankName] = useState('');
-
-  const validateFields = () => {
-    if (!accountHolderName || !accountNumber || !ifscCode || !bankName) {
-      toast.error('All fields are required!');
-      return false;
-    }
-
-    // Add more specific validation (e.g., account number length, IFSC code format)
-    if (accountNumber.length < 10 || accountNumber.length > 18) {
-      toast.error('Account number must be between 10 and 18 digits!');
-      return false;
-    }
-
-    if (!/^[A-Z|a-z]{4}\d{7}$/.test(ifscCode)) {
-      toast.error('Invalid IFSC code format!');
-      return false;
-    }
-
-    if (bankName === 'Select Bank') {
-      toast.error('Please select a valid bank!');
-      return false;
-    }
-
-    return true;
-  };
-  const handleDepositSubmit = (e) => {
-    e.preventDefault();
-    // console.log(holderName,accountNumber,ifscCode,bankName)
-    if (validateFields()) {
-      addBankDetail({bankName,accountNumber,ifscCode,accountHolderName}).then((res)=>{
-        console.log(res)
-        toast.success('Bank details added successfully!');
-        // Reset form
-        setHolderName('');
-        setAccountNumber('');
-        setIfscCode('');
-        setBankName('');
+    useEffect(()=>{
+      fatchProfileDetail().then((res)=>{
+        // console.log(res?.data?.profileData?.bankDetails)
+        // console.log(res?.data?.profileData?.joiningDetails)
+        // console.log(res?.data?.profileData?.personalDetails)
       }).catch((err)=>{
-        console.log(err)
-        toast.error(err.response.data.message)
+        console.log(err?.response?.data)
       })
-    }
+    },[])
+
+
+
+
+
+
+
+  // Bank Data State
+  const [bankData, setBankData] = useState({
+    bankName: "Bank A",
+    accountHolderName: "John Doe",
+    accountNumber: "1234567890",
+    ifscCode: "BANK1234",
+  });
+
+  // Binance Data State
+  const [binanceData, setBinanceData] = useState({
+    binanceEmail: "JohnBinance",
+    binanceAddress: "BINANCE12345",
+  });
+
+  // Profile Edit Handler
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+    // Add profile validation if necessary
+    toast.success("Profile updated successfully!");
+    setIsEditingProfile(false);  // Exit edit mode
+  };
+
+  // Bank Edit Handler
+  const handleBankChange = (e) => {
+    const { name, value } = e.target;
+    setBankData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBankUpdate = (e) => {
+    e.preventDefault();
+    // Add bank validation if necessary
+    toast.success("Bank details updated successfully!");
+    setIsEditingBank(false);  // Exit edit mode
   };
 
 
+
+
+
+
+
+
+  // Binance Edit Handler
+  const handleBinanceChange = (e) => {
+    const { name, value } = e.target;
+    setBinanceData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBinanceUpdate = (e) => {
+    e.preventDefault();
+    addBinanceDetail({walletAddress:binanceData.binanceAddress,accountEmail : binanceData.binanceEmail}).then((res)=>{
+      console.log(res)
+    }).catch((err)=>{
+      console.log(err)
+    })
+    // Add binance validation if necessary
+    toast.success("Binance details updated successfully!");
+    setIsEditingBinance(false);  // Exit edit mode
+  };
 
   return (
     <div className="p-5">
       {/* Profile Section */}
-      <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 profile-section fade-in">
+      <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 profile-section fade-in">
         <h2 className="text-2xl font-bold mb-5 text-center">User Profile</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Profile Image */}
@@ -106,179 +113,287 @@ const Editprofile = () => {
               alt="Profile"
               className="rounded-full h-32 w-32 object-cover mb-4"
             />
-            <input type="file"  className="mb-2" />
-            <div className="text-lg font-semibold">Username</div>
-            <div>User ID: 12345</div>
-            <div>Email: user@example.com</div>
+            <input type="file" className="mb-2" />
           </div>
-          {/* Sponsor Info */}
+          {/* Profile Information */}
           <div>
             <h3 className="text-xl font-semibold mb-2">About</h3>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <h3 className="text-xl font-semibold mt-4 mb-2">Sponsor Information</h3>
-            <p>Sponsor Name: John Doe</p>
-            <p>Joining Date: 2022-01-01</p>
+            <div className="text-lg font-semibold">Username</div>
+            <div>User ID: {profileData.userId}</div>
+            <div>Email: {profileData.email}</div>
+            <div>Mobile: {profileData.mobile}</div>
+            <div>Date of Birth: {profileData.dob}</div>
+
+            {/* Edit Button */}
+            <button
+              type="button"
+              onClick={() => setIsEditingProfile(!isEditingProfile)}
+              className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
+            >
+              {isEditingProfile ? "Cancel" : "Edit"}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Personal Details Section */}
-      <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 mt-5 personal-details-section fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">Personal Details</h2>
-        <form className="space-y-4">
-          {/* User ID and Full Name */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label className="block font-medium">User Id</label>
-              <input type="text"  className="w-full text-black p-2 border rounded-lg" placeholder='ENter Your Full Name'
-              name='userId'
-              onChange={handleChange}
-              value={formValues.userId}
-              />
-              {errors.userId && <span className="text-red-500 text-sm">{errors.userId}</span>}
+      {/* Edit Profile Form */}
+      {isEditingProfile && (
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 personal-details-section fade-in">
+          <h2 className="text-2xl font-bold mb-5 text-center">Edit Personal Details</h2>
+          <form className="space-y-4" onSubmit={handleProfileUpdate}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label className="block font-medium">User Id</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter User ID"
+                  name="userId"
+                  onChange={handleProfileChange}
+                  value={profileData.userId}
+                />
+              </div>
+              <div>
+                <label className="block font-medium">Full Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter Full Name"
+                  name="fullName"
+                  onChange={handleProfileChange}
+                  value={profileData.fullName}
+                />
+              </div>
             </div>
-            <div>
-              <label className="block font-medium">Full Name</label>
-              <input type="text"  className="w-full text-black p-2 border rounded-lg" placeholder='ENter Your Full Name'
-              name='fullName'
-              onChange={handleChange}
-              value={formValues.fullName}
-              />
-              {errors.fullName && <span className="text-red-500 text-sm">{errors.fullName}</span>}
-            </div>
-            
-          </div>
 
-          {/* Email and Mobile */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div>
-              <label className="block font-medium">Email ID</label>
-              <input type="email"  className="w-full text-black p-2 border rounded-lg" placeholder='Enter Your Email Address' 
-              name='email'
-              onChange={handleChange}
-              value={formValues.email}
-              />
-              {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label className="block font-medium">Email</label>
+                <input
+                  type="email"
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter Email"
+                  name="email"
+                  onChange={handleProfileChange}
+                  value={profileData.email}
+                />
+              </div>
+              <div>
+                <label className="block font-medium">Mobile</label>
+                <input
+                  type="tel"
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter Mobile Number"
+                  name="mobile"
+                  onChange={handleProfileChange}
+                  value={profileData.mobile}
+                />
+              </div>
             </div>
-            <div>
-              <label className="block font-medium">Mobile Number</label>
-              <input type="tel" placeholder="Enter Your Mobile Number" className="w-full text-black p-2 border rounded-lg" 
-              value={formValues.mobile}
-              onChange={handleChange}
-              name='mobile'
-              />
-            </div>
+
             <div>
               <label className="block font-medium">Date of Birth</label>
-              <input type="date" className="w-full text-black p-2 border rounded-lg" 
-              onChange={handleChange}
-              name='dob'
-              value={formValues.dob}
+              <input
+                type="date"
+                className="w-full p-2 border rounded-lg"
+                onChange={handleProfileChange}
+                name="dob"
+                value={profileData.dob}
               />
             </div>
+
             <div className="flex justify-end mt-4 space-x-4">
-            <button type="button" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">Update</button>
-            <button type="button" className="bg-gray-500 text-white py-2 px-4 rounded-lg">Edit</button>
-          </div>
-          </div>
+              <button type="submit" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditingProfile(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
-          {/* Update and Edit Buttons */}
-          
-        </form>
-      </div>
-
-      {/* Add New Bank Details Section */}
-      <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 mt-5 bank-details-section slide-in-up">
-      <h2 className="text-2xl font-bold mb-5 text-center">Add New Bank Detail</h2>
-      <form className="space-y-4" onSubmit={handleDepositSubmit}>
-        {/* Holder Name and Account Number */}
+      {/* Bank Details Section */}
+      <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section fade-in">
+        <h2 className="text-2xl font-bold mb-5 text-center">Bank Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block font-medium">Holder Name</label>
-            <input
-              type="text"
-              value={accountHolderName}
-              onChange={(e) => setHolderName(e.target.value)}
-              placeholder="Enter Holder Name"
-              className="w-full p-2 border rounded-lg text-black"
-            />
+            <h3 className="text-lg font-semibold">Bank Name</h3>
+            <div>{bankData.bankName}</div>
           </div>
           <div>
-            <label className="block font-medium">A/c Number</label>
-            <input
-              type="text"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-              placeholder="Enter A/c Number"
-              className="w-full text-black p-2 border rounded-lg"
-            />
+            <h3 className="text-lg font-semibold">Account Holder Name</h3>
+            <div>{bankData.accountHolderName}</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+          <div>
+            <h3 className="text-lg font-semibold">Account Number</h3>
+            <div>{bankData.accountNumber}</div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">IFSC Code</h3>
+            <div>{bankData.ifscCode}</div>
           </div>
         </div>
 
-        {/* IFSC Code and Bank Name */}
+        {/* Edit Button */}
+        <button
+          type="button"
+          onClick={() => setIsEditingBank(!isEditingBank)}
+          className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
+        >
+          {isEditingBank ? "Cancel" : "Edit"}
+        </button>
+      </div>
+
+      {/* Edit Bank Details Form */}
+      {isEditingBank && (
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section fade-in">
+          <h2 className="text-2xl font-bold mb-5 text-center">Edit Bank Details</h2>
+          <form className="space-y-4" onSubmit={handleBankUpdate}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block font-medium">Bank Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter Bank Name"
+                  name="bankName"
+                  value={bankData.bankName}
+                  onChange={handleBankChange}
+                />
+              </div>
+              <div>
+                <label className="block font-medium">Account Holder Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter Account Holder Name"
+                  name="accountHolderName"
+                  value={bankData.accountHolderName}
+                  onChange={handleBankChange}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block font-medium">Account Number</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter Account Number"
+                  name="accountNumber"
+                  value={bankData.accountNumber}
+                  onChange={handleBankChange}
+                />
+              </div>
+              <div>
+                <label className="block font-medium">IFSC Code</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter IFSC Code"
+                  name="ifscCode"
+                  value={bankData.ifscCode}
+                  onChange={handleBankChange}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-4 space-x-4">
+              <button type="submit" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditingBank(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Binance Account Section */}
+      <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 binance-details-section fade-in">
+        <h2 className="text-2xl font-bold mb-5 text-center">Binance Account Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block font-medium">IFSC Code</label>
-            <input
-              type="text"
-              value={ifscCode}
-              onChange={(e) => setIfscCode(e.target.value)}
-              placeholder="Enter IFSC Code"
-              className="w-full text-black p-2 border rounded-lg"
-            />
+            <h3 className="text-lg font-semibold">Email Id</h3>
+            <div>{binanceData.binanceEmail}</div>
           </div>
           <div>
-            <label className="block font-medium">Bank Name</label>
-            <select
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
-              className="w-full p-2 border rounded-lg text-black"
-            >
-              <option>Select Bank</option>
-              <option>SBI</option>
-              <option>HDFC</option>
-              <option>ICICI</option>
-              <option>Axis Bank</option>
-            </select>
+            <h3 className="text-lg font-semibold">Binance Address</h3>
+            <div>{binanceData.binanceAddress}</div>
           </div>
         </div>
 
-        {/* Process Request Button */}
-        <div className="flex justify-center mt-4">
-          <button
-            type="submit"
-            className="bg-[#181D8D] text-white py-2 px-4 rounded-lg hover:bg-blue-800"
-          >
-            Process Request
-          </button>
-        </div>
-      </form>
-    </div>
-
-      {/* Add Binance Account Section */}
-      <div className="max-w-4xl mx-auto border background-color rounded-lg shadow-lg p-5 mt-5 upi-details-section fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">Add New Binance Detail</h2>
-        <form className="space-y-4">
-          {/* UPI Name and UPI ID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium">Binance Name</label>
-              <input type="text" placeholder="Enter UPI Name" className="w-full text-black p-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block font-medium">Binance ID</label>
-              <input type="text" placeholder="Enter UPI ID" className="w-full text-black p-2 border rounded-lg" />
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex justify-center mt-4">
-            <button type="button" className="bg-[#181D8D] text-white py-2 px-4 rounded-lg">Submit Request</button>
-          </div>
-        </form>
+        {/* Edit Button */}
+        <button
+          type="button"
+          onClick={() => setIsEditingBinance(!isEditingBinance)}
+          className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
+        >
+          {isEditingBinance ? "Cancel" : "Edit"}
+        </button>
       </div>
+
+      {/* Edit Binance Details Form */}
+      {isEditingBinance && (
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 binance-details-section fade-in">
+          <h2 className="text-2xl font-bold mb-5 text-center">Edit Binance Details</h2>
+          <form className="space-y-4" onSubmit={handleBinanceUpdate}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block font-medium">Binance Name</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter Binance Name"
+                  name="binanceEmail"
+                  value={binanceData.binanceEmail}
+                  onChange={handleBinanceChange}
+                />
+              </div>
+              <div>
+                <label className="block font-medium">Binance ID</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg text-black"
+                  placeholder="Enter Binance ID"
+                  name="binanceAddress"
+                  value={binanceData.binanceAddress}
+                  onChange={handleBinanceChange}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-4 space-x-4">
+              <button type="submit" className="bg-[#181D8D] py-2 px-4 rounded-lg text-black">
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditingBinance(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Editprofile;
+export default EditProfile;

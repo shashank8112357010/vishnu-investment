@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { depositPayment } from "../../services/api.service";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Loader";
+import { FaCopy } from "react-icons/fa";
 
 const Deposit = () => {
   const [depositMethod, setDepositMethod] = useState(""); // Deposit method
@@ -67,21 +68,21 @@ const Deposit = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Send Request</h1>
+    <div className="flex w-full flex-col items-center justify-center min-h-screen p-6 ">
+      <h1 className="text-2xl font-bold text-white mb-6">Send Request</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white shadow-lg p-6 rounded-lg"
+        className="w-full max-w-lg bg-black shadow-lg p-6 rounded-lg"
       >
         {/* Step 1: Deposit Method */}
         {step === 1 && (
           <>
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">Deposit Method</h2>
+            <h2 className="text-xl font-semibold mb-4 text-white">Deposit Method</h2>
             <select
               value={depositMethod}
               onChange={(e) => setDepositMethod(e.target.value)}
-              className="w-full p-2 mb-4 border border-gray-300 rounded"
+              className="w-full p-2 mb-4 border text-black border-gray-300 rounded"
             >
               <option value="">Transaction Type</option>
               <option value="USDT">USDT</option>
@@ -90,13 +91,13 @@ const Deposit = () => {
             {depositMethod === "USDT" && (
               <>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                  <label className="block text-sm font-medium mb-2 text-white">
                     Select Network
                   </label>
                   <select
                     value={network}
                     onChange={(e) => setNetwork(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
+                    className="w-full p-2 border border-gray-300 rounded text-black"
                   >
                     <option value="">Select Network</option>
                     <option value="TRC20">Tether (TRC20)</option>
@@ -114,18 +115,18 @@ const Deposit = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">
+                    <label className="block text-sm font-medium mb-1 text-white">
                       Currency
                     </label>
                     <input
                       type="text"
                       value="USDT"
                       disabled
-                      className="w-full p-2 border border-gray-300 rounded bg-gray-200"
+                      className="w-full p-2 border border-gray-300 rounded bg-gray-200 text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">
+                    <label className="block text-sm font-medium mb-1 text-white">
                       USDT Amount
                     </label>
                     <input
@@ -133,7 +134,7 @@ const Deposit = () => {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="Enter amount"
-                      className="w-full p-2 border border-gray-300 rounded"
+                      className="w-full p-2 border border-gray-300 rounded text-black"
                     />
                   </div>
                 </div>
@@ -147,21 +148,21 @@ const Deposit = () => {
           <div className="w-full">
             <div className="p-4 border rounded mb-4">
               <h2 className="text-lg mb-2">Transfer to Address (TRC20):</h2>
-              <div className="flex items-center justify-between bg-gray-200 p-2 rounded">
+              <div className="flex items-center justify-between bg-gray-200 p-2 rounded text-black">
                 <span className="truncate">TDf1MFkUTeyu5upSnZozprY8jhMtLQYL81</span>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="text-blue-500 hover:text-blue-600"
+                  className=" hover:text-blue-600"
                 >
-                  Copy
+                <FaCopy title="Copy Text"/>
                 </button>
               </div>
             </div>
 
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="block text-sm font-medium mb-1 text-gray-700">
+                <label className="block text-sm font-medium mb-1 text-white">
                   Transaction Image
                 </label>
                 <input
@@ -171,14 +172,14 @@ const Deposit = () => {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-sm font-medium mb-1 text-gray-700">
+                <label className="block text-sm font-medium mb-1 text-white">
                   Transaction ID
                 </label>
                 <input
                   type="text"
                   value={transactionId}
                   onChange={(e) => setTransactionId(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded text-black"
                 />
               </div>
             </div>
@@ -188,7 +189,7 @@ const Deposit = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-3 mt-6 rounded hover:bg-blue-600 flex items-center justify-center"
+          className="w-full bg-[#01137F] text-white p-3 mt-6 rounded hover:bg-[#101C8E] flex items-center justify-center"
         >
           {loading ? <Loader size="6" color="white" /> : step === 1 ? "Confirm Request" : "Submit Request"}
         </button>

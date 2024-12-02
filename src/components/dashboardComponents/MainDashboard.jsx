@@ -13,12 +13,12 @@ if(!localStorage.getItem('token')){
   return (
     <>
      <div className='w-full h-auto admin-bgcolor text-color flex'>
-      <div className='w-[22%] h-screen overflow-auto admin-bgcolor hidden md:block sticky top-0'>
+      <div className='md:w-[22%] h-screen overflow-auto admin-bgcolor hidden md:block sticky top-0'>
         <Dashboard_SideBar/>
       </div>
       <div className='w-full md:w-[78%] h-auto'>
         <Dashboard_Header/>
-        <div className='w-full h-auto p-5'>
+        <div className='w-full h-auto p-2 md:p-5'>
             <Outlet/>
         </div>
       </div>

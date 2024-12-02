@@ -14,4 +14,8 @@
     .admin-bgcolor{
         background-image: linear-gradient(to right, rgb(67, 67, 67) 0%, black 100%);
     }
+    .button-background-color{
+      background-color: #041682;
+      color: white;
+    }
   }

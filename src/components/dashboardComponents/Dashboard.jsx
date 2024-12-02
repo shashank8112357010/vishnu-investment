@@ -53,7 +53,7 @@ export default function Dashboard() {
   return (
     <>
       <div className='flex flex-col justify-start items-start gap-6 '>
-        <h1 className='px-5 py-2 bg-gray-400 inline-block rounded-md text-3xl text-black font-bold uppercase'>Dashboard</h1>
+        <h1 className='px-5 py-2 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase'>Dashboard</h1>
 
 
         <div>
@@ -61,24 +61,14 @@ export default function Dashboard() {
         </div>
 
 
-        {/* <div className='w-full h-[80px] border rounded-lg shadow-lg shadow-cyan-500/50 flex items-center px-5'>
-          <marquee><h1 className='text-xl md:text-2xl lg:text-3xl'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, temporibus!</h1></marquee>
-        </div> */}
-
-
-        {/* <div className='w-full h-[120px] border rounded-xl px-2 py-5'>
-            <p className='text-xl md:text-2xl lg:text-3xl font-bold mb-5'>OctaFX Referral Id:</p>
-            <p className='text-xl font-bold inline-block'>https://www.google.com <FaCopy className='inline text-2xl ml-3 cursor-pointer'/></p>
-        </div>   */}
-
-
+       
 
         <div className=" flex flex-col justify-center items-center p-4">
           {/* Card Container */}
-          <div className="grid gap-6 md:grid-cols-2 w-full">
+          <div className="grid gap-6 md:grid-cols-2 ">
 
             {/* First Card */}
-            <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex">
+            <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex w-[450px]">
               <div className=''>
                 <p>User Name : </p>
                 <p>User Email : </p>
