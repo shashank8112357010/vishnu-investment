@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { cn } from "../lib/utils.js";
 import { Label } from "./designComponents/Label.jsx";
 import { Input } from "./designComponents/Input.jsx";
@@ -9,13 +8,11 @@ import { toast } from "react-toastify";
 import { RegisterUser, sendOtp } from "../services/api.service.js";
 import Loader from "./Loader.jsx";
 
-const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
   const params = useParams()
   let navigation = useNavigate();
   const [showpassword, setShowPassword] = useState(false);
-  const [enteredOTP, setEnteredOTP] = useState("");
   const [otploading, setotpLoading] = useState(false);
   const [formData, setFormData] = useState({
     referralCode: "",
@@ -28,7 +25,6 @@ export default function Register() {
     otp: "",
   });
 
-  console.log(params , "paramsparamsparamsparamsparamsparams");
   const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
@@ -39,7 +35,6 @@ export default function Register() {
   const handleChange = (e) => {
     const { id, value } = e.target;
 
-    console.log(otp);
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 

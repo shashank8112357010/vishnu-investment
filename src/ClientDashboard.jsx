@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import MainDashboard from './components/dashboardComponents/MainDashboard'
-import { useNavigate } from 'react-router-dom';
 
 
 
 import { isTokenExpired, removeToken } from './utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function ClientDashboard() {
 
-  const navigate = useNavigate();
+  let navigate=useNavigate()
 
   useEffect(() => {
 

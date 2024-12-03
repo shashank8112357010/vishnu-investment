@@ -27,7 +27,7 @@ const ChangePassword = () => {
     }
 
     changePassword({ oldPassword, newPassword })
-      .then((res) => {
+      .then(() => {
         toast.success('Password Change Successfully');
       })
       .catch((err) => {

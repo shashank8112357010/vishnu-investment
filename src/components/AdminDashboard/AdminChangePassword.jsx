@@ -27,11 +27,10 @@ const AdminChangePassword = () => {
     }
 
     changePassword({ oldPassword, newPassword })
-      .then((res) => {
+      .then(() => {
         toast.success('Password Changed Successfully');
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err?.response?.data?.message || 'Something went wrong');
       });
 

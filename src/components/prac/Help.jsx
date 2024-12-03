@@ -4,9 +4,7 @@ import { Label } from '../../components/designComponents/Label';
 import { cn } from '../../lib/utils';
 import axios from 'axios';
 import React, { useState } from 'react'
-import { BiMailSend, BiPhone } from 'react-icons/bi';
-import { BsMailbox } from 'react-icons/bs';
-import { MdCallToAction } from 'react-icons/md';
+import { BiMailSend } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 
 export default function Help() {
@@ -33,12 +31,7 @@ let router = useNavigate()
         <div className='flex flex-col items-start w-1/2'>
             <h1 className='text-4xl font-bold'>Help Center</h1>
             <p className='mt-5'>If you have any query, please contact on below detail:-</p>
-            {/* <div className='flex gap-2 items-center mt-8'>
-            <div className='w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center'>
-                <BiPhone size={50}/>
-            </div>
-            <h1 className='text-2xl'>+91000000000</h1>
-            </div> */}
+            
             <div className='flex gap-2 items-center mt-8'>
             <div className='w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center'>
                 <BiMailSend size={35}/>

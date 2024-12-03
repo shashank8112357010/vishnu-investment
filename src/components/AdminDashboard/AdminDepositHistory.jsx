@@ -25,7 +25,7 @@ const AdminDepositHistory = () => {
   };
 
   const handleReject = (id) => {
-    console.log(`Rejected transaction ID: ${id}`);
+    // console.log(`Rejected transaction ID: ${id}`);
     // Add your API call or logic here
   };
 

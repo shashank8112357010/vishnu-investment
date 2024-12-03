@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaPhone, FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import {FaEnvelope, FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import contact1 from '../assets/trading-6531134.jpg';
 import { FaTelegram } from "react-icons/fa";
 

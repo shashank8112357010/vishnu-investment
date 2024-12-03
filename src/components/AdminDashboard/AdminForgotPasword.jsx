@@ -3,7 +3,6 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../Loader';
-import { useNavigate } from 'react-router-dom';
 
 function AdminForgotPassword() {
    const API_URL = "https://actl.co.in/vishnu"

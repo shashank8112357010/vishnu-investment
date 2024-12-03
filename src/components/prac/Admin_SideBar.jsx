@@ -3,10 +3,9 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillDashboard } from "react-icons/ai";
-import { FaHouseUser, FaRegDotCircle, FaWallet, FaQuestion, FaUsers } from "react-icons/fa";
+import { FaHouseUser, FaRegDotCircle, FaWallet, FaQuestion} from "react-icons/fa";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { BsBank2 } from "react-icons/bs";
-import { GiMoneyStack } from "react-icons/gi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
 import UserContext from '../../context/UserContext';
