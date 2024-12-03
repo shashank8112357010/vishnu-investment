@@ -11,7 +11,7 @@ import { getUserStats } from '../../services/api.service';
 import { toast } from 'react-toastify';
 
 
-export default function Dashboard() {
+export default function Admin_Dashboard() {
 
   let [data, setData] = useState(
     {

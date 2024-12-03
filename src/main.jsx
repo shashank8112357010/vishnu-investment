@@ -20,6 +20,14 @@ import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from './components/ForgotPasword.jsx'
 import ResetPassword from './components/ResetPassword.jsx'
+import AdminDashboard from './AdminDashboard.jsx'
+import Admin_Dashboard from './components/AdminDashboard/Admin_Dashboard.jsx'
+import AdminEditprofile from './components/AdminDashboard/AdminEditprofile.jsx'
+import AdminChangePassword from './components/AdminDashboard/AdminChangePassword.jsx'
+import AdminDeposit from './components/AdminDashboard/AdminDeposit.jsx'
+import AdminDepositHistory from './components/AdminDashboard/AdminDepositHistory.jsx'
+import AdminWithdrawal from './components/AdminDashboard/AdminWithdrawal.jsx'
+import AdminWithdrawalHistory from './components/AdminDashboard/AdminWithdrawalHistory.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +50,15 @@ const router = createBrowserRouter(
         <Route path='/dashboard/deposithistory' element={<DepositHistory />} />
         <Route path='/dashboard/withdrawal' element={<Withdrawal />} />
         <Route path='/dashboard/withdrawalhistory' element={<WithdrawalHistory />} />
+      </Route>
+      <Route path='/admin' element={<AdminDashboard />}>
+        <Route path='/admin/' element={<Admin_Dashboard/>} />
+        <Route path='/admin/editprofile' element={<AdminEditprofile />} />
+        <Route path='/admin/changepassword' element={<AdminChangePassword/>} />
+        <Route path='/admin/deposit' element={<AdminDeposit/>} />
+        <Route path='/admin/deposithistory' element={<AdminDepositHistory />} />
+        <Route path='/admin/withdrawal' element={<AdminWithdrawal />} />
+        <Route path='/admin/withdrawalhistory' element={<AdminWithdrawalHistory />} />
       </Route>
     </>
   )

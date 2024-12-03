@@ -43,7 +43,7 @@ export default function Navbar() {
             {menuItems.map((item) => (
               <li key={item.name}>
                 <Link
-                  to={item.href}
+                  to={item.to}
                   className="text-lg uppercase font-bold text-gray-800 hover:text-gray-900"
                 >
                   {item.name}
