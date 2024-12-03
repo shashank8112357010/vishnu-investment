@@ -60,10 +60,6 @@ const router = createBrowserRouter(
         <Route path='/admin/withdrawalhistory' element={<AdminWithdrawalHistory />} />
       </Route>
       <Route>
-        <Route path='/admin/login' element={<AdminLogin/>}/>
-        <Route path='/admin/reset-password' element={<AdminResetPassword/>}/>
-        <Route path='/admin/forgot-password' element={<AdminForgotPassword/>}/>
-
       </Route>
     </>
   )

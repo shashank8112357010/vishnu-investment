@@ -22,13 +22,22 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const res = await LoginUser(formValues);
       localStorage.setItem("token", res?.data?.token);
+      localStorage.setItem("isVerified", res?.data?.isVerified);
+
       toast.success(res?.data?.message);
+
+      console.log(res?.data);
       setFormValues({ email: "", password: "" }); // Reset the form
-      navigate("/dashboard");
+      if(res?.data?.role === "admin") {
+        navigate("/admin");
+      }
+      else{
+        navigate("/dashboard");
+      }
+   
     } catch (err) {
       toast.error(err?.response?.data?.message || "Login failed!");
     } finally {
