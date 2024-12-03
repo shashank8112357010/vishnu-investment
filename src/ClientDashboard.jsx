@@ -20,6 +20,7 @@ export default function ClientDashboard() {
       navigate("/login"); // Redirect to login page
     }
   }, [navigate]);
+  
   return (
     <div>
       <MainDashboard/>

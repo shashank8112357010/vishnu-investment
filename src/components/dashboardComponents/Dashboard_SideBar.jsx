@@ -15,6 +15,7 @@ export default function Dashboard_SideBar() {
     const [isVerified, setIsVerified] = useState(false);  // To track if user is verified
     const navigate = useNavigate();
 
+
     // Fetch isVerified status from localStorage
     useEffect(() => {
         const verifiedStatus = JSON.parse(localStorage.getItem("isVerified"));
@@ -30,24 +31,26 @@ export default function Dashboard_SideBar() {
     };
 
     return (
-        <div>
-            <h1 className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black flex justify-center items-center'>
-                <Link to="/dashboard"> <img src={logo} alt="Logo" /></Link>
+        <div className=''>
+            <h1 className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black md:flex justify-center items-center hidden'>
+                <Link to="/dashboard"> <img src={logo} alt="Logo" className='w-[150px]'/></Link>
             </h1>
-            <div className='admin-bgcolor'>
+            <div className='admin-bgcolor w-full'>
                 <ul>
                     {/* Dashboard */}
-                    <li>
+                    <li className=''>
                         <Link to='/dashboard/' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
                             <AiFillDashboard className='inline text-2xl' /> &nbsp;&nbsp;Dashboard
+
                         </Link>
+                    
                     </li>
 
                     {/* Profile */}
-                    <li onClick={() => setIsOpen(!isOpen)}>
+                    <li onClick={() => setIsOpen(!isOpen)} >
                         <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
                             <FaHouseUser className='inline text-2xl' /> &nbsp;&nbsp;Profile
-                            {isOpen ? <TiArrowSortedUp className='inline relative left-[145px]' /> : <TiArrowSortedDown className='inline relative left-[145px]' />}
+                            {isOpen ? <TiArrowSortedUp className='inline relative  left-[145px]' /> : <TiArrowSortedDown className='inline relative left-[145px]' />}
                         </Link>
                         <ul className={`${isOpen ? "block" : "hidden"}`}>
                             <li>

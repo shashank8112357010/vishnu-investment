@@ -40,14 +40,15 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="w-[80%] m-auto flex items-center rounded-xl justify-center border">
-      <div className="w-full p-10 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold text-white mb-6 text-center">Change Password</h2>
+    <div className=''>
+      <div className="md:w-[80%] w-full p-3 flex items-center rounded-xl  justify-center border">
+      <div className="w-full rounded-lg shadow-lg">
+        <h2 className="text-xl  font-semibold text-white mb-6 text-center">Change Password</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-red-500 text-center">{error}</p>}
           
           {/* Old Password */}
-          <div className="flex flex-col space-y-1">
+          <div className="flex w-full flex-col space-y-1">
             <label htmlFor="oldPassword" className="text-gray-300">Old Password</label>
             <div className="relative w-full">
               <input
@@ -123,6 +124,7 @@ const ChangePassword = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

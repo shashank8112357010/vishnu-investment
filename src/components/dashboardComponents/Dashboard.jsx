@@ -4,6 +4,7 @@ import { GiTakeMyMoney, GiReceiveMoney, GiMoneyStack } from "react-icons/gi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FaAward } from "react-icons/fa6";
 import { BsCashCoin } from "react-icons/bs";
+import { FaCopy } from "react-icons/fa";
 
 import { getUserStats } from '../../services/api.service';
 import { toast } from 'react-toastify';
@@ -32,7 +33,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col gap-6 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-6 p-0 md:px-6 lg:px-8">
         <h1 className="px-5 py-2 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
           Dashboard
         </h1>
@@ -45,11 +46,11 @@ export default function Dashboard() {
           <>
             {/* User Status */}
             <div>
-              <p className="text-xl font-bold">
+              <p className="text-xl md:text-2xl font-bold">
                 Status:{' '}
                 <span
                   className={
-                    data?.status === "verified" ? "text-green-700 text-xl" : "text-red-700 text-xl"
+                    data?.status === "verified" ? "text-green-700 md:text-2xl" : "text-red-700 text-xl"
                   }
                 >
                   {data?.status}
@@ -58,33 +59,30 @@ export default function Dashboard() {
             </div>
 
             {/* User Information Cards */}
-            <div className="flex flex-col items-center p-4">
-              <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 w-full">
-                <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex flex-col sm:flex-row">
-                  <div className="flex-grow text-white">
-                    <p>User Name:</p>
-                    <p>User Email:</p>
-                    <p>Referral Email:</p>
+            <div className="px-4">
+              <div className="w-full grid xl:grid-cols-2 gap-4">
+                <div className=" w-full border rounded bg-black py-2 px-3 lg:flex hover:shadow-xl transform transition duration-300 hover:scale-105">
+                  <div className="">
+                    <p>User Name: <p className='lg:hidden'>{data.username}</p></p>
+                    <p>User Email: <p className='lg:hidden'>{data.email}</p></p>
+                    <p>Referral Email: <p className='lg:hidden'> <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p></p></p>
                   </div>
-                  <div className="text-gray-300">
+                  <div className="hidden lg:block ml-3">
                     <p>{data.username}</p>
                     <p>{data.email}</p>
                     <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
                   </div>
                 </div>
 
-                <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
-                  <h2 className="text-md mb-1">Referral Program: Earn a stable income by</h2>
-                  <p>introducing clients to Enter Company Name</p>
-                  <div className="w-full h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black justify-between overflow-hidden border">
-                    <p className="pl-5 w-full h-5 inline-block overflow-hidden">
+                <div className=" border rounded bg-black py-2 px-4 hover:shadow-xl transform transition duration-300 hover:scale-105">
+                  <h2 className="mb-2">Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</h2>
+                  {/* <p className='mb-2'>clients to Enter Company Name</p> */}
+                  <div className="">
+                    <p className=" border bg-gray-700 py-1 px-3 rounded">
                       {data?.referalLink}
-                    </p>
-                    <p
-                      className="bg-black p-5 rounded-full text-white cursor-pointer"
-                      onClick={handleCopy}
-                    >
-                      Copy
+                    <FaCopy className="inline ml-3 text-2xl" title='Click to Copy Referral Code'
+                      onClick={handleCopy}/>           
+                  
                     </p>
                   </div>
                 </div>
@@ -93,7 +91,7 @@ export default function Dashboard() {
 
             {/* Metrics Cards */}
             <div className="flex flex-col justify-center items-center p-4">
-              <div className="grid gap-6 md:grid-cols-4 w-full">
+              <div className="grid gap-2 lg:gap-6 grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-full">
                 {[
                   { label: 'Deposit', value: data.totalDeposits, icon: <FcMoneyTransfer /> },
                   { label: 'Daily Profit Rate', value: `${data.profitRate}%`, icon: <GiTakeMyMoney /> },
@@ -107,7 +105,7 @@ export default function Dashboard() {
                     key={idx}
                     className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex flex-col gap-2 items-center"
                   >
-                    <div className="text-xl font-semibold">
+                    <div className="md:text-xl md:font-normal">
                       <p>{label}</p>
                       {loading ? (
                         <Loader size="4" color="white" />
