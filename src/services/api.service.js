@@ -96,3 +96,22 @@ export const approveOrRejectWithdrawal = (data) => {
 export const fetchWithdrawalHistory = () => {
     return apiClient.get("/withdraw/history");
 };
+
+
+
+
+// Admin api calls down below 
+
+
+export const fetchAllUsers = () => {
+    return apiClient.get("/admin/users");
+};
+
+export const approveUsers = (userId) => {
+    return apiClient.patch(`/admin/users/${userId}/approve`);
+};
+
+export const fetchAllDeposits = () => {
+    return apiClient.get("/admin/fetchalldeposit");
+};
+

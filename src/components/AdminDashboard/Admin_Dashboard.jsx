@@ -68,25 +68,25 @@ export default function Admin_Dashboard() {
               <div className="text-gray-300">
                 <p>{data.username}</p>
                 <p>{data.email}</p>
-                <p>{data.referalEmail}</p>
+                <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
               </div>
             </div>
 
             <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
-              <h2 className="text-sm sm:text-md text-gray-300 mb-2">
-                Referral Program: Earn a stable income by introducing clients to
-                our platform.
-              </h2>
-              <div className="flex items-center bg-gray-200 rounded-full overflow-hidden">
-                <p className="pl-4 pr-2 text-sm truncate">{data.referalLink}</p>
-                <button
-                  className="bg-black text-white px-4 py-2 text-sm rounded-full"
-                  onClick={handleCopy}
-                >
-                  Copy
-                </button>
-              </div>
-            </div>
+                  <h2 className="text-md mb-1">Referral Program: Earn a stable income by</h2>
+                  <p>introducing clients to Enter Company Name</p>
+                  <div className="w-full h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black justify-between overflow-hidden border">
+                    <p className="pl-5 w-full h-5 inline-block overflow-hidden">
+                      {data?.referalLink}
+                    </p>
+                    <p
+                      className="bg-black p-5 rounded-full text-white cursor-pointer"
+                      onClick={handleCopy}
+                    >
+                      Copy
+                    </p>
+                  </div>
+                </div>
           </div>
         </div>
 

@@ -2,41 +2,46 @@ import React, { useState } from 'react';
 import { changePassword } from '../../services/api.service';
 import { toast } from 'react-toastify';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Loader from "../../components/Loader"
 
 const AdminChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading , setLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(''); // Reset errors on each submission
+    setLoading(true)
 
     if (!oldPassword || !newPassword || !confirmPassword) {
-      setError('All fields are required!');
+      toast.error("All fields are required!");
+      setLoading(false)
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError('New Password and Confirm Password do not match!');
+      toast.error("New Password and Confirm Password do not match!")
+      setLoading(false)
       return;
     }
 
     changePassword({ oldPassword, newPassword })
       .then(() => {
         toast.success('Password Changed Successfully');
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
       })
       .catch((err) => {
+        setLoading(false)
         toast.error(err?.response?.data?.message || 'Something went wrong');
       });
 
-    setOldPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
+
   };
 
   return (
@@ -44,7 +49,6 @@ const AdminChangePassword = () => {
       <div className="w-full max-w-lg bg-gray-800 border border-gray-700 p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-white mb-6 text-center">Change Password</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {error && <p className="text-red-500 text-center">{error}</p>}
           
           {/* Old Password */}
           <div className="flex flex-col space-y-1">
@@ -57,7 +61,7 @@ const AdminChangePassword = () => {
                 onChange={(e) => setOldPassword(e.target.value)}
                 placeholder="Old Password"
                 className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+                
               />
               <button
                 type="button"
@@ -80,7 +84,7 @@ const AdminChangePassword = () => {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="New Password"
                 className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+                
               />
               <button
                 type="button"
@@ -103,7 +107,7 @@ const AdminChangePassword = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-Enter New Password"
                 className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
+                
               />
               <button
                 type="button"
@@ -119,7 +123,10 @@ const AdminChangePassword = () => {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
           >
-            Submit
+            {
+              loading && loading ? <Loader size="6" color="white" /> : "Submit"
+            }
+            
           </button>
         </form>
       </div>

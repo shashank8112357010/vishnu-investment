@@ -32,7 +32,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col justify-start items-start gap-6">
+      <div className="flex flex-col gap-6 px-4 sm:px-6 lg:px-8">
         <h1 className="px-5 py-2 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
           Dashboard
         </h1>
@@ -58,26 +58,26 @@ export default function Dashboard() {
             </div>
 
             {/* User Information Cards */}
-            <div className="flex flex-col justify-center items-center p-4">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex w-[450px]">
-                  <div>
-                    <p>User Name: </p>
-                    <p>User Email: </p>
-                    <p>Referral Email: </p>
+            <div className="flex flex-col items-center p-4">
+              <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 w-full">
+                <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex flex-col sm:flex-row">
+                  <div className="flex-grow text-white">
+                    <p>User Name:</p>
+                    <p>User Email:</p>
+                    <p>Referral Email:</p>
                   </div>
-                  <div className="w-1/2">
-                    <p>{data?.username}</p>
-                    <p>{data?.email}</p>
-                    <p>{data?.referalEmail}</p>
+                  <div className="text-gray-300">
+                    <p>{data.username}</p>
+                    <p>{data.email}</p>
+                    <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
                   </div>
                 </div>
 
                 <div className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105">
                   <h2 className="text-md mb-1">Referral Program: Earn a stable income by</h2>
                   <p>introducing clients to Enter Company Name</p>
-                  <div className="w-[280px] h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black justify-between overflow-hidden border">
-                    <p className="pl-5 w-[350px] h-5 inline-block overflow-hidden">
+                  <div className="w-full h-8 mt-3 bg-gray-200 rounded-full flex items-center text-black justify-between overflow-hidden border">
+                    <p className="pl-5 w-full h-5 inline-block overflow-hidden">
                       {data?.referalLink}
                     </p>
                     <p

@@ -40,7 +40,7 @@ const AdminWithdrawalHistory = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-6 rounded-lg mb-6 shadow-lg">
-        <h2 className="text-3xl font-bold mb-6">Request History</h2>
+        <h2 className="text-3xl font-bold mb-6">Withdrawal History</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
