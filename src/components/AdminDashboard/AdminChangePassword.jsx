@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { changePassword } from '../../services/api.service';
 import { toast } from 'react-toastify';
-import { FiEye, FiEyeOff } from 'react-icons/fi'; // Importing eye icons from react-icons
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const AdminChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -28,7 +28,7 @@ const AdminChangePassword = () => {
 
     changePassword({ oldPassword, newPassword })
       .then((res) => {
-        toast.success('Password Change Successfully');
+        toast.success('Password Changed Successfully');
       })
       .catch((err) => {
         console.log(err);
@@ -42,9 +42,9 @@ const AdminChangePassword = () => {
   };
 
   return (
-    <div className="w-[80%] m-auto flex items-center rounded-xl justify-center border">
-      <div className="w-full p-10 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold text-white mb-6 text-center">Change Password</h2>
+    <div className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
+      <div className="w-full max-w-lg bg-gray-800 border border-gray-700 p-8 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">Change Password</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-red-500 text-center">{error}</p>}
           
@@ -58,13 +58,13 @@ const AdminChangePassword = () => {
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
                 placeholder="Old Password"
-                className="w-full p-2 bg-white text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowOldPassword(!showOldPassword)}
-                className="absolute right-3 top-3 text-black"
+                className="absolute right-3 top-3 text-gray-400 hover:text-white"
               >
                 {showOldPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -81,13 +81,13 @@ const AdminChangePassword = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="New Password"
-                className="w-full p-2 bg-white text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute right-3 top-3 text-black"
+                className="absolute right-3 top-3 text-gray-400 hover:text-white"
               >
                 {showNewPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -104,13 +104,13 @@ const AdminChangePassword = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-Enter New Password"
-                className="w-full p-2 bg-white text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-3 text-black"
+                className="absolute right-3 top-3 text-gray-400 hover:text-white"
               >
                 {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
               </button>
@@ -119,7 +119,7 @@ const AdminChangePassword = () => {
 
           <button
             type="submit"
-            className="w-full button-background-color text-white py-2 rounded-md hover:bg-green-700"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
           >
             Submit
           </button>
