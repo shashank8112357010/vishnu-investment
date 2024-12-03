@@ -24,10 +24,11 @@ import AdminDashboard from './AdminDashboard.jsx'
 import Admin_Dashboard from './components/AdminDashboard/Admin_Dashboard.jsx'
 import AdminEditprofile from './components/AdminDashboard/AdminEditprofile.jsx'
 import AdminChangePassword from './components/AdminDashboard/AdminChangePassword.jsx'
-import AdminDeposit from './components/AdminDashboard/AdminDeposit.jsx'
 import AdminDepositHistory from './components/AdminDashboard/AdminDepositHistory.jsx'
-import AdminWithdrawal from './components/AdminDashboard/AdminWithdrawal.jsx'
 import AdminWithdrawalHistory from './components/AdminDashboard/AdminWithdrawalHistory.jsx'
+import AdminLogin from './components/AdminDashboard/AdminLogin.jsx'
+import AdminResetPassword from './components/AdminDashboard/AdminResetPassword.jsx'
+import AdminForgotPassword from './components/AdminDashboard/AdminForgotPasword.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,10 +56,14 @@ const router = createBrowserRouter(
         <Route path='/admin/' element={<Admin_Dashboard/>} />
         <Route path='/admin/editprofile' element={<AdminEditprofile />} />
         <Route path='/admin/changepassword' element={<AdminChangePassword/>} />
-        <Route path='/admin/deposit' element={<AdminDeposit/>} />
         <Route path='/admin/deposithistory' element={<AdminDepositHistory />} />
-        <Route path='/admin/withdrawal' element={<AdminWithdrawal />} />
         <Route path='/admin/withdrawalhistory' element={<AdminWithdrawalHistory />} />
+      </Route>
+      <Route>
+        <Route path='/admin/login' element={<AdminLogin/>}/>
+        <Route path='/admin/reset-password' element={<AdminResetPassword/>}/>
+        <Route path='/admin/forgot-password' element={<AdminForgotPassword/>}/>
+
       </Route>
     </>
   )

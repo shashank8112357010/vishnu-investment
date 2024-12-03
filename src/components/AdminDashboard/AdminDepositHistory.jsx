@@ -19,69 +19,112 @@ const AdminDepositHistory = () => {
       });
   }, []);
 
-  return (
-    <div className="min-h-screen p-6">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center text-white-800 mb-8">Deposit History</h2>
+  const handleApprove = (id) => {
+    console.log(`Approved transaction ID: ${id}`);
+    // Add your API call or logic here
+  };
 
-        {loading ? (
-          <div className="flex justify-center items-center h-40">
-            <span className="text-lg text-gray-600">Loading...</span>
-          </div>
-        ) : error ? (
-          <div className="flex justify-center items-center h-40">
-            <p className="text-red-500">{error}</p>
-          </div>
-        ) : depositHistory.length > 0 ? (
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <table className="min-w-full bg-white">
-              <thead className="bg-gray-800 text-white">
-                <tr>
-                  {["ID", "Date", "Amount", "Status"].map((item, index) => (
-                    <th
-                      key={index}
-                      className="py-3 px-4 text-left text-sm font-medium uppercase tracking-wider"
-                    >
-                      {item}
-                    </th>
-                  ))}
+  const handleReject = (id) => {
+    console.log(`Rejected transaction ID: ${id}`);
+    // Add your API call or logic here
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-6 rounded-lg mb-6 shadow-lg">
+        <h2 className="text-3xl font-bold mb-6 text-center">Deposit History</h2>
+      </div>
+
+      {/* Main Content */}
+      {loading ? (
+        <div className="flex justify-center items-center h-40">
+          <span className="text-lg text-gray-500">Loading...</span>
+        </div>
+      ) : error ? (
+        <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
+          <p className="text-red-500 text-center">{error}</p>
+        </div>
+      ) : depositHistory.length > 0 ? (
+        <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto text-sm">
+              <caption className="text-left mb-4 text-lg font-semibold text-white">
+                Deposit Records
+              </caption>
+              <thead>
+                <tr className="bg-gray-700">
+                  <th className="p-4 border-b">ID</th>
+                  <th className="p-4 border-b">Date</th>
+                  <th className="p-4 border-b">Amount</th>
+                  <th className="p-4 border-b">Status</th>
+                  <th className="p-4 border-b text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {depositHistory.map((item, index) => (
                   <tr
                     key={index}
-                    className={`${index % 2 === 0 ? "bg-gray-50 " : "bg-white "}border-t-2 `}
+                    className={`${
+                      index % 2 === 0 ? "bg-gray-600" : "bg-gray-700"
+                    } text-white`}
                   >
-                    <td className="py-3 px-4 text-sm text-gray-700">{item?.transactionId || "N/A"}</td>
-                    <td className="py-3 px-4 text-sm text-gray-700">
+                    <td className="p-4">{item?.transactionId || "N/A"}</td>
+                    <td className="p-4">
                       {item?.date ? new Date(item?.date).toLocaleDateString() : "N/A"}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-700">${item?.amount || "0.00"}</td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`text-sm font-medium px-2 py-1 rounded ${
-                          item?.status === "approved"
-                            ? "bg-green-100 text-green-800"
-                            : item?.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {item?.status || "Unknown"}
-                      </span>
+                    <td className="p-4">₹{item?.amount || "0.00"}</td>
+                    <td
+                      className={`p-4 ${
+                        item?.status === "approved"
+                          ? "text-green-500"
+                          : item?.status === "pending"
+                          ? "text-yellow-500"
+                          : "text-red-500"
+                      } font-semibold`}
+                    >
+                      {item?.status || "Unknown"}
+                    </td>
+                    <td className="p-4">
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleApprove(item.transactionId)}
+                          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                        >
+                          Approve
+                        </button>
+                        <button
+                          onClick={() => handleReject(item.transactionId)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                        >
+                          Reject
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+                <tr className="bg-gray-700">
+                  <td colSpan="3" className="p-4 font-bold text-white">
+                    Total Amount
+                  </td>
+                  <td colSpan="2" className="p-4 text-right">
+                    ₹
+                    {depositHistory
+                      .reduce((sum, item) => sum + (Number(item.amount) || 0), 0)
+                      .toFixed(2)}
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
-        ) : (
-          <div className="flex justify-center items-center h-40">
-            <p className="text-gray-500">No deposit history available.</p>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-40">
+          <p className="text-gray-500">No deposit history available.</p>
+        </div>
+      )}
     </div>
   );
 };

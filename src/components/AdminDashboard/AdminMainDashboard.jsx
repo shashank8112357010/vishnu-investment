@@ -4,12 +4,12 @@ import AdminDashboard_SideBar from '../AdminDashboard/AdminDashboard_SideBar'
 import AdminDashboard_Header from './AdminDashboard_Header'
 
 export default function AdminMainDashboard() {
-  const navigate=useNavigate()
-  useEffect(()=>{
-if(!localStorage.getItem('token')){
-  navigate('/login')
-}
-  },[])
+//   const navigate=useNavigate()
+//   useEffect(()=>{
+// if(!localStorage.getItem('token')){
+//   navigate('/login')
+// }
+//   },[])
   return (
     <>
      <div className='w-full h-auto admin-bgcolor text-color flex'>
