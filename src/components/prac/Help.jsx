@@ -17,7 +17,6 @@ export default function Help() {
 let router = useNavigate()
   async function handleSubmit(e) {
     e.preventDefault()
-    // console.log(email)
     await axios.post('https:///actl.co.in/vishnu/contact',{
       "email":email,
       "phone":phone,
@@ -43,6 +42,7 @@ let router = useNavigate()
     <h2 className="font-bold text-2xl tracking-wider text-center text-white dark:text-neutral-200">
       Connect to NOBLETRADIFY.COM
     </h2>
+    
 
     {error && <div className="text-red-500">{error}</div>}
 

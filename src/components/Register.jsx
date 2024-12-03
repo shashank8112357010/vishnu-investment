@@ -42,7 +42,6 @@ export default function Register() {
     if(formData.email){
       await sendOtp({email : formData?.email})
     }else{
-      console.log(res)
       toast.error(res?.response?.data)
     }
   };
@@ -55,14 +54,12 @@ export default function Register() {
 
     await RegisterUser(formData)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         navigation("/login");
         toast.success(res?.response?.data?.message || `${formData.firstName} Registered Successfully `);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
         toast.error(err?.response?.data?.message || "Something went wrong");
       });
   };

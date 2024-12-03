@@ -10,15 +10,12 @@ const AdminWithdrawalHistory = () => {
   const handleToDateChange = (e) => setToDate(e.target.value);
 
   const handleSearch = () => {
-    console.log({ status, fromDate, toDate });
   };
 
   const handleApprove = (id) => {
-    console.log(`Approved withdrawal with ID: ${id}`);
   };
 
   const handleReject = (id) => {
-    console.log(`Rejected withdrawal with ID: ${id}`);
   };
 
   const tableData = [

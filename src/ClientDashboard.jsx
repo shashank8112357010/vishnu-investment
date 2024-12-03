@@ -15,7 +15,6 @@ export default function ClientDashboard() {
 
     const token = localStorage.getItem("token");
 
-    console.log(isTokenExpired(token) ,"isTokenExpired(token)");
     if (isTokenExpired(token)) {
       removeToken(); // Clear expired token
       navigate("/login"); // Redirect to login page

@@ -31,7 +31,6 @@ const AdminEditprofile = () => {
         setBinanceData(res?.data?.profileData?.binanceDetails);
       })
       .catch((err) => {
-        console.log(err?.response?.data);
       });
   }, []);
 
@@ -75,10 +74,8 @@ const AdminEditprofile = () => {
       dob: profileData.dob,
     })
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
       });
 
     toast.success("Profile updated successfully!");
@@ -100,10 +97,8 @@ const AdminEditprofile = () => {
       accountHolderName: bankData.accountHolderName,
     })
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
       });
 
     toast.success("Bank details updated successfully!");
@@ -123,10 +118,8 @@ const AdminEditprofile = () => {
       accountEmail: binanceData.accountEmail,
     })
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
       });
 
     toast.success("Binance details updated successfully!");

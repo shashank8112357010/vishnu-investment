@@ -23,14 +23,12 @@ export default function AdminLogin() {
     setLoading(true);
     await LoginUser(formValues)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         localStorage.setItem('token',res?.data?.token )
         toast.success(res?.data?.message);
         navigate('/dashboard')
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
         toast.error(err?.response?.data.message);
       });

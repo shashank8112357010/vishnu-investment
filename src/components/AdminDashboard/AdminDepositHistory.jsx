@@ -20,12 +20,10 @@ const AdminDepositHistory = () => {
   }, []);
 
   const handleApprove = (id) => {
-    console.log(`Approved transaction ID: ${id}`);
     // Add your API call or logic here
   };
 
   const handleReject = (id) => {
-    // console.log(`Rejected transaction ID: ${id}`);
     // Add your API call or logic here
   };
 

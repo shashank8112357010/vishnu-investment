@@ -35,21 +35,18 @@ const PracHome = () => {
       navigator.clipboard.writeText(forcopy).then(() => {
           alert('Copied to clipboard!!');
         }).catch(err => {
-          console.error('Failed to copy: ', err);
         });
   }
   
   async function getReferral(sponsor) {
     if(sponsor){
       await axios.get(`https:///actl.co.in/vishnu/updateReferral/${sponsor}/${auth.userData.email}`)
-      // console.log(auth.userData.sponsorEmail)
     }
   }
   
   useEffect(()=>{
   getReferral(sponsor)
   },[auth])
-// console.log(
 // (
 //     (
 //       (auth.userData?.totalIncome ?? 0) - 

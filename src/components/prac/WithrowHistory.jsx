@@ -11,16 +11,13 @@ const WithrowHistory = () => {
     const [toDate, setToDate] = useState('');
 
     const handleSearch = async () => {
-        // console.log('Searching with:', { paymentMethod, fromDate, toDate });
        if(paymentMethod && fromDate && toDate){
         let result = await axios.get(`https:///actl.co.in/vishnu/getwithrawalHistory/${auth.userData.email}/${paymentMethod}/${fromDate}/${toDate}`)
-        // console.log(result)
        setdata(result.data)
        }else{
         alert("Select All The Field")
        }
     };
-console.log(data)
     return (
         <div className="flex justify-center min-h-screen background-color border rounded-xl p-4">
             <div className="bg-gray-700 p-6 rounded mb-4 w-full ">

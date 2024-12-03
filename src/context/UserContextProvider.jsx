@@ -5,7 +5,6 @@ import axios from 'axios'
 export default function UserContextProvider({children}) {
     let [flag, setFlag] = useState(false)
     let [adminflag, setAdminFlag] = useState(false)
-    let [haveAdmin, setHaveAdmin] = useState(false)
     let [showmenu, setShowmenu ] = useState(false)
     
     let [auth, setAuth] = useState({
@@ -60,7 +59,6 @@ export default function UserContextProvider({children}) {
     }, [])
 
 
-    // console.log(auth)
   return (
    <UserContext.Provider value={{auth, setAuth, userLogin, logout, flag, setFlag, adminflag, setAdminFlag, showmenu, setShowmenu}}>
     {children}

@@ -11,12 +11,9 @@ const DepositeHistory = () => {
     const [toDate, setToDate] = useState('');
 
     const handleSearch = async () => {
-        // console.log('Searching with:', { paymentMethod, fromDate, toDate });
         let result = await axios.get(`https:///actl.co.in/vishnu/getdepositeHistory/${auth.userData.email}/${paymentMethod}/${fromDate}/${toDate}`)
-        // console.log(result)
        setdata(result.data)
     };
-// console.log(data)
     return (
         <div className="flex justify-center min-h-screen bg-gray-400 text-white border rounded-xl p-4">
             <div className="bg-gray-700 p-6 rounded mb-4 w-full ">

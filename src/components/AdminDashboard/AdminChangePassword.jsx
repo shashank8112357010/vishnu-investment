@@ -37,7 +37,6 @@ const AdminChangePassword = () => {
     setOldPassword('');
     setNewPassword('');
     setConfirmPassword('');
-    console.log(oldPassword, newPassword, confirmPassword);
   };
 
   return (

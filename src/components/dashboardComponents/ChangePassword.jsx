@@ -31,14 +31,12 @@ const ChangePassword = () => {
         toast.success('Password Change Successfully');
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err?.response?.data?.message || 'Something went wrong');
       });
 
     setOldPassword('');
     setNewPassword('');
     setConfirmPassword('');
-    console.log(oldPassword, newPassword, confirmPassword);
   };
 
   return (

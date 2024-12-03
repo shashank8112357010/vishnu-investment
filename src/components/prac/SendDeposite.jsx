@@ -70,7 +70,6 @@ const SendDeposite = () => {
     };
 
     async function handleCashSubmit() {
-        console.log(depositeData)
         if (parseInt(depositeData.depositeAmount) > 1599) {
             if (enteredOTP === generatedOTP) {
                 await axios.post(`https:///actl.co.in/vishnu/depositeRequest`, depositeData)

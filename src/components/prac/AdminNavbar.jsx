@@ -23,7 +23,7 @@ import UserContext from '../../context/UserContext';
 import { Link } from 'react-router-dom';
 export default function AdminNavbar() {
   let {setShowmenu, showmenu, logout} = useContext(UserContext)
-//   console.log(showmenu)
+//   .log(showmenu)
   let [isOpen ,setIsOpen] = useState(false)
     let [isOpen1 ,setIsOpen1] = useState(false)
     let [isOpen2 ,setIsOpen2] = useState(false)

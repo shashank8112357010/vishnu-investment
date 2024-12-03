@@ -152,7 +152,6 @@ const EditProfile = () => {
         await axios.post('https:///actl.co.in/vishnu/verifyotp', { email, otp });
         alert('OTP has been sent to your email');
       } catch (err) {
-        console.error('Error sending OTP:', err);
         alert('Failed to send OTP');
       }finally{
         setotpLoading(false)
@@ -164,7 +163,6 @@ const EditProfile = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(personalDetails)
    try {
     setLoading(true)
     if (enteredOTP === generatedOTP){
@@ -184,13 +182,11 @@ const EditProfile = () => {
       alert("please verify Email by OTP")
     }
    } catch (error) {
-    console.log(error)
     // setLoading(false)
    }finally{
     setLoading(false)
    }
   };
-  // console.log(auth.userData.deposite)
 
   return (
     <div className="p-5 mt-20 md:mt-0">

@@ -25,13 +25,11 @@ export default function Login() {
 
     try {
       const res = await LoginUser(formValues);
-      console.log(res);
       localStorage.setItem("token", res?.data?.token);
       toast.success(res?.data?.message);
       setFormValues({ email: "", password: "" }); // Reset the form
       navigate("/dashboard");
     } catch (err) {
-      console.error(err);
       toast.error(err?.response?.data?.message || "Login failed!");
     } finally {
       setLoading(false); // Ensure loading is disabled after request
