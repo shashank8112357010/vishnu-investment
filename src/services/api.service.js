@@ -81,3 +81,18 @@ export const addProfileDetail= (data) => {
 export const fatchProfileDetail= () => {
     return apiClient.get("/profile");
 };
+
+// Submit Withdrawal Request API
+export const submitWithdrawalRequest = (data) => {
+    return apiClient.post("/withdraw", data);
+};
+
+// Approve/Reject Withdrawal Request API (Admin Only)
+export const approveOrRejectWithdrawal = (data) => {
+    return apiClient.post("/withdraw/approve-reject", data);
+};
+
+// Get Withdrawal History API
+export const fetchWithdrawalHistory = () => {
+    return apiClient.get("/withdraw/history");
+};

@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
+import { submitWithdrawalRequest } from "../../services/api.service"; // Adjust path to your service file
+import { useNavigate } from "react-router-dom";
 
 const Withdrawal = () => {
-  const [transactionType, setTransactionType] = useState("");
+  const [withdrawalMethod, setTransactionType] = useState("");
   const [amountINR, setAmountINR] = useState("");
   const [amountUSD, setAmountUSD] = useState("");
   const [network, setNetwork] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Validate the form fields
   const validateFields = () => {
-    if (!transactionType) return "Please select a transaction type.";
-    if (transactionType === "Bank_Account" && !amountINR)
+    if (!withdrawalMethod) return "Please select a transaction type.";
+    if (withdrawalMethod === "Bank_Account" && !amountINR)
       return "Please enter an amount in INR.";
-    if (transactionType === "Binance_Account") {
+    if (withdrawalMethod === "Binance_Account") {
       if (!network) return "Please select a network for Binance.";
       if (!amountUSD) return "Please enter an amount in USD.";
     }
 
-    const amount = transactionType === "Bank_Account" ? amountINR : amountUSD;
+    const amount = withdrawalMethod === "Bank_Account" ? amountINR : amountUSD;
     if (amount < 3) return "Amount must be at least $3.";
     if (amount > 350) return "Amount cannot exceed $350.";
 
@@ -26,19 +29,31 @@ const Withdrawal = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationError = validateFields();
     if (validationError) {
       toast.error(validationError); // Show error notification
     } else {
       const requestData = {
-        transactionType,
-        amount: transactionType === "Bank_Account" ? amountINR : amountUSD,
-        ...(transactionType === "Binance_Account" && { network }),
+        withdrawalMethod,
+        amount: withdrawalMethod === "Bank_Account" ? amountINR : amountUSD,
+        ...(withdrawalMethod === "Binance_Account" && { network }),
       };
-      console.log("Request Data:", requestData); // Log data to the console
-      toast.success("Request submitted successfully!");
+
+      setLoading(true); // Set loading state
+      try {
+        const response = await submitWithdrawalRequest(requestData); // Call API service
+        toast.success(response.message || "Request submitted successfully!");
+        navigate("/dashboard/withdrawalhistory");
+      } catch (error) {
+        console.error("Error submitting withdrawal request:", error);
+        toast.error(
+          error.response?.data?.message || "Failed to submit request. Try again!"
+        );
+      } finally {
+        setLoading(false); // Reset loading state
+      }
     }
   };
 
@@ -57,7 +72,7 @@ const Withdrawal = () => {
         {/* Transaction Type Dropdown */}
         <select
           className="w-full bg-gray-900 text-white p-3 border border-gray-600 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={transactionType}
+          value={withdrawalMethod}
           onChange={handleTransactionChange}
         >
           <option value="">Select Transaction Type</option>
@@ -66,7 +81,7 @@ const Withdrawal = () => {
         </select>
 
         {/* Bank Account Form */}
-        {transactionType === "Bank_Account" && (
+        {withdrawalMethod === "Bank_Account" && (
           <div className="bg-gray-700 p-6 rounded mb-4">
             <h3 className="text-xl mb-4 text-red-600">Important to Know</h3>
             <p className="text-sm mb-2">Minimum Withdrawal Amount: (3$).</p>
@@ -89,7 +104,7 @@ const Withdrawal = () => {
         )}
 
         {/* Binance Account Form */}
-        {transactionType === "Binance_Account" && (
+        {withdrawalMethod === "Binance_Account" && (
           <div className="bg-gray-700 p-6 rounded mb-4">
             <h3 className="text-xl mb-4 text-red-500">Important to know</h3>
             <p className="text-sm mb-2">Minimum Withdrawal Amount: (3$).</p>
@@ -126,12 +141,42 @@ const Withdrawal = () => {
         {/* Confirm Button */}
         <button
           onClick={handleSubmit}
-          className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded transition duration-300 ease-in-out"
+          disabled={loading} // Disable button during loading
+          className={`w-full py-3 rounded transition duration-300 ease-in-out ${
+            loading
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-green-500 hover:bg-green-600 text-white"
+          }`}
         >
-          Confirm Your Request
+          {loading ? (
+            <div className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Submitting...
+            </div>
+          ) : (
+            "Confirm Your Request"
+          )}
         </button>
       </div>
-
     </div>
   );
 };

@@ -12,7 +12,8 @@ export default function Login() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  let navigate=useNavigate()
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
@@ -21,19 +22,20 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await LoginUser(formValues)
-      .then((res) => {
-        console.log(res);
-        setLoading(false);
-        localStorage.setItem('token',res?.data?.token )
-        toast.success(res?.data?.message);
-        navigate('/dashboard')
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        toast.error(err?.response?.data.message);
-      });
+
+    try {
+      const res = await LoginUser(formValues);
+      console.log(res);
+      localStorage.setItem("token", res?.data?.token);
+      toast.success(res?.data?.message);
+      setFormValues({ email: "", password: "" }); // Reset the form
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Login failed!");
+    } finally {
+      setLoading(false); // Ensure loading is disabled after request
+    }
   };
 
   return (
@@ -41,7 +43,7 @@ export default function Login() {
       <div className="w-full max-w-sm p-6 border rounded bg-white shadow-md">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* User ID */}
+          {/* Email Field */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium">
               User Email
@@ -52,12 +54,13 @@ export default function Login() {
               name="email"
               placeholder="Enter User Email"
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-              value={formValues.userId}
+              value={formValues.email}
               onChange={handleChange}
+              disabled={loading} // Disable input during request
             />
           </div>
 
-          {/* Password */}
+          {/* Password Field */}
           <div className="relative">
             <label htmlFor="password" className="block text-sm font-medium">
               Password
@@ -70,6 +73,7 @@ export default function Login() {
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
               value={formValues.password}
               onChange={handleChange}
+              disabled={loading} // Disable input during request
             />
             {showPass ? (
               <IoEyeOffSharp
@@ -77,7 +81,7 @@ export default function Login() {
                 onClick={() => setShowPass(!showPass)}
               />
             ) : (
-              < IoEyeSharp
+              <IoEyeSharp
                 className="absolute top-[40px] right-3 transform -translate-y-1/2 cursor-pointer"
                 onClick={() => setShowPass(!showPass)}
               />
@@ -87,9 +91,10 @@ export default function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-black rounded "
-          > {loading ? <Loader color="white" size={"6"} /> : "Submit"}
-            
+            className="w-full px-4 py-2 text-white bg-black rounded"
+            disabled={loading} // Disable button during request
+          >
+            {loading ? <Loader color="white" size="6" /> : "Submit"}
           </button>
         </form>
 
@@ -102,10 +107,7 @@ export default function Login() {
               Register Now
             </Link>
           </p>
-          <Link
-            to="/forgot-password"
-            className="text-blue-500 hover:underline"
-          >
+          <Link to="/forgot-password" className="text-blue-500 hover:underline">
             Forgot Password?
           </Link>
         </div>
