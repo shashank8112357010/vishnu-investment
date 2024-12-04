@@ -20,6 +20,16 @@ export default function ClientDashboard() {
       navigate("/login"); // Redirect to login page
     }
   }, [navigate]);
+  
+
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }, [location.pathname])
+
   return (
     <div>
       <MainDashboard/>

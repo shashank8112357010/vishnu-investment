@@ -127,7 +127,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="md:p-5">
       {/* Profile Section */}
       <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 profile-section fade-in">
         <h2 className="text-2xl font-bold mb-5 text-center">User Profile...</h2>
@@ -181,7 +181,7 @@ const EditProfile = () => {
 
       {/* Edit Profile Form */}
       {isEditingProfile && (
-        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 personal-details-section fade-in">
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-3 md:p-5 mt-5 personal-details-section fade-in">
           <h2 className="text-2xl font-bold mb-5 text-center">
             Edit Personal Details
           </h2>
@@ -297,7 +297,7 @@ const EditProfile = () => {
 
       {/* Edit Bank Details Form */}
       {isEditingBank && (
-        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section fade-in">
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-3 md:p-5 mt-5 bank-details-section fade-in">
           <h2 className="text-2xl font-bold mb-5 text-center">
             Edit Bank Details
           </h2>
@@ -399,7 +399,7 @@ const EditProfile = () => {
 
       {/* Edit Binance Details Form */}
       {isEditingBinance && (
-        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-5 mt-5 binance-details-section fade-in">
+        <div className="max-w-4xl mx-auto border rounded-lg shadow-lg p-3 md:p-5 mt-5 binance-details-section fade-in">
           <h2 className="text-2xl font-bold mb-5 text-center">
             Edit Binance Details
           </h2>
