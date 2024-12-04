@@ -83,7 +83,7 @@ export default function Dashboard() {
             </div>
 
             {/* Metrics Cards */}
-            <div className="flex flex-col justify-center items-center p-4">
+            <div className="flex w-full flex-col justify-center items-center p-4">
               <div className="grid gap-2 lg:gap-6 grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-full">
                 {[
                   { label: 'Deposit', value: data.totalDeposits, icon: <FcMoneyTransfer /> },
