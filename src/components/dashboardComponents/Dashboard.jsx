@@ -46,11 +46,15 @@ export default function Dashboard() {
           <>
             {/* User Status */}
             <div>
-              <p className="text-xl md:text-2xl font-bold">
-                Status:{' '}
+              <p className="text-xl md:text-2xl px-4 font-bold">
+                <span className='mr-2'> 
+                  Status:{' '}
+
+                </span>
+               
                 <span
                   className={
-                    data?.status === "verified" ? "text-green-700 md:text-2xl" : "text-red-700 text-xl"
+                    data?.status === "verified" ? " uppercase text-green-700 md:text-xl" : "text-red-700 text-xl"
                   }
                 >
                   {data?.status}
@@ -65,21 +69,21 @@ export default function Dashboard() {
                   <div className="">
                     <p>User Name: <p className='lg:hidden'>{data.username}</p></p>
                     <p>User Email: <p className='lg:hidden'>{data.email}</p></p>
-                    <p>Referral Email: <p className='lg:hidden'> <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p></p></p>
+                    <p>Referral: <p className='lg:hidden'> <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p></p></p>
                   </div>
-                  <div className="hidden lg:block ml-3">
-                    <p>{data.username}</p>
-                    <p>{data.email}</p>
-                    <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
+                  <div className="hidden  lg:block ml-3">
+                    <p className='text-sm'>{data.username}</p>
+                    <p className='text-sm'>{data.email}</p>
+                    <p className='text-sm'>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
                   </div>
                 </div>
 
                 <div className=" border rounded bg-black py-2 px-4 hover:shadow-xl transform transition duration-300 hover:scale-105">
-                  <h2 className="mb-2">Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</h2>
+                  <h2 className="mb-2 text-sm ">Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</h2>
                   {/* <p className='mb-2'>clients to Enter Company Name</p> */}
                   <div className="">
-                    <p className=" border bg-gray-700 py-1 px-3 rounded">
-                      {data?.referalLink}
+                    <p className=" border text-sm bg-gray-700 py-1 px-3 rounded">
+                      {data?.referalLink.slice(0,30) + "..."}
                     <FaCopy className="inline ml-3 text-2xl" title='Click to Copy Referral Code'
                       onClick={handleCopy}/>           
                   

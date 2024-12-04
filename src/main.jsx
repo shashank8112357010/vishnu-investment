@@ -41,8 +41,8 @@ const router = createBrowserRouter(
         <Route path='/contactus' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register/:ReferalCode?' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword/>}/>
-        <Route path='/reset-password/:token?' element={<ResetPassword/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password/:token?' element={<ResetPassword />} />
       </Route>
       <Route path='/dashboard' element={<ClientDashboard />}>
         <Route path="/dashboard/" element={<Dashboard />} />
@@ -54,11 +54,11 @@ const router = createBrowserRouter(
         <Route path='/dashboard/withdrawalhistory' element={<WithdrawalHistory />} />
       </Route>
       <Route path='/admin' element={<AdminDashboard />}>
-        <Route path='/admin/' element={<Admin_Dashboard/>} />
+        <Route path='/admin/' element={<Admin_Dashboard />} />
         <Route path='/admin/editprofile' element={<AdminEditprofile />} />
-        <Route path='/admin/changepassword' element={<AdminChangePassword/>} />
+        <Route path='/admin/changepassword' element={<AdminChangePassword />} />
         <Route path='/admin/deposithistory' element={<AdminDepositHistory />} />
-        <Route path='/admin/users' element={<Admin_Users/>} />
+        <Route path='/admin/users' element={<Admin_Users />} />
 
         <Route path='/admin/withdrawalhistory' element={<AdminWithdrawalHistory />} />
       </Route>
@@ -70,7 +70,18 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ToastContainer />
+    <ToastContainer
+      position="top-center"
+      autoClose={1200}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+    />
     <RouterProvider router={router} />
   </StrictMode>,
 )

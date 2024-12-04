@@ -135,20 +135,20 @@ export default function Register() {
             </LabelInputContainer>
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="enteredOTP">Verify Email Address By OTP</Label>
-              <div className="flex w-full">
+              <div className="flex w-full items-center">
                 <Input
                   id="otp"
                   placeholder="Enter OTP"
                   type="text"
                   value={formData?.otp}
                   onChange={handleChange}
-                  className="w-[300px] md:w-[360px]"
+                  className="w-[200px] md:w-[360px]"
                 />
                 <button
                   onClick={handleSendOTP}
                   type="button"
                   disabled={otploading}
-                  className="bg-black text-white px-2 rounded ml-2 text  font-[600]"
+                  className=" rounded-lg font-[500] h-[39px] text-sm w-full text-white bg-black"
                 >
                   {otploading ? "Sending.." : "Send OTP"}
                 </button>

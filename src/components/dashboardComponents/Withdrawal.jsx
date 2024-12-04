@@ -65,13 +65,13 @@ const Withdrawal = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen background-color border rounded-xl p-4">
-      <div className="background-color border text-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+    <div className="flex justify-center items-center  min-h-screen min-h-screen bg-gray-900 text-white border rounded-xl p-4">
+      <div className=" border text-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
         <h2 className="text-2xl font-semibold mb-6">Withdrawal Method</h2>
 
         {/* Transaction Type Dropdown */}
         <select
-          className="w-full bg-gray-900 text-white p-3 border border-gray-600 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full text-sm md:text-lg  bg-gray-900 text-white p-3 border border-gray-600 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={withdrawalMethod}
           onChange={handleTransactionChange}
         >
@@ -142,10 +142,10 @@ const Withdrawal = () => {
         <button
           onClick={handleSubmit}
           disabled={loading} // Disable button during loading
-          className={`w-full py-3 rounded transition duration-300 ease-in-out ${
+          className={`  w-full py-3 rounded transition duration-300 ease-in-out ${
             loading
               ? "bg-gray-500 cursor-not-allowed"
-              : "bg-green-500 hover:bg-green-600 text-white"
+              : "bg-[#0d1b87]  hover:bg-[#1c2fbc] text-white"
           }`}
         >
           {loading ? (

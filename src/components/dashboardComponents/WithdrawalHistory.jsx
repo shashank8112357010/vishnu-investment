@@ -62,7 +62,7 @@ const WithdrawalHistory = () => {
 
     setFilteredData(filtered);
     if (filtered.length === 0) {
-      toast.info("No records found for the selected filters.");
+      toast.info("No records found .");
     }
   };
 
@@ -80,7 +80,7 @@ const WithdrawalHistory = () => {
         <h2 className="text-2xl font-bold mb-4">Withdrawal History</h2>
         <div className="flex flex-wrap items-center gap-4">
           <select
-            className="bg-gray-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-700 w-full md:w-[160px] text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={status}
             onChange={handleStatusChange}
           >
@@ -90,25 +90,27 @@ const WithdrawalHistory = () => {
           </select>
           <input
             type="date"
-            className="bg-gray-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-700 w-full md:w-auto text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={fromDate}
             onChange={handleFromDateChange}
           />
           <input
             type="date"
-            className="bg-gray-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-700 w-full md:w-auto text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={toDate}
             onChange={handleToDateChange}
           />
+
+
           <button
             onClick={handleSearch}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded-md transition duration-300"
+            className="bg-[#0d1b87] px-3 hover:bg-[#1c2fbc] w-full md:w-auto hover:bg-blue-700 text-white font-semibold p-2 rounded-md transition duration-300"
           >
             Search
           </button>
           <button
             onClick={clearFilters}
-            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold p-2 rounded-md transition duration-300"
+            className="bg-[#0d1b87] px-3  hover:bg-[#1c2fbc] w-full md:w-auto hover:bg-gray-700 text-white font-semibold p-2 rounded-md transition duration-300"
           >
             Clear Filters
           </button>

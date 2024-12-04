@@ -68,7 +68,7 @@ const Deposit = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center min-h-screen p-6 ">
+    <div className="flex w-full min-h-screen bg-gray-900 text-white flex-col items-center justify-center min-h-screen p-6 ">
       <h1 className="text-2xl font-bold text-white mb-6">Send Request</h1>
 
       <form
@@ -160,7 +160,7 @@ const Deposit = () => {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="grid gap-5 md:grid-column-2">
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1 text-white">
                   Transaction Image
@@ -177,6 +177,7 @@ const Deposit = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="Enter Transaction ID"
                   value={transactionId}
                   onChange={(e) => setTransactionId(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded text-black"

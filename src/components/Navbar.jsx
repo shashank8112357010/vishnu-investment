@@ -44,6 +44,7 @@ export default function Navbar() {
               <li key={item.name}>
                 <Link
                   to={item.to}
+                  onClick={()=>setIsMenuOpen(false)}
                   className="text-lg uppercase font-bold text-gray-800 hover:text-gray-900"
                 >
                   {item.name}
@@ -119,11 +120,13 @@ export default function Navbar() {
               <div className="mt-6 flex flex-col items-center justify-center space-y-2"> {/* Space between buttons */}
                 <Link
                   to='/login'
+                  onClick={()=>setIsMenuOpen(false)}
                   className="w-full uppercase text-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
                   Login
                 </Link>
                 <Link
+                 onClick={()=>setIsMenuOpen(false)}
                   to='/register'
                   className="w-full uppercase rounded-md text-center bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >

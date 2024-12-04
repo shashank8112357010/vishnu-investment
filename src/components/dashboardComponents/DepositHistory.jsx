@@ -20,11 +20,12 @@ const DepositHistory = () => {
   }, []);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
+      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
+        <h2 className="text-2xl font-bold mb-4">
           Deposit History
         </h2>
+        </div>
 
         {loading ? (
           <div className="flex justify-center items-center h-40">
@@ -35,15 +36,15 @@ const DepositHistory = () => {
             <p className="text-red-500">{error}</p>
           </div>
         ) : depositHistory.length > 0 ? (
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full table-auto">
                 <thead className="bg-gray-800 text-white">
-                  <tr>
+                  <tr className="bg-gray-700 text-white">
                     {["ID", "Date", "Amount", "Status"].map((item, index) => (
                       <th
                         key={index}
-                        className="py-3 px-4 text-left text-sm font-medium uppercase tracking-wider"
+                        className="py-3 font-small px-4 text-left uppercase"
                       >
                         {item}
                       </th>
@@ -54,19 +55,18 @@ const DepositHistory = () => {
                   {depositHistory.map((item, index) => (
                     <tr
                       key={index}
-                      className={`${
-                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      } border-t`}
+                      // className=""
+                      className={"text-white hover:bg-gray-700 transition"}
                     >
-                      <td className="py-3 px-4 text-sm text-gray-700">
+                      <td className="py-3 px-4 text-sm text-white-700">
                         {item?.transactionId || "N/A"}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-700">
+                      <td className="p-4">
                         {item?.date
                           ? new Date(item?.date).toLocaleDateString()
                           : "N/A"}
                       </td>
-                      <td className="py-3 px-4 text-sm text-gray-700">
+                      <td className="p-4">
                         ${item?.amount || "0.00"}
                       </td>
                       <td className="py-3 px-4">
@@ -93,7 +93,7 @@ const DepositHistory = () => {
             <p className="text-gray-500">No deposit history available.</p>
           </div>
         )}
-      </div>
+     
     </div>
   );
 };
