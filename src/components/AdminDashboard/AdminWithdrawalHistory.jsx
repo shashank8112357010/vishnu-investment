@@ -1,82 +1,136 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { approveOrRejectWithrawls, fetchAllWithdrawls } from "../../services/api.service"; // Assuming API is configured
+import Loader from "../../components/Loader"; // Assuming a Loader component exists
+import { toast } from "react-toastify"; // For notifications
 
 const AdminWithdrawalHistory = () => {
-  const [status, setStatus] = useState("Failed");
+  const [withdrawals, setWithdrawals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(null);
+  const [status, setStatus] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  const handleStatusChange = (e) => setStatus(e.target.value);
-  const handleFromDateChange = (e) => setFromDate(e.target.value);
-  const handleToDateChange = (e) => setToDate(e.target.value);
+  const [rowIndex, setindex] = useState("")
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      await fetchAllWithdrawls().then((res) => {
+        if (res) {
+          console.log(res, "ddddddddddd");
+          setWithdrawals(res.data.data || []);
+        } else {
+          toast.error("Failed to fetch withdrawals.");
+        }
+      }).catch((err) => {
+        console.error(err);
+      })
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Error fetching withdrawals.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleApprove = async (id, index) => {
+    setindex(index)
+    console.log(id, "iddddddddddd shashank is here ");
+    setActionLoading(id); // Show loader for the specific action
+    try {
+      // Mock API call for approval
+
+      await approveOrRejectWithrawls({ withdrawalId: id, status: "approved" }).then((res) => {
+        fetchData()
+        console.log(res, "---------------------------------");
+
+      }).catch((err) => {
+        toast.error("error while approval ");
+      })
+      toast.success("Withdrawal approved successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to approve withdrawal.");
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // const handleReject = async (id) => {
+  //   setActionLoading(id); // Show loader for the specific action
+  //   try {
+  //     // Mock API call for rejection
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     setWithdrawals((prev) =>
+  //       prev.map((withdrawal) =>
+  //         withdrawal.id === id ? { ...withdrawal, status: "Rejected" } : withdrawal
+  //       )
+  //     );
+  //     toast.success("Withdrawal rejected successfully!");
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Failed to reject withdrawal.");
+  //   } finally {
+  //     setActionLoading(null);
+  //   }
+  // };
 
   const handleSearch = () => {
+    // Add search logic (filter by status, fromDate, and toDate)
+    const filtered = withdrawals.filter(
+      (item) =>
+        (!status || item.status === status) &&
+        (!fromDate || new Date(item.requestData) >= new Date(fromDate)) &&
+        (!toDate || new Date(item.requestData) <= new Date(toDate))
+    );
+    setWithdrawals(filtered);
   };
-
-  const handleApprove = (id) => {
-  };
-
-  const handleReject = (id) => {
-  };
-
-  const tableData = [
-    {
-      id: "1",
-      withdrawalMethod: "Bank Account",
-      amount: "12345",
-      requestData: "01/01/2024",
-      approvedDate: "02/01/2024",
-      status: "Approved",
-    },
-    {
-      id: "2",
-      withdrawalMethod: "Bank Account",
-      amount: "67890",
-      requestData: "03/01/2024",
-      approvedDate: "",
-      status: "Pending",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-6 rounded-lg mb-6 shadow-lg">
-        <h2 className="text-3xl font-bold mb-6">Withdrawal History</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg mb-6 shadow-lg">
+        <h2 className="text-2xl font-bold mb-4">Withdrawal History</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           <div>
-            <label className="block mb-2 font-semibold">Select Status</label>
+            <label className="block mb-1 text-sm font-medium">Status</label>
             <select
-              className="w-full bg-gray-700 text-white p-3 rounded-lg focus:ring focus:ring-gray-500"
+              className="w-full bg-gray-700 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
               value={status}
-              onChange={handleStatusChange}
+              onChange={(e) => setStatus(e.target.value)}
             >
-              <option value="">Select Status</option>
+              <option value="">All</option>
               <option value="Approved">Approved</option>
               <option value="Pending">Pending</option>
             </select>
           </div>
           <div>
-            <label className="block mb-2 font-semibold">From Date</label>
+            <label className="block mb-1 text-sm font-medium">From Date</label>
             <input
               type="date"
-              className="w-full bg-gray-700 text-white p-3 rounded-lg focus:ring focus:ring-gray-500"
+              className="w-full bg-gray-700 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
               value={fromDate}
-              onChange={handleFromDateChange}
+              onChange={(e) => setFromDate(e.target.value)}
             />
           </div>
           <div>
-            <label className="block mb-2 font-semibold">To Date</label>
+            <label className="block mb-1 text-sm font-medium">To Date</label>
             <input
               type="date"
-              className="w-full bg-gray-700 text-white p-3 rounded-lg focus:ring focus:ring-gray-500"
+              className="w-full bg-gray-700 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
               value={toDate}
-              onChange={handleToDateChange}
+              onChange={(e) => setToDate(e.target.value)}
             />
           </div>
           <div className="flex items-end">
             <button
               onClick={handleSearch}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-3 rounded-lg transition"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded-lg transition"
             >
               Search
             </button>
@@ -85,80 +139,79 @@ const AdminWithdrawalHistory = () => {
       </div>
 
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto text-sm">
-            <thead>
-              <tr className="bg-gray-700">
-                <th className="p-4 border-b">Sr. No.</th>
-                <th className="p-4 border-b">Withdrawal Method</th>
-                <th className="p-4 border-b">Amount</th>
-                <th className="p-4 border-b">Request Date</th>
-                <th className="p-4 border-b">Approved Date</th>
-                <th className="p-4 border-b">Status</th>
-                <th className="p-4 border-b text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.length > 0 ? (
-                tableData.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={`${
-                      index % 2 === 0 ? "bg-gray-600" : "bg-gray-700"
-                    } text-white`}
-                  >
-                    <td className="p-4">{item.id}</td>
-                    <td className="p-4">{item.withdrawalMethod}</td>
-                    <td className="p-4">₹{item.amount}</td>
-                    <td className="p-4">{item.requestData}</td>
-                    <td className="p-4">
-                      {item.approvedDate || "Not Approved"}
-                    </td>
-                    <td
-                      className={`p-4 ${
-                        item.status === "Approved"
-                          ? "text-green-500"
-                          : "text-yellow-500"
-                      } font-semibold`}
+        {loading ? (
+          <div className="flex justify-center items-center h-32">
+            <Loader color="white" size="6" />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto text-sm">
+              <thead>
+                <tr className="bg-gray-700">
+                  <th className="p-3 border-b">Sr. No.</th>
+                  <th className="p-3 border-b">Withdrawal Method</th>
+                  <th className="p-3 border-b">Amount</th>
+                  <th className="p-3 border-b">Request Date</th>
+                  <th className="p-3 border-b">Approved Date</th>
+                  <th className="p-3 border-b">Status</th>
+                  <th className="p-3 border-b text-center">Actions</th>
+                </tr>
+              </thead>
+              {console.log(withdrawals, "withdrawals")}
+              <tbody>
+                {withdrawals.length > 0 ? (
+                  withdrawals.map((item, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-600" : "bg-gray-700"}
                     >
-                      {item.status}
-                    </td>
-                    <td className="p-4 flex gap-2">
-                      <button
-                        onClick={() => handleApprove(item.id)}
-                        className="bg-green-600 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded"
+                      <td className="p-3">{index + 1}</td>
+                      <td className="p-3">{item.withdrawalMethod}</td>
+                      <td className="p-3">₹{item.amount}</td>
+                      <td className="p-3">{item.requestedAt}</td>
+                      <td className="p-3">
+                        {item.approvedDate || "Not Approved"}
+                      </td>
+                      <td
+                        className={`p-3 font-semibold capitalize ${item.status === "approved"
+                          ? "text-green-500"
+                          : item.status === "rejected"
+                            ? "text-red-500"
+                            : "text-yellow-500"
+                          }`}
                       >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleReject(item.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded"
-                      >
-                        Reject
-                      </button>
+                        {item.status}
+                      </td>
+                      <td className="p-3 flex gap-2">
+                        <button
+                        title={item.status === "approved" && "Already approved"}
+                          onClick={() => handleApprove(item.withdrawalId, index)}
+                          className={` ${item.status === "approved" ?  "bg-slate-800 hover:bg-grey-700" :  "bg-green-600 hover:bg-green-700"}  text-white font-semibold w-full py-1 px-3 rounded`}
+                          disabled={item.status === "approved" || loading}
+                        >
+                          {actionLoading === item.id && rowIndex === index ? (
+                            <Loader color="white" size="6" />
+                          ) :  item.status === "approved" ? "Approved" : (
+                           
+                            "Approve"
+                          ) 
+                          
+                          }
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="p-3 text-center text-gray-500">
+                      No data available
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="p-4 text-center text-gray-500">
-                    No data available
-                  </td>
-                </tr>
-              )}
-            </tbody>
-            <tfoot>
-              <tr className="bg-gray-700">
-                <td colSpan="3" className="p-4 font-bold text-white">
-                  Total Amount
-                </td>
-                <td colSpan="4" className="p-4 text-right">
-                  ₹{tableData.reduce((sum, item) => sum + Number(item.amount), 0).toFixed(2)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

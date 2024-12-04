@@ -115,3 +115,19 @@ export const fetchAllDeposits = () => {
     return apiClient.get("/admin/fetchalldeposit");
 };
 
+
+export const fetchAllWithdrawls = () => {
+    return apiClient.get("/admin/fetchallwithdraw");
+};
+
+
+export const approveOrRejectWithrawls = (data) => {
+    return apiClient.patch("/admin/withdraw/approve-reject" , data);
+};
+
+
+
+
+
+
+
