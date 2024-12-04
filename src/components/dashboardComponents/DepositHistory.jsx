@@ -20,12 +20,11 @@ const DepositHistory = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">
-          Deposit History
-        </h2>
-        </div>
+    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-start">
+      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+      deposit history
+        </h1>
+     
 
         {loading ? (
           <div className="flex justify-center items-center h-40">
