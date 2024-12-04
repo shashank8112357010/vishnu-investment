@@ -192,7 +192,7 @@ const Deposit = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-[#01137F] text-white p-3 mt-6 rounded hover:bg-[#101C8E] flex items-center justify-center"
+          className="w-full bg-[#01137F] text-white p-2 mt-6 rounded hover:bg-[#101C8E] flex items-center justify-center"
         >
           {loading ? <Loader size="6" color="white" /> : step === 1 ? "Confirm Request" : "Submit Request"}
         </button>

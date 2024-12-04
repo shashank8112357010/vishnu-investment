@@ -65,9 +65,13 @@ const Withdrawal = () => {
   };
 
   return (
-    <div className="flex justify-center items-center  min-h-screen min-h-screen bg-gray-900 text-white border rounded-xl p-4">
-      <div className=" border text-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
-        <h2 className="text-2xl font-semibold mb-6">Withdrawal Method</h2>
+       <>
+        <div className="flex justify-start items-start flex-col  min-h-screen bg-gray-900 text-white border rounded-xl p-4">
+    <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+      Withdrawal Request
+        </h1>
+      <div className="border text-white p-8 rounded-lg shadow-lg w-full bg-black">
+       
 
         {/* Transaction Type Dropdown */}
         <select
@@ -178,6 +182,8 @@ const Withdrawal = () => {
         </button>
       </div>
     </div>
+       
+       </>
   );
 };
 

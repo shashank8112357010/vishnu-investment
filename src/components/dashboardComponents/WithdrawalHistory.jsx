@@ -74,12 +74,12 @@ const WithdrawalHistory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-start">
       {/* Header */}
-      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
-       <h1 className="px-5 py-2 mb-3 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
-        Deposit History
+       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+        Withdrawal History
       </h1>
+      <div className="w-full max-w-7xl bg-black border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
         <div className="flex flex-wrap items-center gap-4">
           <select
             className="bg-gray-700 w-full md:w-[160px] text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -120,12 +120,12 @@ const WithdrawalHistory = () => {
       </div>
 
       {/* Results Section */}
-      <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
+      <div className="w-full max-w-7xl bg-black border border-gray-700 rounded-lg p-6 shadow-lg">
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left table-auto">
             <thead>
-              <tr className="bg-gray-700 text-white">
+              <tr className="bg-[#333] text-white">
                 <th className="p-4 border-b border-gray-600">Sr. No.</th>
                 <th className="p-4 border-b border-gray-600">Withdrawal Method</th>
                 <th className="p-4 border-b border-gray-600">Amount</th>
@@ -143,7 +143,7 @@ const WithdrawalHistory = () => {
                 </tr>
               ) : filteredData && filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
-                  <tr key={item._id} className="hover:bg-gray-700 transition">
+                  <tr key={item._id} className="hover:bg-[#111] transition">
                     <td className="p-4">{index + 1}</td>
                     <td className="p-4">{item.withdrawalMethod}</td>
                     <td className="p-4">{item.amount}</td>
