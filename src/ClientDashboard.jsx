@@ -21,6 +21,15 @@ export default function ClientDashboard() {
     }
   }, [navigate]);
   
+
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }, [location.pathname])
+
   return (
     <div>
       <MainDashboard/>

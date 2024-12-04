@@ -14,7 +14,7 @@ export default function MainDashboard() {
   }, [navigate]);
 
   // State to toggle sidebar visibility
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   // Toggle sidebar visibility
   const handleClick = () => {
@@ -27,18 +27,18 @@ export default function MainDashboard() {
       <div className="w-full h-auto admin-bgcolor text-color flex justify-center ">
         {/* Sidebar */}
         <div
-          className={`md:w-[28%] xl:w-[22%] w-1/2  h-screen overflow-auto admin-bgcolor md:sticky md:top-0 md:block ${
-            open ? " absolute left-0 top-[70px] z-50" : "hidden"
+          className={`md:w-[28%] xl:w-[22%] w-1/2  h-screen overflow-auto  admin-bgcolor md:sticky md:top-0 md:block ${
+            open ? "absolute left-0 top-[70px] z-50" : "hidden"
           }`}
         >
-          <Dashboard_SideBar open={open} />
+          <Dashboard_SideBar open={open} onClick={handleClick}/>
         </div>
 
         {/* Main Content */}
         <div className={` md:w-[72%] xl:w-[78%] w-full h-auto flex flex-col justify-center items-center"}`}>
           <Dashboard_Header onClick={handleClick} />
           <div className="w-full h-auto p-2 md:p-5">
-            <Outlet />
+            <Outlet/>
           </div>
         </div>
       </div>

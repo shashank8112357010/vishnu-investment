@@ -8,7 +8,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import logo from '../../assets/trustt.png'
 import { toast } from "react-toastify";
 
-export default function Dashboard_SideBar() {
+export default function Dashboard_SideBar({onClick}) {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
@@ -39,8 +39,8 @@ export default function Dashboard_SideBar() {
                 <ul>
                     {/* Dashboard */}
                     <li className=''>
-                        <Link to='/dashboard/' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
-                            <AiFillDashboard className='inline text-2xl' /> &nbsp;&nbsp;Dashboard
+                        <Link to='/dashboard/' onClick={onClick} className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                            <AiFillDashboard className='inline md:text-2xl' /> &nbsp;&nbsp;Dashboard
 
                         </Link>
                     
@@ -49,17 +49,17 @@ export default function Dashboard_SideBar() {
                     {/* Profile */}
                     <li onClick={() => setIsOpen(!isOpen)} >
                         <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
-                            <FaHouseUser className='inline text-2xl' /> &nbsp;&nbsp;Profile
-                            {isOpen ? <TiArrowSortedUp className='inline relative  left-[145px]' /> : <TiArrowSortedDown className='inline relative left-[145px]' />}
+                            <FaHouseUser className='inline md:text-2xl' /> &nbsp;&nbsp;Profile
+                            {isOpen ? <TiArrowSortedUp className='inline relative left-7  md:left-[145px]' /> : <TiArrowSortedDown className='inline relative left-7 md:left-[145px]' />}
                         </Link>
                         <ul className={`${isOpen ? "block" : "hidden"}`}>
                             <li>
-                                <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                     <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Edit Profile
                                 </Link>
                             </li>
                             <li>
-                                <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                     <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Change Password
                                 </Link>
                             </li>
@@ -70,17 +70,17 @@ export default function Dashboard_SideBar() {
                     {isVerified ? (
                         <li onClick={() => setIsOpen1(!isOpen1)}>
                             <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
-                                <FaWallet className='inline text-2xl' /> &nbsp;&nbsp;Deposit
-                                {isOpen1 ? <TiArrowSortedUp className='inline relative left-[135px]' /> : <TiArrowSortedDown className='inline relative left-[135px]' />}
+                                <FaWallet className='inline md:text-2xl' /> &nbsp;&nbsp;Deposit
+                                {isOpen1 ? <TiArrowSortedUp className='inline relative left-4 md:left-[135px]' /> : <TiArrowSortedDown className='inline relative left-4 md:left-[135px]' />}
                             </Link>
                             <ul className={`${isOpen1 ? "block" : "hidden"}`}>
                                 <li>
-                                    <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                    <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                         <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                    <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                         <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp; Request History
                                     </Link>
                                 </li>
@@ -88,7 +88,7 @@ export default function Dashboard_SideBar() {
                         </li>
                     ) : (
                         <li className="text-gray-500 pl-5 p-2 text-xl font-semibold cursor-not-allowed">
-                            <FaWallet className='inline text-2xl' /> &nbsp;&nbsp;Deposit  Locked
+                            <FaWallet className='inline md:text-2xl' /> &nbsp;&nbsp;Deposit  Locked
                         </li>
                     )}
 
@@ -96,17 +96,17 @@ export default function Dashboard_SideBar() {
                     {isVerified ? (
                         <li onClick={() => setIsOpen2(!isOpen2)}>
                             <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
-                                <BsBank2 className='inline text-2xl' /> &nbsp;&nbsp;WithDrawal
-                                {isOpen2 ? <TiArrowSortedUp className='inline relative left-[100px]' /> : <TiArrowSortedDown className='inline relative left-[100px]' />}
+                                <BsBank2 className='inline md:text-2xl' /> &nbsp;&nbsp;WithDrawal
+                                {isOpen2 ? <TiArrowSortedUp className='inline relative left-3 md:left-[100px]' /> : <TiArrowSortedDown className='inline relative left-3 md:left-[100px]' />}
                             </Link>
                             <ul className={`${isOpen2 ? "block" : "hidden"}`}>
                                 <li>
-                                    <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                    <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                         <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/dashboard/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
+                                    <Link to='/dashboard/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' onClick={onClick}>
                                         <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp; Withdrawal History
                                     </Link>
                                 </li>
@@ -114,14 +114,14 @@ export default function Dashboard_SideBar() {
                         </li>
                     ) : (
                         <li className="text-gray-500 pl-5 p-2 text-xl font-semibold cursor-not-allowed">
-                            <BsBank2 className='inline text-2xl' /> &nbsp;&nbsp;Withdrawal Locked
+                            <BsBank2 className='inline md:text-2xl' /> &nbsp;&nbsp;Withdrawal Locked
                         </li>
                     )}
 
                     {/* Signout */}
-                    <li>
-                        <Link to='/login' onClick={handleLogout} className='block pl-5 p-2 text-red-700 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold'>
-                            <RiLogoutCircleRLine className='inline text-2xl' /> &nbsp;&nbsp;Signout
+                    <li onClick={onClick}>
+                        <Link to='/login' onClick={handleLogout} className='block pl-5 p-2 text-red-700 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-xl font-semibold' >
+                            <RiLogoutCircleRLine className='inline md:text-2xl' /> &nbsp;&nbsp;Signout
                         </Link>
                     </li>
                 </ul>
