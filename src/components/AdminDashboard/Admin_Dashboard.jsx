@@ -129,7 +129,7 @@ export default function Admin_Dashboard() {
                 key={index}
                 className="bg-black border p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-300 hover:scale-105 flex flex-col items-center text-gray-300"
               >
-                <p className="text-sm font-normal sm:text-lg font-semibold">{card.label}</p>
+                <p className="text-sm font-normal sm:text-lg ">{card.label}</p>
                 <p className="text-center md:text-lg sm:text-xl font-bold">
                   {card.value}
                 </p>

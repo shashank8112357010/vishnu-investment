@@ -106,13 +106,13 @@ const WithdrawalHistory = () => {
 
           <button
             onClick={handleSearch}
-            className="bg-[#0d1b87] px-3 hover:bg-[#1c2fbc] w-full md:w-auto hover:bg-blue-700 text-white font-semibold p-2 rounded-md transition duration-300"
+            className="bg-[#0d1b87] px-3 hover:bg-[#1c2fbc] w-full md:w-auto text-white font-semibold p-2 rounded-md transition duration-300"
           >
             Search
           </button>
           <button
             onClick={clearFilters}
-            className="bg-[#0d1b87] px-3  hover:bg-[#1c2fbc] w-full md:w-auto hover:bg-gray-700 text-white font-semibold p-2 rounded-md transition duration-300"
+            className="bg-[#0d1b87] px-3  hover:bg-[#1c2fbc] w-full md:w-auto text-white font-semibold p-2 rounded-md transition duration-300"
           >
             Clear Filters
           </button>
