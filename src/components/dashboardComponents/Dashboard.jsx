@@ -33,8 +33,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col gap-6 p-0 md:px-6 lg:px-8">
-        <h1 className="px-5 py-2 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
+      <div className="flex flex-col gap-6 md:p-4 items-start justify-normal">
+        <h1 className="px-3 py-2 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
           Dashboard
         </h1>
 

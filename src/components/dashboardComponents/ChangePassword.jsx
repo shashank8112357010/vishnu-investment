@@ -40,13 +40,13 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className='p-5'>
-      <h1 className="px-5 py-2 mb-3 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
-          Edit Profile
+    <div className='p-3'>
+      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+          Change Password
         </h1>
       <div className=" w-full p-3 flex items-center rounded-xl  justify-center border">
       <div className="w-full rounded-lg shadow-lg">
-        <h2 className="text-xl  font-semibold text-white mb-6 text-center">Change Password</h2>
+        <h2 className="text-xl  font-semibold text-white text-center">Change Password</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-red-500 text-center">{error}</p>}
           

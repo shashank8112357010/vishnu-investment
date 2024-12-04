@@ -68,12 +68,14 @@ const Deposit = () => {
   };
 
   return (
-    <div className="flex w-full min-h-screen bg-gray-900 text-white flex-col items-center justify-center min-h-screen p-6 ">
-      <h1 className="text-2xl font-bold text-white mb-6">Send Request</h1>
+    <div className="flex w-full bg-gray-900 text-white flex-col items-start justify-start min-h-screen p-6 ">
+      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+          Deposit
+        </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-black shadow-lg p-6 rounded-lg"
+        className="w-full  bg-black shadow-lg p-6 rounded-lg"
       >
         {/* Step 1: Deposit Method */}
         {step === 1 && (
