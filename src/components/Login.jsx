@@ -27,9 +27,9 @@ export default function Login() {
       localStorage.setItem("token", res?.data?.token);
       localStorage.setItem("isVerified", res?.data?.isVerified);
 
-      toast.success(res?.data?.message);
+      toast.success(`${res.data.username} Logged In `);
 
-      console.log(res?.data);
+      // console.log(res?.data);
       setFormValues({ email: "", password: "" }); // Reset the form
       if(res?.data?.role === "admin") {
         navigate("/admin");

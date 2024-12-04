@@ -8,12 +8,14 @@ import { toast } from "react-toastify";
 import { RegisterUser, sendOtp } from "../services/api.service.js";
 import Loader from "./Loader.jsx";
 
-
 export default function Register() {
-  const params = useParams()
-  let navigation = useNavigate();
+  const params = useParams();
+  const navigation = useNavigate();
+
   const [showpassword, setShowPassword] = useState(false);
-  const [otploading, setotpLoading] = useState(false);
+  const [otploading, setOtpLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0); // Timer for resend OTP
   const [formData, setFormData] = useState({
     referralCode: "",
     firstName: "",
@@ -27,41 +29,61 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-
-    if(params.ReferalCode)  setFormData((prev)=>({...prev , referralCode : params.ReferalCode}))
-  },[])
+  useEffect(() => {
+    if (params.ReferalCode) {
+      setFormData((prev) => ({ ...prev, referralCode: params.ReferalCode }));
+    }
+  }, [params.ReferalCode]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSendOTP = async (res) => {
-    if(formData.email){
-      await sendOtp({email : formData?.email})
-    }else{
-      toast.error(res?.response?.data)
+  const handleSendOTP = async () => {
+    if (formData.email) {
+      try {
+        setOtpLoading(true);
+        await sendOtp({ email: formData.email });
+        toast.success("OTP sent successfully!");
+        setOtpSent(true);
+        setResendTimer(60); // Set a 60-second timer
+      } catch (error) {
+        toast.error(
+          error?.response?.data?.message || "Email already registered!"
+        );
+      } finally {
+        setOtpLoading(false);
+      }
+    } else {
+      toast.error("Please enter a valid email address.");
     }
   };
 
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
+
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
 
-
-
-    await RegisterUser(formData)
-      .then((res) => {
-        setLoading(false);
-        navigation("/login");
-        toast.success(res?.response?.data?.message || `${formData.firstName} Registered Successfully `);
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err?.response?.data?.message || "Something went wrong");
-      });
+    try {
+      const res = await RegisterUser(formData);
+      toast.success(
+        res?.response?.data?.message ||
+          `${formData.firstName} Registered Successfully`
+      );
+      navigation("/login");
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,7 +95,6 @@ export default function Register() {
             Registration Form
           </h2>
         </div>
-      
 
         <form className="my-10" onSubmit={handleSubmit}>
           <div className="md:flex ">
@@ -140,17 +161,21 @@ export default function Register() {
                   id="otp"
                   placeholder="Enter OTP"
                   type="text"
-                  value={formData?.otp}
+                  value={formData.otp}
                   onChange={handleChange}
                   className="w-[200px] md:w-[360px]"
                 />
                 <button
                   onClick={handleSendOTP}
                   type="button"
-                  disabled={otploading}
-                  className=" rounded-lg font-[500] h-[39px] text-sm w-full text-white bg-black"
+                  disabled={otploading || resendTimer > 0}
+                  className="ml-2 rounded-lg font-[500] h-[39px] text-sm w-full text-white bg-black"
                 >
-                  {otploading ? "Sending.." : "Send OTP"}
+                  {otploading
+                    ? <Loader size="6" color="white" />
+                    : resendTimer > 0
+                    ? `Resend in ${resendTimer}s`
+                    : "Send OTP"}
                 </button>
               </div>
             </LabelInputContainer>
@@ -182,11 +207,11 @@ export default function Register() {
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="referralCode">Referral Code (optional)</Label>
               <Input
-              disabled={params.ReferalCode}
+                disabled={params.ReferalCode}
                 id="referralCode"
                 placeholder="Referral Link"
                 type="text"
-                value={formData.referralCode }
+                value={formData.referralCode}
                 onChange={handleChange}
               />
             </LabelInputContainer>
@@ -196,11 +221,11 @@ export default function Register() {
             className={cn(
               "py-1 mt-4 rounded-lg font-[500] text-lg w-full text-white bg-black",
               {
-                "cursor-not-allowed": loading,
+                "cursor-not-allowed": loading || !formData.otp,
               }
             )}
             type="submit"
-            disabled={loading}
+            disabled={loading || !formData.otp}
           >
             {loading ? <Loader color="white" size={"6"} /> : "Submit"}
           </button>
