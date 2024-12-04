@@ -49,7 +49,9 @@ const Admin_Users = () => {
 
   return (
     <div className="p-4 bg-gray-900 text-gray-200 min-h-screen">
-      <h1 className="text-2xl font-bold text-center mb-4">All Users</h1>
+      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+        All User
+      </h1>
       {loading ? (
         <div className="flex justify-center items-center h-[70vh]">
           <Loader size="6" color="white" />

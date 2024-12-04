@@ -64,33 +64,22 @@ export default function Dashboard() {
 
             {/* User Information Cards */}
             <div className="px-4">
-              <div className="w-full grid xl:grid-cols-2 gap-4">
-                <div className=" w-full border rounded bg-black py-2 px-3 lg:flex hover:shadow-xl transform transition duration-300 hover:scale-105">
-                  <div className="">
-                    <p>User Name: <p className='lg:hidden'>{data.username}</p></p>
-                    <p>User Email: <p className='lg:hidden'>{data.email}</p></p>
-                    <p>Referral: <p className='lg:hidden'> <p>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p></p></p>
-                  </div>
-                  <div className="hidden  lg:block ml-3">
-                    <p className='text-sm'>{data.username}</p>
-                    <p className='text-sm'>{data.email}</p>
-                    <p className='text-sm'>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</p>
-                  </div>
-                </div>
-
-                <div className=" border rounded bg-black py-2 px-4 hover:shadow-xl transform transition duration-300 hover:scale-105">
-                  <h2 className="mb-2 text-sm ">Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</h2>
-                  {/* <p className='mb-2'>clients to Enter Company Name</p> */}
-                  <div className="">
-                    <p className=" border text-sm bg-gray-700 py-1 px-3 rounded">
-                      {data?.referalLink.slice(0,30) + "..."}
-                    <FaCopy className="inline ml-3 text-2xl" title='Click to Copy Referral Code'
-                      onClick={handleCopy}/>           
-                  
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <di className="">
+                     <div className='w-full grid gap-3 grid-cols-1 lg:grid-cols-2 '>
+                      <div className='w-full border overflow-hidden py-3 px-2 rounded bg-black hover:shadow-xl transform transition duration-300 hover:scale-105'>
+                      <p>User Name : <span className='text-sm'>{data.username}</span></p>
+                      <p>User Email : <span className='text-sm'>{data.email}</span></p>
+                      <p>Referral Id  : <span className='text-sm'>{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</span></p>
+                      </div>
+                      <div className='w-full border overflow-hidden py-3 px-2 rounded bg-black hover:shadow-xl transform transition duration-300 hover:scale-105'>
+                      <p className='text-sm'>Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</p>
+                      <p className=" border text-sm bg-gray-700 py-1 px-3 rounded flex justify-between mt-2">
+                      {data?.referalLink.slice(0,42) + "..."}
+                    <FaCopy className="inline ml-3 text-2xl cursor-pointer" title='Click to Copy Referral Code'
+                      onClick={handleCopy}/>    </p>
+                      </div>
+                    </div>
+              </di>
             </div>
 
             {/* Metrics Cards */}

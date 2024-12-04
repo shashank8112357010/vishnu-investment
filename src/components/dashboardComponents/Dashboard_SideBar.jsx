@@ -32,9 +32,9 @@ export default function Dashboard_SideBar({onClick}) {
 
     return (
         <div className=''>
-            <h1 className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black md:flex justify-center items-center hidden '>
+            <div className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black md:flex justify-center items-center hidden '>
                 <Link to="/dashboard"> <img src={logo} alt="Logo" className='w-[150px]'/></Link>
-            </h1>
+            </div>
             <div className='admin-bgcolor w-full mt-3 '>
                 <ul>
                     {/* Dashboard */}

@@ -9,34 +9,34 @@ import {toast} from "react-toastify"
 
 
 
-export default function Dashboard_SideBar() {
+export default function Dashboard_SideBar({onClick}) {
     
   return (
     <>
     <div className='' >
-        <h1 className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black flex justify-center items-center'> <Link to="/admin"> <img src={logo} alt="" /></Link></h1>
+        <div className='text-center text-3xl font-bold uppercase p-5 h-[150px] bg-black md:flex justify-center items-center hidden'> <Link to="/admin"> <img src={logo} alt="" /></Link></div>
         <div className='admin-bgcolor'>
             <ul>
                 {/* Dashboard */}
-                <li><Link to='/admin/' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><AiFillDashboard className='inline text-2xl' /> &nbsp;&nbsp;Dashboard</Link></li>
+                <li onClick={onClick} ><Link to='/admin/' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><AiFillDashboard className='inline text-2xl' /> &nbsp;&nbsp;Dashboard</Link></li>
 
                 {/* Profile */}
                
                     <ul >
-                        <li><Link to='/admin/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'> <FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Edit Profile</Link></li>
-                        <li><Link to='/admin/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Change Password</Link></li>
+                        <li onClick={onClick} ><Link to='/admin/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'> <FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Edit Profile</Link></li>
+                        <li onClick={onClick} ><Link to='/admin/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Change Password</Link></li>
                     </ul>
 
 
                 {/* Diposit */}
-                <li><Link to='/admin/users' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Users </Link></li>
+                <li onClick={onClick} ><Link to='/admin/users' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Users </Link></li>
 
                
-                        <li><Link to='/admin/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Deposit History</Link></li>
+                        <li onClick={onClick} ><Link to='/admin/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp;Deposit History</Link></li>
 
                 {/* WithDrawal section */}
                
-                        <li><Link to='/admin/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp; WithDrawal History</Link></li>
+                        <li onClick={onClick} ><Link to='/admin/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp; WithDrawal History</Link></li>
 
 
                 {/* My Team */}

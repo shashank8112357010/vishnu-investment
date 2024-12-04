@@ -77,7 +77,9 @@ const WithdrawalHistory = () => {
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
       {/* Header */}
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">Withdrawal History</h2>
+       <h1 className="px-5 py-2 mb-3 bg-gray-400 inline-block rounded-md md:text-3xl text-black font-bold uppercase">
+        Deposit History
+      </h1>
         <div className="flex flex-wrap items-center gap-4">
           <select
             className="bg-gray-700 w-full md:w-[160px] text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
