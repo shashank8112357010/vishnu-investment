@@ -23,8 +23,8 @@ export default function Navbar() {
   }
 
   return (
-    <div className="relative w-full bg-white h-16">
-      <div className="mx-auto h-16 flex max-w-7xl items-center justify-between px-4  sm:px-6 lg:px-8">
+    <div className="relative w-full bg-white h-20">
+      <div className="mx-auto h-20 flex max-w-7xl items-center justify-between px-4  sm:px-6 lg:px-8">
         {/* Logo Section */}
         <div className="inline-flex items-center space-x-2">
           <div className="text-xl">
@@ -32,7 +32,7 @@ export default function Navbar() {
            <Link to='/'> <img
               src={logo}
               alt="Trust Bost Logo"
-              className="w-24 lg:w-24 lg:h-16  " // Adjusting width/height based on screen size
+              className="w-24 lg:w-28 lg:h-22  " // Adjusting width/height based on screen size
             /></Link>
           </div>
         </div>

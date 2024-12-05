@@ -93,11 +93,11 @@ export default function Hero() {
             and Commodity markets with cutting-edge solutions and unwavering
             dedication to our customers.
           </p>
-          <div className="w-full flex flex-col md:flex-row items-center justify-center mt-16 px-5 md:px-20">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-center mt-16 px-5 md:px-20">
             <div className="w-full md:w-[50%]">
               <img src={tradImage} alt="" className="w-full h-auto" />
             </div>
-            <div className="w-full md:w-[50%] md:pe-[50px] mt-5 md:mt-0">
+            <div className="w-full lg:w-[50%] md:pe-[50px] mt-5 md:mt-0">
               <h1 className="text-3xl md:text-4xl text-left">
                 We’ve built this platform to deal in Forex and Commodity market.
               </h1>
