@@ -39,7 +39,7 @@ export default function Admin_Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col items-start justify-start gap-6 p-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-start justify-start gap-6  lg:px-8">
         <h1 className="px-3 py-2 bg-gray-400 inline- rounded-md  text-black font-bold uppercase">
           Dashboard
         </h1>
@@ -71,8 +71,12 @@ export default function Admin_Dashboard() {
                       </div>
                       <div className='w-full border overflow-hidden py-3 px-2 rounded bg-black hover:shadow-xl transform transition duration-300 hover:scale-105'>
                       <p className='text-sm'>Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</p>
-                      <p className=" border text-sm bg-gray-700 py-1 px-3 rounded flex justify-between mt-2">
-                      {data?.referalLink.slice(0,35) + "..."}
+                      <p className=" border text-sm bg-gray-700 py-1 hidden px-3 rounded md:flex justify-between mt-2">
+                      {data?.referalLink.slice(0,40) + "..."}
+                    <FaCopy className="inline ml-3 text-2xl cursor-pointer" title='Click to Copy Referral Code'
+                      onClick={handleCopy}/>    </p>
+                      <p className=" border text-sm bg-gray-700 py-1 px-3 md:hidden rounded flex justify-between mt-2">
+                      {data?.referalLink.slice(0,30) + "..."}
                     <FaCopy className="inline ml-3 text-2xl cursor-pointer" title='Click to Copy Referral Code'
                       onClick={handleCopy}/>    </p>
                       </div>

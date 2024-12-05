@@ -48,21 +48,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-sm p-6 border rounded bg-white shadow-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+    <div className="min-h-screen welcome-main-container flex items-center justify-center ">
+      <div className="w-full welcome-boxcontainer max-w-sm p-6 border rounded  shadow-md">
+        <h1 className="text-2xl font-bold text-center mb-6 text-white">Login</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              User Email
+            <label htmlFor="email" className="block text-sm font-medium text-white">
+              Email
             </label>
             <input
               type="text"
               id="email"
               name="email"
-              placeholder="Enter User Email"
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
+              placeholder="Enter Email"
+              className="w-full px-3 py-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:ring-blue-300"
               value={formValues.email}
               onChange={handleChange}
               disabled={loading} // Disable input during request
@@ -71,7 +71,7 @@ export default function Login() {
 
           {/* Password Field */}
           <div className="relative">
-            <label htmlFor="password" className="block text-sm font-medium">
+            <label htmlFor="password" className="block text-sm font-medium text-white">
               Password
             </label>
             <input
@@ -79,7 +79,7 @@ export default function Login() {
               id="password"
               name="password"
               placeholder="Enter Password"
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
+              className="w-full px-3 py-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:ring-blue-300"
               value={formValues.password}
               onChange={handleChange}
               disabled={loading} // Disable input during request
@@ -100,7 +100,7 @@ export default function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-black rounded"
+            className="w-full px-4 py-2 text-white bg-[#071783] rounded"
             disabled={loading} // Disable button during request
           >
             {loading ? <Loader color="white" size="6" /> : "Submit"}
@@ -109,7 +109,7 @@ export default function Login() {
 
         <hr className="my-4" />
 
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between text-sm text-white">
           <p>
             Not a member?{" "}
             <Link to="/register" className="text-blue-500 hover:underline">

@@ -58,13 +58,13 @@ export default function Navbar() {
         <div className=" hidden lg:block">
           <Link
             to='/login'
-            className="rounded-md uppercase bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black mr-2"
+            className="rounded-md uppercase bg-[#071783] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#0e0f41] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black mr-2"
           >
             Login
           </Link>
           <Link
             to='/register'
-            className="rounded-md uppercase bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="rounded-md uppercase bg-[#071783] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#0e0f41] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
             Register
           </Link>

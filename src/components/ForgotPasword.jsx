@@ -39,12 +39,12 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white border rounded-lg shadow-md">
-        <h2 className="text-xl font-bold text-center text-gray-800">Forgot Password</h2>
+    <div className="flex items-center justify-center min-h-screen welcome-main-container ">
+      <div className="w-full max-w-md p-6 welcome-boxcontainer border rounded-lg shadow-md">
+        <h2 className="text-xl font-bold text-center text-white ">Forgot Password</h2>
         <form onSubmit={handleForgotPassword} className="mt-6">
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-white">
               Email Address
             </label>
             <input
@@ -52,21 +52,21 @@ function ForgotPassword() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 mt-2 bg-gray-100 border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 mt-2  border rounded-md bg-gray-600 focus:outline-none focus:ring focus:ring-blue-400 text-white"
               placeholder="Enter your email"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 text-white bg-black rounded-md ${
+            className={`w-full px-4 py-2 text-white bg-[#071783] rounded-md ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
             {loading ? <Loader color="white" size="6" /> : 'Send Reset Link'}
           </button>
         </form>
-        <p className="mt-4 text-sm text-center text-gray-600">
+        <p className="mt-4 text-sm text-center text-white">
           Remembered your password?{' '}
           <a href="/login" className="text-blue-500 hover:underline">
             Login
