@@ -119,7 +119,7 @@ export default function Dashboard_SideBar({onClick}) {
 
                     {/* Signout */}
                     <li onClick={onClick}>
-                        <Link to='/login' onClick={handleLogout} className='block pl-5 p-2 text-red-500 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' >
+                        <Link to='/login' onClick={handleLogout} className='block pl-5 p-2 text-red-500 hover:text-red-700 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' >
                             <RiLogoutCircleRLine className='inline md:text-2xl' /> &nbsp;&nbsp;Signout
                         </Link>
                     </li>

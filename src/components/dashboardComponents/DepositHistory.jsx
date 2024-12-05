@@ -55,7 +55,7 @@ const DepositHistory = () => {
                     <tr
                       key={index}
                       // className=""
-                      className={"text-white hover:bg-[#444] border-t transition"}
+                      className={"text-white hover:bg-[#444] border-b transition"}
                     >
                       <td className="py-2 px-4 text-sm text-white-700">
                         {item?.transactionId || "N/A"}
