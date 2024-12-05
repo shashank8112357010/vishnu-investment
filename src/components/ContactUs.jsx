@@ -24,9 +24,9 @@ const ContactUs = () => {
     <>
 
       {/* Outer container with background color change */}
-      <div className="  background-color welcome-boxcontainer  md:p-16 lg:p-24">
+      <div className="  background-color welcome-boxcontainer pt-24   lg:p-24">
         {/* Heading and paragraph */}
-        <h1 className="text-2xl md:text-4xl font-bold text-center mb-6 pt-16 md:mt-16 lg:mt-16 text-white">
+        <h1 className="text-2xl md:text-4xl font-bold text-center mb-6  md:mt-16 lg:mt-16 text-white">
           Let's Connect and Get to Know Each Other
         </h1>
         <p className="text-center text-sm md:text-lg mb-10 text-white">
@@ -34,7 +34,7 @@ const ContactUs = () => {
         </p>
 
         {/* Cards */}
-        <div className="flex flex-col md:flex-row justify-between gap-6 p-4 md:p-10 lg:p-20">
+        <div className="flex flex-col md:flex-row justify-between gap-6 p-4 ">
           {/* Card 1 - Call Us */}
           <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center w-full md:w-1/3">
             <FaTelegram  className="text-2xl md:text-3xl mb-4 text-[#1D7B83]" />
