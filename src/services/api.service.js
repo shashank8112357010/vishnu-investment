@@ -132,6 +132,12 @@ export const approveOrRejectDeposit = (data) => {
 
 
 
+export const userContact = (data) => {
+    return apiClient.post("/contact" , data);
+};
+
+
+
 
 
 
