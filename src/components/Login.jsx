@@ -26,6 +26,8 @@ export default function Login() {
       const res = await LoginUser(formValues);
       localStorage.setItem("token", res?.data?.token);
       localStorage.setItem("isVerified", res?.data?.isVerified);
+      localStorage.setItem("role", res?.data?.role);
+
 
       toast.success(`${res.data.username} Logged In `);
 
