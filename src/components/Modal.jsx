@@ -35,7 +35,7 @@ export default function Modal({data}) {
             {/* Modal Header */}
             <div className="modal-header">
               <h5 className="modal-title " id="verticallyCenteredModalLabel">
-                Modal Title {data}
+                Transaction Image  
               </h5>
               <button
                 type="button"
@@ -45,23 +45,24 @@ export default function Modal({data}) {
               ></button>
             </div>
             {/* Modal Body */}
-            <div className="modal-body " > 
-              Content for a vertically centered modal.lorem 
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime aliquid architecto laboriosam, fuga cum repudiandae eius qui dolores nobis assumenda?
+            <div className="modal-body flex justify-center items-centre " > 
+
+              <img src={data} alt="image" className="w-96"/>
+             
             </div>
             {/* Modal Footer */}
-            <div className="modal-footer">
+            {/* <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Close 3
+                Close 
               </button>
               <button type="button" className="btn btn-primary">
                 Save changes
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
