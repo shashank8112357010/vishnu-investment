@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { approveOrRejectWithrawls, fetchAllWithdrawls } from "../../services/api.service"; // Assuming API is configured
-import Loader from "../../components/Loader"; // Assuming a Loader component exists
-import { toast } from "react-toastify"; // For notifications
+import {
+  approveOrRejectWithrawls,
+  fetchAllWithdrawls,
+} from "../../services/api.service";
+import Loader from "../../components/Loader";
+import { toast } from "react-toastify";
 
 const AdminWithdrawalHistory = () => {
   const [withdrawals, setWithdrawals] = useState([]);
@@ -10,27 +13,28 @@ const AdminWithdrawalHistory = () => {
   const [status, setStatus] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-
-  const [rowIndex, setindex] = useState("")
+  const [rowIndex, setRowIndex] = useState("");
 
   useEffect(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    setFromDate(today.toISOString().split("T")[0]); // Format as yyyy-mm-dd
+    setToDate(tomorrow.toISOString().split("T")[0]);
+
     fetchData();
   }, []);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      await fetchAllWithdrawls().then((res) => {
-        if (res) {
-          console.log(res, "ddddddddddd");
-          setWithdrawals(res.data.data || []);
-        } else {
-          toast.error("Failed to fetch withdrawals.");
-        }
-      }).catch((err) => {
-        console.error(err);
-      })
-
+      const res = await fetchAllWithdrawls();
+      if (res && res.data && res.data.data) {
+        setWithdrawals(res.data.data);
+      } else {
+        toast.error("Failed to fetch withdrawals.");
+      }
     } catch (error) {
       console.error(error);
       toast.error("Error fetching withdrawals.");
@@ -40,20 +44,15 @@ const AdminWithdrawalHistory = () => {
   };
 
   const handleApprove = async (id, index) => {
-    setindex(index)
-    console.log(id, "iddddddddddd shashank is here ");
-    setActionLoading(id); // Show loader for the specific action
+    setRowIndex(index);
+    setActionLoading(id);
     try {
-      // Mock API call for approval
-
-      await approveOrRejectWithrawls({ withdrawalId: id, status: "approved" }).then((res) => {
-        fetchData()
-        console.log(res, "---------------------------------");
-
-      }).catch((err) => {
-        toast.error("error while approval ");
-      })
+      await approveOrRejectWithrawls({
+        withdrawalId: id,
+        status: "approved",
+      });
       toast.success("Withdrawal approved successfully!");
+      fetchData();
     } catch (error) {
       console.error(error);
       toast.error("Failed to approve withdrawal.");
@@ -62,40 +61,33 @@ const AdminWithdrawalHistory = () => {
     }
   };
 
-  // const handleReject = async (id) => {
-  //   setActionLoading(id); // Show loader for the specific action
-  //   try {
-  //     // Mock API call for rejection
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-  //     setWithdrawals((prev) =>
-  //       prev.map((withdrawal) =>
-  //         withdrawal.id === id ? { ...withdrawal, status: "Rejected" } : withdrawal
-  //       )
-  //     );
-  //     toast.success("Withdrawal rejected successfully!");
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Failed to reject withdrawal.");
-  //   } finally {
-  //     setActionLoading(null);
-  //   }
-  // };
-
   const handleSearch = () => {
-    // Add search logic (filter by status, fromDate, and toDate)
     const filtered = withdrawals.filter(
       (item) =>
-        (!status || item.status === status) &&
-        (!fromDate || new Date(item.requestData) >= new Date(fromDate)) &&
-        (!toDate || new Date(item.requestData) <= new Date(toDate))
+        (!status || item.status.toLowerCase() === status.toLowerCase()) &&
+        (!fromDate || new Date(item.requestedAt) >= new Date(fromDate)) &&
+        (!toDate || new Date(item.requestedAt) <= new Date(toDate))
     );
     setWithdrawals(filtered);
+    toast.info("Filters applied successfully.");
+  };
+
+  const clearFilters = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    setFromDate(today.toISOString().split("T")[0]);
+    setToDate(tomorrow.toISOString().split("T")[0]);
+    setStatus("");
+    fetchData();
+    toast.info("Filters cleared.");
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-start">
       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
-      Withdrawal History
+        Withdrawal History
       </h1>
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg mb-6 shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -126,15 +118,22 @@ const AdminWithdrawalHistory = () => {
               type="date"
               className="w-full bg-gray-700 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
               value={toDate}
+              min={fromDate}
               onChange={(e) => setToDate(e.target.value)}
             />
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end gap-2">
             <button
               onClick={handleSearch}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded-lg transition"
             >
               Search
+            </button>
+            <button
+              onClick={clearFilters}
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold p-2 rounded-lg transition"
+            >
+              Clear Filters
             </button>
           </div>
         </div>
@@ -159,13 +158,14 @@ const AdminWithdrawalHistory = () => {
                   <th className="p-3 border-b text-center">Actions</th>
                 </tr>
               </thead>
-              {console.log(withdrawals, "withdrawals")}
               <tbody>
                 {withdrawals.length > 0 ? (
                   withdrawals.map((item, index) => (
                     <tr
                       key={index}
-                      className={index % 2 === 0 ? "bg-gray-600" : "bg-gray-700"}
+                      className={
+                        index % 2 === 0 ? "bg-gray-600" : "bg-gray-700"
+                      }
                     >
                       <td className="p-3">{index + 1}</td>
                       <td className="p-3">{item.withdrawalMethod}</td>
@@ -175,37 +175,43 @@ const AdminWithdrawalHistory = () => {
                         {item.approvedDate || "Not Approved"}
                       </td>
                       <td
-                        className={`p-3 font-semibold capitalize ${item.status === "approved"
-                          ? "text-green-500"
-                          : item.status === "rejected"
+                        className={`p-3 font-semibold capitalize ${
+                          item.status === "approved"
+                            ? "text-green-500"
+                            : item.status === "rejected"
                             ? "text-red-500"
                             : "text-yellow-500"
-                          }`}
+                        }`}
                       >
                         {item.status}
                       </td>
                       <td className="p-3 flex gap-2">
                         <button
-                        title={item.status === "approved" && "Already approved"}
                           onClick={() => handleApprove(item.withdrawalId, index)}
-                          className={` ${item.status === "approved" ?  "bg-slate-800 hover:bg-grey-700" :  "bg-green-600 hover:bg-green-700"}  text-white font-semibold w-full py-1 px-3 rounded`}
+                          className={` ${
+                            item.status === "approved"
+                              ? "bg-gray-500 hover:bg-gray-700"
+                              : "bg-green-600 hover:bg-green-700"
+                          }  text-white font-semibold w-full py-1 px-3 rounded`}
                           disabled={item.status === "approved" || loading}
                         >
                           {actionLoading === item.id && rowIndex === index ? (
                             <Loader color="white" size="6" />
-                          ) :  item.status === "approved" ? "Approved" : (
-                           
+                          ) : item.status === "approved" ? (
+                            "Approved"
+                          ) : (
                             "Approve"
-                          ) 
-                          
-                          }
+                          )}
                         </button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="p-3 text-center text-gray-500">
+                    <td
+                      colSpan="7"
+                      className="p-3 text-center text-gray-500"
+                    >
                       No data available
                     </td>
                   </tr>

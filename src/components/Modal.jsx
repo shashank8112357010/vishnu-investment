@@ -1,10 +1,11 @@
 import React from "react";
 
-export default function Modal() {
+export default function Modal({data}) {
+  console.log(data , "data");
   return (
     <div>
       {/* Trigger Buttons */}
-      <button
+      {/* <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
@@ -19,7 +20,7 @@ export default function Modal() {
         data-bs-target="#scrollableModal"
       >
         Open Scrollable Modal
-      </button>
+      </button> */}
 
       {/* Vertically Centered Modal */}
       <div
@@ -30,11 +31,11 @@ export default function Modal() {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+          <div className="modal-content bg-black rounded-lg">
             {/* Modal Header */}
             <div className="modal-header">
-              <h5 className="modal-title" id="verticallyCenteredModalLabel">
-                Modal Title
+              <h5 className="modal-title " id="verticallyCenteredModalLabel">
+                Modal Title {data}
               </h5>
               <button
                 type="button"
@@ -44,8 +45,9 @@ export default function Modal() {
               ></button>
             </div>
             {/* Modal Body */}
-            <div className="modal-body">
-              Content for a vertically centered modal.
+            <div className="modal-body " > 
+              Content for a vertically centered modal.lorem 
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime aliquid architecto laboriosam, fuga cum repudiandae eius qui dolores nobis assumenda?
             </div>
             {/* Modal Footer */}
             <div className="modal-footer">
@@ -54,7 +56,7 @@ export default function Modal() {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Close
+                Close 3
               </button>
               <button type="button" className="btn btn-primary">
                 Save changes
@@ -64,51 +66,7 @@ export default function Modal() {
         </div>
       </div>
 
-      {/* Vertically Centered Scrollable Modal */}
-      <div
-        className="modal fade"
-        id="scrollableModal"
-        tabIndex="-1"
-        aria-labelledby="scrollableModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content">
-            {/* Modal Header */}
-            <div className="modal-header">
-              <h5 className="modal-title" id="scrollableModalLabel">
-                Scrollable Modal Title
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            {/* Modal Body */}
-            <div className="modal-body">
-              <p>Scrollable content goes here...</p>
-              <p>More content...</p>
-              <p>More content...</p>
-              {/* Add as much content as needed to demonstrate scrolling */}
-            </div>
-            {/* Modal Footer */}
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </div>
   );
 }
