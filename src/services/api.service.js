@@ -126,6 +126,10 @@ export const approveOrRejectWithrawls = (data) => {
 };
 
 
+export const approveOrRejectDeposit = (data) => {
+    return apiClient.patch("/admin/deposit/approve-reject" , data);
+};
+
 
 
 

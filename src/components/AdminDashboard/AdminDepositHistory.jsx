@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { approveOrRejectWithrawls, fetchAllDeposits } from "../../services/api.service";
+import { approveOrRejectDeposit, fetchAllDeposits } from "../../services/api.service";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import Modal from "../Modal";
@@ -12,7 +12,9 @@ const AdminDepositHistory = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [modalData, setModalData] = useState(null);
-  const [rowIndex, setIndex] = useState("");
+  const [rowIndex, setIndex] = useState(null);
+  const [markStatus, setMarkStatus] = useState(null);
+
 
   useEffect(() => {
     fetchData();
@@ -35,16 +37,18 @@ const AdminDepositHistory = () => {
     }
   };
 
-  const handleApprove = async (id, index) => {
+  const handleAction = async (id, index, actionStatus) => {
+    setMarkStatus(actionStatus)
+    console.log(id, "id");
     setIndex(index);
     setActionLoading(id);
     try {
-      await approveOrRejectWithrawls({ withdrawalId: id, status: "approved" });
-      toast.success("Deposit approved successfully!");
-      fetchData();
+      await approveOrRejectDeposit({ depositId: id, status: actionStatus });
+      toast.success(`Deposit ${actionStatus} successfully!`);
+      fetchData(); // Refresh data after action
     } catch (error) {
       console.error(error);
-      toast.error("Failed to approve deposit.");
+      toast.error(`Failed to ${actionStatus} deposit.`);
     } finally {
       setActionLoading(null);
     }
@@ -65,37 +69,21 @@ const AdminDepositHistory = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-start">
       <div className="flex gap-3">
-      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
-        Deposit History
-      </h1>
-      <h1 className="text-white bg-green-600  px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md font-bold uppercase">
-          <p >Total Approved { " "}{getCountByStatus("approved")}</p>
-      </h1>
-      <h1 className="text-white bg-yellow-600  px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md font-bold uppercase">
-          <p >Total Pending { " "}{getCountByStatus("pending")}</p>
-      </h1>
-      <h1 className="text-white bg-red-600  px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md font-bold uppercase">
-          <p >Total Rejected { " "}{getCountByStatus("rejected")}</p>
-      </h1>
-        
+        <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
+          Deposit History
+        </h1>
+        <h1 className="text-white bg-green-600 px-3 py-2 mb-3 rounded-md font-bold uppercase">
+          <p>Total Approved: {getCountByStatus("approved")}</p>
+        </h1>
+        <h1 className="text-white bg-yellow-600 px-3 py-2 mb-3 rounded-md font-bold uppercase">
+          <p>Total Pending: {getCountByStatus("pending")}</p>
+        </h1>
+        <h1 className="text-white bg-red-600 px-3 py-2 mb-3 rounded-md font-bold uppercase">
+          <p>Total Rejected: {getCountByStatus("rejected")}</p>
+        </h1>
       </div>
-  
 
       <Modal data={modalData} />
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-green-600 text-white p-4 rounded-lg text-center shadow-md">
-          
-        </div>
-        <div className="bg-yellow-600 text-white p-4 rounded-lg text-center shadow-md">
-          <h3 className="text-lg font-bold">Total Pending</h3>
-          <p className="text-2xl">{getCountByStatus("pending")}</p>
-        </div>
-        <div className="bg-red-600 text-white p-4 rounded-lg text-center shadow-md">
-          <h3 className="text-lg font-bold">Total Rejected</h3>
-          <p className="text-2xl">{getCountByStatus("rejected")}</p>
-        </div>
-      </div> */}
 
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg mb-6 shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -170,14 +158,9 @@ const AdminDepositHistory = () => {
                     >
                       <td className="p-3">{index + 1}</td>
                       <td className="p-3">{item.transactionId}</td>
+                      <td className="p-3">₹{item.amount}</td>
                       <td
-                        className="p-3"
-
-
-                      >
-                        ₹{item.amount}
-                      </td>
-                      <td className="p-3 cursor-pointer "
+                        className="p-3 cursor-pointer"
                         data-bs-toggle="modal"
                         data-bs-target="#verticallyCenteredModal"
                         onClick={() => setModalData(item?.transactionImage)}
@@ -188,32 +171,55 @@ const AdminDepositHistory = () => {
                       <td className="p-3">{item.userEmail}</td>
                       <td
                         className={`p-3 font-semibold capitalize ${item.status === "approved"
-                            ? "text-green-500"
-                            : item.status === "rejected"
-                              ? "text-red-500"
-                              : "text-yellow-500"
+                          ? "text-green-500"
+                          : item.status === "rejected"
+                            ? "text-red-500"
+                            : "text-yellow-500"
                           }`}
                       >
                         {item.status}
                       </td>
                       <td className="p-3 flex gap-2">
-                        <button
-                          title={item.status === "approved" && "Already approved"}
-                          onClick={() => handleApprove(item.depositId, index)}
-                          className={` ${item.status === "approved"
-                              ? "bg-gray-600 hover:bg-gray-700"
-                              : "bg-green-600 hover:bg-green-700"
-                            }  text-white font-semibold w-full py-1 px-3 rounded`}
-                          disabled={item.status === "approved" || loading}
-                        >
-                          {actionLoading === item.depositId && rowIndex === index ? (
-                            <Loader color="white" size="6" />
-                          ) : item.status === "approved" ? (
-                            "Approved"
-                          ) : (
-                            "Approve"
-                          )}
-                        </button>
+                        {item.status === "pending" ? (
+                          <>
+                            <button
+                              onClick={() => handleAction(item.depositId, index, "approved")}
+                              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded"
+                              disabled={actionLoading === item.depositId}
+                            >
+                              {actionLoading === item.depositId && rowIndex === index && markStatus === "approved"  ? (
+                                <Loader color="white" size="6" />
+                              ) : (
+                                "Approve"
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleAction(item.depositId, index, "rejected")}
+                              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded"
+                              disabled={actionLoading === item.depositId}
+                            >
+                              {actionLoading === item.depositId && rowIndex === index && markStatus === "rejected"  ? (
+                                <Loader color="white" size="6" />
+                              ) : (
+                                "Reject"
+                              )}
+                            </button>
+                          </>
+                        ) : (
+                          // <span
+                          //   className={`font-semibold capitalize ${item.status === "approved"
+                          //       ? "text-green-500"
+                          //       : "text-red-500"
+                          //     }`}
+                          // >
+                          //   {item.status}
+                          // </span>
+                          // <span className="text-white font-semibold py-1 px-3 rounded">
+                          //   Marked
+                          // </span>
+                          ""
+
+                        )}
                       </td>
                     </tr>
                   ))
@@ -225,6 +231,7 @@ const AdminDepositHistory = () => {
                   </tr>
                 )}
               </tbody>
+
             </table>
           </div>
         )}

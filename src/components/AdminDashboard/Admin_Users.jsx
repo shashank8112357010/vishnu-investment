@@ -10,6 +10,7 @@ const Admin_Users = () => {
   const [approving, setApproving] = useState(false);
   const [rowIndex, setRowIndex] = useState("");
 
+  const [searchQuery, setSearchQuery] = useState("");
   const [status, setStatus] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -67,6 +68,8 @@ const Admin_Users = () => {
         (!status || user.status === status) &&
         (!fromDate || new Date(user.createdAt) >= new Date(fromDate)) &&
         (!toDate || new Date(user.createdAt) <= new Date(toDate))
+      // (user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      //   user.lastName.toLowerCase().includes(searchQuery.toLowerCase()))
     );
     setFilteredUsers(filtered);
   };
@@ -75,14 +78,24 @@ const Admin_Users = () => {
     setStatus("");
     setFromDate("");
     setToDate("");
+    setSearchQuery("");
     setFilteredUsers(users);
   };
 
   return (
     <div className="p-4 bg-gray-900 text-gray-200 min-h-screen">
-      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
-        All Users
-      </h1>
+      <div className="flex justify-between items-center">
+        <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
+          All Users
+        </h1>
+        <input
+          type="search"
+          placeholder="Search by Name"
+          className="w-64 bg-gray-800 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+        />
+      </div>
 
       {/* Filters Section */}
       <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 p-4 rounded-lg mb-6 shadow-lg">
@@ -148,54 +161,37 @@ const Admin_Users = () => {
                 <th className="py-2 px-4 border-b font-medium text-left">Name</th>
                 <th className="py-2 px-4 border-b font-medium text-left">Email</th>
                 <th className="py-2 px-4 border-b font-medium text-left">Phone</th>
-                <th className="py-2 px-4 border-b font-medium text-left">
-                  Bank Details
-                </th>
-                <th className="py-2 px-4 border-b font-medium text-left">
-                  Binance Details
-                </th>
+                <th className="py-2 px-4 border-b font-medium text-left">Bank Details</th>
+                <th className="py-2 px-4 border-b font-medium text-left">Binance Details</th>
                 <th className="py-2 px-4 border-b font-medium text-left">Status</th>
                 <th className="py-2 px-4 border-b font-medium text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map((user, index) => (
+              {filteredUsers.filter((item) => item.firstName.toLowerCase().includes(searchQuery)).map((user, index) => (
                 <tr
                   key={user.userId}
                   className={index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}
                 >
-                  <td className="py-2 px-4 border-b">
-                    {user.firstName} {user.lastName}
-                  </td>
-                  <td className="py-2 px-4 border-b">{user.email}</td>
+                  <td className="py-2 px-4 border-b">{user.firstName} {user.lastName}</td>
+                  <td className="py-2 px-4 border-b" title={user.email}>{user.email.slice(0, 20)}</td>
                   <td className="py-2 px-4 border-b">{user.phone}</td>
                   <td className="py-2 px-4 border-b">
-                    {user.bankDetails.bankName !== "N/A" ? (
-                      <>
-                        {user.bankDetails.bankName}, {user.bankDetails.accountNumber},{" "}
-                        {user.bankDetails.ifscCode}
-                      </>
-                    ) : (
-                      "N/A"
-                    )}
+                    {user.bankDetails.bankName !== "N/A"
+                      ? `${user.bankDetails.bankName}, ${user.bankDetails.accountNumber}, ${user.bankDetails.ifscCode}`
+                      : "N/A"}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    {user.binanceDetails.walletAddress !== "N/A" ? (
-                      <>
-                        {user.binanceDetails.walletAddress},{" "}
-                        {user.binanceDetails.accountEmail}
-                      </>
-                    ) : (
-                      "N/A"
-                    )}
+                    {user.binanceDetails.walletAddress !== "N/A"
+                      ? `${user.binanceDetails.walletAddress}, ${user.binanceDetails.accountEmail}`
+                      : "N/A"}
                   </td>
                   <td className="py-2 px-4 border-b">
                     <span
-                      className={`px-2 py-1 text-sm rounded ${
-                        user.status === "approved"
+                      className={`px-2 py-1 text-sm rounded ${user.status === "approved"
                           ? "bg-green-800 text-green-400"
                           : "bg-yellow-600 text-black-400"
-                      }`}
+                        }`}
                     >
                       {user.status}
                     </span>
@@ -203,18 +199,27 @@ const Admin_Users = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       onClick={() => handleApprove(user.userId, index)}
-                      className="bg-blue-700 w-full text-white px-3 py-2 rounded hover:bg-blue-800 focus:outline-none"
+                      className="bg-blue-700 w-full text-white px-2 py-1 text-sm rounded hover:bg-blue-800 focus:outline-none"
                       disabled={user.status === "approved" || approving}
                     >
                       {approving && rowIndex === index ? (
                         <Loader size="6" color="white" />
-                      ) : (
-                        "Approve"
-                      )}
+                      ) : user.status === "approved" ? "Approved" : "Approve"}
                     </button>
                   </td>
                 </tr>
               ))}
+
+              {
+                filteredUsers.filter((item) => item.firstName.toLowerCase().includes(searchQuery)).length === 0 && (
+                  <tr className="text-center p-5" >
+
+                    <td colSpan={6} className="py-5">
+                    No  users found with this name {searchQuery}.
+                    </td>
+                  </tr>
+                )
+              }
             </tbody>
           </table>
         </div>
