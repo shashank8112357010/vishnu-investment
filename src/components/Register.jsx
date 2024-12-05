@@ -40,7 +40,8 @@ export default function Register() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSendOTP = async () => {
+  const handleSendOTP = async (e) => {
+    e.preventDefault();
     if (formData.email) {
       try {
         setOtpLoading(true);
