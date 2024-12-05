@@ -37,6 +37,7 @@ export default function Dashboard_SideBar({onClick}) {
                 {/* WithDrawal section */}
                
                         <li onClick={onClick} ><Link to='/admin/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 lg:text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp; WithDrawal History</Link></li>
+                        <li onClick={onClick} ><Link to='/admin/contact' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear  border-b border-b-gray-500 lg:text-xl  font-semibold'><FaRegDotCircle className='inline text-sm'/>&nbsp;&nbsp; User Contact</Link></li>
 
 
                 {/* My Team */}

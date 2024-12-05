@@ -134,4 +134,15 @@ export const approveOrRejectDeposit = (data) => {
 
 
 
+export const getContactUsDetails = () => {
+    return apiClient.get("/contact");
+};
+
+
+
+
+
+
+
+
 

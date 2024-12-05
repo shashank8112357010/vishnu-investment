@@ -30,6 +30,7 @@ import AdminLogin from './components/AdminDashboard/AdminLogin.jsx'
 import AdminResetPassword from './components/AdminDashboard/AdminResetPassword.jsx'
 import AdminForgotPassword from './components/AdminDashboard/AdminForgotPasword.jsx'
 import Admin_Users from './components/AdminDashboard/Admin_Users.jsx'
+import UserContact from './components/AdminDashboard/UserContact.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,7 +60,7 @@ const router = createBrowserRouter(
         <Route path='/admin/changepassword' element={<AdminChangePassword />} />
         <Route path='/admin/deposithistory' element={<AdminDepositHistory />} />
         <Route path='/admin/users' element={<Admin_Users />} />
-
+        <Route path='/admin/contact' element={<UserContact />} />
         <Route path='/admin/withdrawalhistory' element={<AdminWithdrawalHistory />} />
       </Route>
       <Route>
