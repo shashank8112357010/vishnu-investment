@@ -35,11 +35,11 @@ const DepositHistory = () => {
             <p className="text-red-500">{error}</p>
           </div>
         ) : depositHistory.length > 0 ? (
-          <div className="w-full max-w-7xl bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-lg">
+          <div className="w-full max-w-7xl bg-black border border-gray-700 rounded-lg p-6 shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full table-auto">
                 <thead className="bg-gray-800 text-white">
-                  <tr className="bg-gray-700 text-white">
+                  <tr className="bg-[#333] text-white">
                     {["ID", "Date", "Amount", "Status"].map((item, index) => (
                       <th
                         key={index}
@@ -55,9 +55,9 @@ const DepositHistory = () => {
                     <tr
                       key={index}
                       // className=""
-                      className={"text-white hover:bg-gray-700 transition"}
+                      className={"text-white hover:bg-[#444] border-t transition"}
                     >
-                      <td className="py-3 px-4 text-sm text-white-700">
+                      <td className="py-2 px-4 text-sm text-white-700">
                         {item?.transactionId || "N/A"}
                       </td>
                       <td className="p-4">

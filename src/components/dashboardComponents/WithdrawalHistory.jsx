@@ -143,7 +143,7 @@ const WithdrawalHistory = () => {
                 </tr>
               ) : filteredData && filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
-                  <tr key={item._id} className="hover:bg-[#111] transition">
+                  <tr key={item._id} className="hover:bg-[#444] border-b transition">
                     <td className="p-4">{index + 1}</td>
                     <td className="p-4">{item.withdrawalMethod}</td>
                     <td className="p-4">{item.amount}</td>
