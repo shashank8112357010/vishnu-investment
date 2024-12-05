@@ -40,7 +40,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className='p-3'>
+    <div className='p-3 bg-gray-900'>
       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
           Change Password
         </h1>
