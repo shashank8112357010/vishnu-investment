@@ -68,12 +68,12 @@ function ResetPassword() {
   };
 
   return (
-    <div className="flex items-center pt-20 justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Reset Password</h2>
+    <div className="flex items-center welcome-main-container pt-20 justify-center min-h-screen ">
+      <div className="w-full max-w-md welcome-boxcontainer p-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center text-white">Reset Password</h2>
         <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4 relative">
-            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="newPassword" className="block text-sm font-medium text-white">
               New Password
             </label>
             <input
@@ -81,18 +81,18 @@ function ResetPassword() {
               name="newPassword"
               value={formData.newPassword}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 bg-gray-100 border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 mt-2 bg-gray-800 text-white border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
               placeholder="Enter new password"
             />
             <span
               className="absolute right-3 top-[40px] transform cursor-pointer"
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
-              {showNewPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+              {showNewPassword ? <AiFillEyeInvisible className='text-white'/> : <AiFillEye className='text-white'/>}
             </span>
           </div>
           <div className="mb-4 relative">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
               Confirm Password
             </label>
             <input
@@ -100,20 +100,20 @@ function ResetPassword() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 bg-gray-100 border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+              className="w-full px-4 py-2 mt-2 bg-gray-800 text-white border rounded-md focus:outline-none focus:ring focus:ring-blue-400"
               placeholder="Confirm new password"
             />
             <span
               className="absolute right-3 top-[40px] transform cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+              {showConfirmPassword ? <AiFillEyeInvisible className='text-white' /> : <AiFillEye className='text-white'/>}
             </span>
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 text-white bg-black ${loading ? 'opacity-50 cursor-not-allowed' : ''
+            className={`w-full px-4 py-2 text-white bg-[#071783] ${loading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
           >
             {loading ? <Loader color="white" size="6" /> : 'Reset Password'}

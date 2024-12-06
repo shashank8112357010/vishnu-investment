@@ -91,7 +91,7 @@ export default function Admin_Dashboard() {
 
         <div className="flex w-full flex-col items-center p-4">
           {/* Financial Data */}
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full">
+          <div className="grid gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full">
             {[
               {
                 label: "Deposit",
@@ -105,7 +105,7 @@ export default function Admin_Dashboard() {
               },
               {
                 label: "Trade Profit Income",
-                value: `$ ${data.tradeProfitIncome}`,
+                value: `$ ${data.tradeProfitIncome.toFixed(2)}`,
                 icon: <GiReceiveMoney />,
               },
               {
@@ -115,17 +115,17 @@ export default function Admin_Dashboard() {
               },
               {
                 label: "Total Balance",
-                value: `$ ${data.totalBalance}`,
+                value: `$ ${data.totalBalance.toFixed(2)}`,
                 icon: <BsCashCoin />,
               },
               {
                 label: "Total Withdrawal",
-                value: `$ ${data.totalWithdrawals}`,
+                value: `$ ${data.totalWithdrawals.toFixed(2)}`,
                 icon: <FaAward />,
               },
               {
                 label: "Withdrawable Balance",
-                value: `$ ${data.withdrawalBalance}`,
+                value: `$ ${data.withdrawalBalance.toFixed(2)}`,
                 icon: <GiMoneyStack />,
               },
             ].map((card, index) => (

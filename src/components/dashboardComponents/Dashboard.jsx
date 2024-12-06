@@ -14,9 +14,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import financeImage1 from '../../assets/TRUSTBOT.png';
-import financeImage2 from '../../assets/finance image2 .jpg';
-import financeImage3 from '../../assets/finance image 3.jpg';
-import financeImage4 from '../../assets/chart-1905224.jpg';
+import financeImage2 from '../../assets/TRUSTBOT 2.png';
+import financeImage3 from '../../assets/trust bot image 3-1.jpg';
+import financeImage4 from '../../assets/TRUSTBOT 2.png';
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -61,13 +61,13 @@ export default function Dashboard() {
 
       {/* Announcement */}
       <div className="border py-2 px-3 rounded-md text-xl w-full bg-black">
-        <marquee>Leadership Development Programme coming soon.</marquee>
+        <marquee>Exclusive : get the latest updates on Forex crypto trading ! Maximize your earnings with trust bot !</marquee>
       </div>
 
       {/* Image Slider */}
       <div
         className="slider-container"
-        style={{ width: "100%", margin: "auto", height: '350px', overflow: 'hidden', objectFit: 'fill' }}
+        style={{ width: "100%", margin: "auto", overflow: 'hidden', objectFit: 'fill' }}
       >
         <Slider {...sliderSettings}>
           {images.map((image, index) => (
@@ -86,7 +86,7 @@ export default function Dashboard() {
         <>
           {/* User Status */}
           <div>
-            <p className="text-xl md:text-2xl px-4 font-bold -mt-10 md:m-0">
+            <p className="text-xl md:text-2xl px-4 font-bold md:m-0">
               <span className="mr-2">Status:</span>
               <span
                 className={`uppercase md:text-xl ${
@@ -105,9 +105,9 @@ export default function Dashboard() {
               <p>User Email: <span className="text-sm">{data.email}</span></p>
               <p>Referral ID: <span className="text-sm">{data.referalEmail === "N/A" ? "Not Referred" : data.referalEmail}</span></p>
             </div>
-            <div className="w-full border overflow-hidden py-3 px-2 rounded bg-black hover:shadow-xl transform transition duration-300 hover:scale-105">
+            <div className="w-full border overflow-hidden py-3 px-2 rounded bg-black hover:shadow-xl transform transition duration-300 hover:scale-105 ">
               <p className="text-sm">Referral Program: Earn a stable income by introducing clients to Enter Trust Bot.</p>
-              <p className="border text-sm bg-gray-700 py-1 px-3 rounded flex justify-between mt-2">
+              <p className="border text-sm bg-gray-700 py-1 px-3 rounded flex justify-between items-center mt-2">
                 {`${data?.referalLink.slice(0, 42)}...`}
                 <FaCopy
                   className="inline ml-3 text-2xl cursor-pointer"
@@ -122,13 +122,13 @@ export default function Dashboard() {
           <div className="flex w-full flex-col justify-center items-center p-4">
             <div className="grid gap-2 lg:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full">
               {[
-                { label: 'Deposit', value: data.totalDeposits, icon: <FcMoneyTransfer /> },
+                { label: 'Deposit', value: data.totalDeposits.toFixed(2), icon: <FcMoneyTransfer /> },
                 { label: 'Daily Profit Rate', value: `${data.profitRate}%`, icon: <GiTakeMyMoney /> },
                 { label: 'Trade Profit Income', value: data.tradeProfitIncome.toFixed(2), icon: <GiReceiveMoney /> },
-                { label: 'Referral Income', value: data.referalIncome, icon: <RiMoneyDollarCircleFill /> },
-                { label: 'Total Balance', value: data.totalBalance, icon: <BsCashCoin /> },
-                { label: 'Total Withdrawal', value: data.totalWithdrawals, icon: <FaAward /> },
-                { label: 'Withdrawable Balance', value: data.withdrawalBalance, icon: <GiMoneyStack /> },
+                { label: 'Referral Income', value: data.referalIncome.toFixed(2), icon: <RiMoneyDollarCircleFill /> },
+                { label: 'Total Balance', value: data.totalBalance.toFixed(2), icon: <BsCashCoin /> },
+                { label: 'Total Withdrawal', value: data.totalWithdrawals.toFixed(2), icon: <FaAward /> },
+                { label: 'Withdrawable Balance', value: data.withdrawalBalance.toFixed(2), icon: <GiMoneyStack /> },
               ].map(({ label, value, icon }, idx) => (
                 <div
                   key={idx}

@@ -30,7 +30,7 @@ export default function AdminMainDashboard() {
         <AdminDashboard_SideBar open={open} onClick={handleClick}/>
       </div>
       <div className={` md:w-[72%] xl:w-[78%] w-full h-auto flex flex-col justify-center items-center"}`}>
-        <AdminDashboard_Header onClick={handleClick} />
+        <AdminDashboard_Header onClick={handleClick} open={open} />
         <div className='w-full h-auto p-2 md:p-5'>
             <Outlet/>
         </div>

@@ -7,6 +7,9 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import logo from '../../assets/trustt.png'
 import { toast } from "react-toastify";
+import { FaUser,FaLock ,FaHistory  } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+import { IoMdGitPullRequest } from "react-icons/io";
 
 export default function Dashboard_SideBar({onClick}) {
     const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +43,7 @@ export default function Dashboard_SideBar({onClick}) {
                     {/* Dashboard */}
                     <li className=''>
                         <Link to='/dashboard/' onClick={onClick} className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold'>
-                            <AiFillDashboard className='inline md:text-2xl ' /> &nbsp;&nbsp;Dashboard
+                            <MdDashboard className='inline md:text-2xl ' /> &nbsp;&nbsp;Dashboard
                         </Link>
                     
                     </li>
@@ -54,12 +57,12 @@ export default function Dashboard_SideBar({onClick}) {
                         <ul className={`${isOpen ? "block" : "hidden"}`}>
                             <li>
                                 <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                    <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Edit Profile
+                                    <FaUser className='inline text-sm' />&nbsp;&nbsp;Edit Profile
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                    <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Change Password
+                                    <FaLock  className='inline text-sm' />&nbsp;&nbsp;Change Password
                                 </Link>
                             </li>
                         </ul>
@@ -75,12 +78,12 @@ export default function Dashboard_SideBar({onClick}) {
                             <ul className={`${isOpen1 ? "block" : "hidden"}`}>
                                 <li>
                                     <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                        <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Send Request
+                                        <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                        <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp; Request History
+                                        <FaHistory  className='inline text-sm' />&nbsp;&nbsp; Request History
                                     </Link>
                                 </li>
                             </ul>
@@ -101,12 +104,12 @@ export default function Dashboard_SideBar({onClick}) {
                             <ul className={`${isOpen2 ? "block" : "hidden"}`}>
                                 <li>
                                     <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                        <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp;Send Request
+                                        <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/dashboard/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                        <FaRegDotCircle className='inline text-sm' />&nbsp;&nbsp; Withdrawal History
+                                        <FaHistory  className='inline text-sm' />&nbsp;&nbsp; Withdrawal History
                                     </Link>
                                 </li>
                             </ul>
