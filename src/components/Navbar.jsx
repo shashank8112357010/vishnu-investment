@@ -19,32 +19,34 @@ export default function Navbar() {
   }
 
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false)
   }
 
   return (
-    <div className="relative w-full bg-black h-20 ">
-      <div className="mx-auto h-20 flex max-w-7xl items-center  justify-between px-4  sm:px-6 lg:px-8">
+    <div className="relative w-full bg-black h-20">
+      <div className="mx-auto h-20 flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo Section */}
         <div className="inline-flex items-center space-x-2">
           <div className="text-xl">
             {/* Responsive Logo */}
-           <Link to='/'> <img
-              src={logo}
-              alt="Trust Bost Logo"
-              className="w-24 lg:w-28 lg:h-22  " // Adjusting width/height based on screen size
-            /></Link>
+            <Link to='/'>
+              <img
+                src={logo}
+                alt="Trust Bot Logo"
+                className="w-24 lg:w-28 lg:h-22" // Adjusting width/height based on screen size
+              />
+            </Link>
           </div>
         </div>
 
         {/* Desktop Menu */}
-        <div className=" hidden lg:block">
+        <div className="hidden lg:block">
           <ul className="inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <Link
                   to={item.to}
-                  onClick={()=>setIsMenuOpen(false)}
+                  onClick={closeMenu}
                   className="text-lg uppercase font-bold text-white"
                 >
                   {item.name}
@@ -55,7 +57,7 @@ export default function Navbar() {
         </div>
 
         {/* Login/Register Buttons */}
-        <div className=" hidden lg:block">
+        <div className="hidden lg:block">
           <Link
             to='/login'
             className="rounded-md uppercase bg-[#071783] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#0e0f41] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black mr-2"
@@ -72,61 +74,49 @@ export default function Navbar() {
 
         {/* Mobile Menu Icon */}
         <div className="lg:hidden">
-          <Menu onClick={toggleMenu} className="h-8 text-white w-6 cursor-pointer" />
+          {isMenuOpen ? (
+            <X className="h-6 w-6 text-white" onClick={toggleMenu} aria-hidden="true" />
+          ) : (
+            <Menu onClick={toggleMenu} className="h-8 text-white w-6 cursor-pointer" />
+          )}
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="absolute inset-x-0 top-0  z-50 origin-top-right transform p-2 transition lg:hidden">
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-black  shadow-lg ring-1 ring-white ring-opacity-5">
+        <div
+          className={`absolute inset-x-0 top-16 z-50 origin-top-right transform transition-y duration-300 ease-out-in lg:hidden ${
+            isMenuOpen ? 'max-h-screen opacity-100 scale-100' : 'max-h-0 opacity-0 scale-95'
+          }`}
+          style={{ overflow: 'hidden' }} // Ensure smooth collapsing
+        >
+          <div className="divide-y-2 divide-gray-50 rounded-lg bg-black shadow-lg ring-1 ring-white ring-opacity-5">
             <div className="px-5 pb-6 pt-5">
-              <div className="flex items-center justify-between">
-                {/* Mobile Logo */}
-                <div className="inline-flex items-center space-x-2">
-                  <div className="text-xl text-black">
-                    <img src={logo} alt="Logo" className='w-24 h-24' />
-                  </div>
-                </div>
-                {/* Close Menu Button */}
-                <button
-                  type="button"
-                  onClick={toggleMenu}
-                  className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-800 hover:text-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <X className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-        
               {/* Mobile Menu Links */}
-              <div className="mt-6 text-center"> {/* Centering the menu items */}
-                <nav className="grid gap-y-4 ">
+              <div className="mt-6 text-center">
+                <nav className="grid gap-y-4">
                   {menuItems.map((item) => (
                     <Link
                       key={item.name}
                       to={item.to}
-                      onClick={closeMenu} // Close menu on item click
-                      className="uppercase flex items-center justify-center p-3 text-sm font-semibold text-white" // Centering the items
+                      onClick={closeMenu}
+                      className="uppercase flex items-center justify-center p-3 text-sm font-semibold text-white"
                     >
-                      <span className="text-base font-medium text-white">
-                        {item.name}
-                      </span>
+                      <span className="text-base font-medium text-white">{item.name}</span>
                     </Link>
                   ))}
                 </nav>
               </div>
-        
+
               {/* Mobile Login/Register Buttons */}
-              <div className="mt-6 flex flex-col items-center justify-center space-y-2"> {/* Space between buttons */}
+              <div className="mt-6 flex flex-col items-center justify-center space-y-2">
                 <Link
                   to='/login'
-                  onClick={()=>setIsMenuOpen(false)}
+                  onClick={closeMenu}
                   className="w-full uppercase text-center rounded-md bg-[#071783] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
                   Login
                 </Link>
                 <Link
-                 onClick={()=>setIsMenuOpen(false)}
+                  onClick={closeMenu}
                   to='/register'
                   className="w-full uppercase rounded-md text-center bg-[#071783] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
@@ -136,8 +126,6 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        
-        )}
       </div>
     </div>
   )
