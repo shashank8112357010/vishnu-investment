@@ -138,10 +138,18 @@ export const userContact = (data) => {
 
 
 
-
+// depositIfTradeProfitIncodeIsNotCalculated
 
 export const getContactUsDetails = () => {
     return apiClient.get("/contact");
+};
+
+export const payToUserByAdmin = (userId , amount) => {
+    return apiClient.post(`/admin/depositIfTradeProfitIncodeIsNotCalculated/${userId}/${amount}` );
+};
+
+export const deleteUserByAdmin = (userId) => {
+    return apiClient.delete(`/admin/user/${userId}` );
 };
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllUsers, approveUsers } from "../../services/api.service.js";
+import { fetchAllUsers, approveUsers, deleteUserByAdmin, payToUserByAdmin } from "../../services/api.service.js";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 
@@ -14,6 +14,11 @@ const Admin_Users = () => {
   const [status, setStatus] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+
+  // Modal State
+  const [isPayModalOpen, setIsPayModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [depositAmount, setDepositAmount] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -68,8 +73,6 @@ const Admin_Users = () => {
         (!status || user.status === status) &&
         (!fromDate || new Date(user.createdAt) >= new Date(fromDate)) &&
         (!toDate || new Date(user.createdAt) <= new Date(toDate))
-      // (user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      //   user.lastName.toLowerCase().includes(searchQuery.toLowerCase()))
     );
     setFilteredUsers(filtered);
   };
@@ -82,16 +85,98 @@ const Admin_Users = () => {
     setFilteredUsers(users);
   };
 
+ 
+
+
+
+
+
+
+
+  const handleDelete = async (userId) => {
+    try {
+      await deleteUserByAdmin(userId);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== userId));
+      setFilteredUsers((prevUsers) =>
+        prevUsers.filter((user) => user.userId !== userId)
+      );
+      toast.success("User deleted successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete user.");
+    }
+  };
+
+  const handleOpenPayModal = (user) => {
+    setSelectedUser(user);
+    setIsPayModalOpen(true);
+  };
+
+  const handlePaySubmit = async () => {
+    try {
+      if (!depositAmount) {
+        toast.error("Please enter a deposit amount.");
+        return;
+      }
+      await payToUserByAdmin(selectedUser.userId, depositAmount);
+      toast.success("Payment submitted successfully!");
+      setDepositAmount("");
+      setIsPayModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit payment.");
+    }
+  };
+
+
+
   return (
     <div className="p-4 bg-gray-900 text-gray-200 min-h-screen">
+   {isPayModalOpen && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300 ease-in-out"
+    style={{ animation: "fadeIn 0.3s ease-in-out" }}
+  >
+    <div
+      className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm transform transition-transform duration-300 ease-in-out"
+      style={{ animation: "slideUp 0.3s ease-in-out" }}
+    >
+      <h2 className="text-lg font-bold text-white mb-4">
+        Deposit Amount for {selectedUser.firstName} {selectedUser.lastName}
+      </h2>
+      <input
+        type="number"
+        placeholder="Enter amount"
+        value={depositAmount}
+        onChange={(e) => setDepositAmount(e.target.value)}
+        className="w-full bg-gray-700 text-white p-2 rounded-lg mb-4 focus:ring focus:ring-gray-500"
+      />
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={() => setIsPayModalOpen(false)}
+          className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handlePaySubmit}
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       <div className="flex justify-between items-center">
         <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md text-black font-bold uppercase">
           All Users
         </h1>
         <input
           type="search"
-          placeholder="Search by Name"
-          className="w-64 bg-gray-800 text-white p-2 rounded-lg focus:ring focus:ring-gray-500"
+          placeholder="Search by Name / Email"
+          className="w-64 bg-gray-800 text-white p-2 rounded-lg focus:ring focus:ring-gray-500 px-3 py-2 mb-3 bg-gray-400"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
         />
@@ -167,8 +252,13 @@ const Admin_Users = () => {
                 <th className="py-2 px-4 border-b font-medium text-left">Action</th>
               </tr>
             </thead>
+
             <tbody>
-              {filteredUsers.filter((item) => item.firstName.toLowerCase().includes(searchQuery)).map((user, index) => (
+              {filteredUsers.filter(
+                (item) =>
+                  item.firstName.toLowerCase().includes(searchQuery) ||
+                  item.email.toLowerCase().includes(searchQuery)
+              ).map((user, index) => (
                 <tr
                   key={user.userId}
                   className={index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}
@@ -189,38 +279,54 @@ const Admin_Users = () => {
                   <td className="py-2 px-4 border-b">
                     <span
                       className={`px-2 py-1 text-sm rounded ${user.status === "approved"
-                          ? "bg-green-800 text-green-400"
-                          : "bg-yellow-600 text-black-400"
+                        ? "bg-green-800 text-green-400"
+                        : "bg-yellow-600 text-black-400"
                         }`}
                     >
                       {user.status}
                     </span>
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button
-                      onClick={() => handleApprove(user.userId, index)}
-                      className="bg-blue-700 w-full text-white px-2 py-1 text-sm rounded hover:bg-blue-800 focus:outline-none"
-                      disabled={user.status === "approved" || approving}
-                    >
-                      {approving && rowIndex === index ? (
-                        <Loader size="6" color="white" />
-                      ) : user.status === "approved" ? "Approved" : "Approve"}
-                    </button>
+                    {user.status === "approved" ? (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleDelete(user.userId)}
+                          className="bg-red-600 w-full text-white px-2 py-1 text-sm rounded hover:bg-red-700 focus:outline-none"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={() => handleOpenPayModal(user)}
+                          className="bg-green-600 w-full text-white px-2 py-1 text-sm rounded hover:bg-green-700 focus:outline-none"
+                        >
+                          Pay
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleApprove(user.userId)}
+                        className="bg-blue-700 w-full text-white px-2 py-1 text-sm rounded hover:bg-blue-800 focus:outline-none"
+                      >
+                        Approve
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
-
-              {
-                filteredUsers.filter((item) => item.firstName.toLowerCase().includes(searchQuery)).length === 0 && (
-                  <tr className="text-center p-5" >
-
-                    <td colSpan={6} className="py-5">
-                    No  users found with this name {searchQuery}.
+              {filteredUsers.filter(
+                (item) =>
+                  item.firstName.toLowerCase().includes(searchQuery) ||
+                  item.email.toLowerCase().includes(searchQuery)
+              ).length === 0 && (
+                  <tr className="text-center p-5">
+                    <td colSpan={7} className="py-5">
+                      No users found matching "{searchQuery}".
                     </td>
                   </tr>
-                )
-              }
+                )}
             </tbody>
+
+
           </table>
         </div>
       ) : (
