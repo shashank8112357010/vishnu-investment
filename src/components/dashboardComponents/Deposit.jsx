@@ -16,16 +16,52 @@ const Deposit = () => {
 
   const navigate = useNavigate();
 
-  // Validate form fields
   const validateFields = () => {
-    if (!depositMethod) return "Please select a deposit method.";
-    if (depositMethod === "USDT" && !network) return "Please select a network.";
-    if (!amount || isNaN(amount) || amount < 3 || amount > 350)
-      return "Amount must be a number between $3 and $350.";
-    if (step === 2 && !transactionImage) return "Transaction image is required.";
-    if (step === 2 && !transactionId) return "Transaction ID is required.";
-    return ""; // No errors
+    // Step 1: Validate Deposit Method
+    if (!depositMethod) {
+      return "Please select a deposit method.";
+    }
+  
+    // Step 2: Validate Network for USDT
+    if (depositMethod === "USDT" && !network) {
+      return "Please select a network.";
+    }
+  
+    // Step 3: Validate Amount
+    if (!amount || isNaN(amount)) {
+      return "Amount must be a valid number.";
+    }
+    if (amount < 50 || amount > 350) {
+      return "Amount must be between $50 and $350.";
+    }
+  
+    // Step 4: Step-specific Validations
+    if (step === 2) {
+      if (!transactionImage) {
+        return "Transaction image is required.";
+      }
+  
+      // Validate File Type
+      const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!allowedImageTypes.includes(transactionImage.type)) {
+        return "Only image files (JPG, PNG, GIF) are allowed.";
+      }
+  
+      // Validate File Size
+      const maxFileSizeInBytes = 2 * 1024 * 1024; // 2 MB
+      if (transactionImage.size > maxFileSizeInBytes) {
+        return "File size must not exceed 2 MB.";
+      }
+  
+      if (!transactionId) {
+        return "Transaction ID is required.";
+      }
+    }
+  
+    // No Errors
+    return "";
   };
+  
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -70,8 +106,8 @@ const Deposit = () => {
   return (
     <div className="flex w-full bg-gray-900 text-white flex-col items-start justify-start min-h-screen p-6 ">
       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
-          Deposit
-        </h1>
+        Deposit
+      </h1>
 
       <form
         onSubmit={handleSubmit}
@@ -157,7 +193,7 @@ const Deposit = () => {
                   onClick={handleCopy}
                   className=" hover:text-blue-600"
                 >
-                <FaCopy title="Copy Text"/>
+                  <FaCopy title="Copy Text" />
                 </button>
               </div>
             </div>
