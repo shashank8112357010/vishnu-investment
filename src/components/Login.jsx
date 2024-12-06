@@ -27,6 +27,8 @@ export default function Login() {
       localStorage.setItem("token", res?.data?.token);
       localStorage.setItem("isVerified", res?.data?.isVerified);
       localStorage.setItem("role", res?.data?.role);
+      localStorage.setItem("profile", res?.data?.profile);
+
 
 
       toast.success(`${res.data.username} Logged In `);
