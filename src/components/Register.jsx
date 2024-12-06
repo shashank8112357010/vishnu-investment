@@ -200,12 +200,12 @@ export default function Register() {
               />
               {showpassword ? (
                 <IoEyeOffSharp
-                  className="absolute text-black top-[45%] right-2 cursor-pointer"
+                  className="absolute text-white top-[45%] right-2 cursor-pointer"
                   onClick={() => setShowPassword(!showpassword)}
                 />
               ) : (
                 <IoEyeSharp
-                  className="absolute text-black top-[45%] right-2 cursor-pointer"
+                  className="absolute text-white top-[45%] right-2 cursor-pointer"
                   onClick={() => setShowPassword(!showpassword)}
                 />
               )}

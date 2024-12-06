@@ -86,12 +86,12 @@ export default function Login() {
             />
             {showPass ? (
               <IoEyeOffSharp
-                className="absolute top-[40px] right-3 transform -translate-y-1/2 cursor-pointer"
+                className="absolute top-[40px] right-3 transform -translate-y-1/2 text-white cursor-pointer"
                 onClick={() => setShowPass(!showPass)}
               />
             ) : (
               <IoEyeSharp
-                className="absolute top-[40px] right-3 transform -translate-y-1/2 cursor-pointer"
+                className="absolute top-[40px] right-3 transform text-white -translate-y-1/2 cursor-pointer"
                 onClick={() => setShowPass(!showPass)}
               />
             )}

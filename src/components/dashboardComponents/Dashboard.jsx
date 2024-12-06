@@ -10,6 +10,14 @@ import { getUserStats } from '../../services/api.service';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader'; // Adjust the path to your Loader component
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import financeImage1 from '../../assets/TRUSTBOT.png'
+import financeImage2 from '../../assets/finance image2 .jpg'
+import financeImage3 from '../../assets/finance image 3.jpg'
+import financeImage4 from '../../assets/chart-1905224.jpg'
+
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,22 +39,65 @@ export default function Dashboard() {
     toast.success('Referral link copied!');
   };
 
+
+
+
+  // Slider Code Here
+  const settings = {
+    dots: false, // Show navigation dots
+    infinite: true, // Loop through slides infinitely
+    speed: 500, // Transition speed
+    slidesToShow: 1, // Number of slides to show at once
+    slidesToScroll: 1, // Number of slides to scroll at once
+    autoplay: true, // Enable auto-play
+    autoplaySpeed: 3000, // Auto-play speed in ms
+    arrows: false, // Show next/prev arrows
+  };
+
+  const images = [
+    financeImage1,
+    financeImage2,
+    financeImage3,
+    financeImage4,
+   
+  ];
+
+
   return (
     <>
       <div className="flex flex-col gap-6 md:p-4 items-start justify-normal">
-        <h1 className="px-3 py-2 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+      <h1 className="px-3 py-2 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
           Dashboard
         </h1>
+        <div className='border py-2 px-3 rounded-md text-xl w-full bg-black'>
+          <marquee>Leadership Development Programme comming soon.</marquee>
+        </div>
+
+      
+
+      <div className="slider-container" style={{ width: "100%", margin: "auto", height:'350px', overflow:'hidden',objectFit:'fill'}}>
+      <Slider {...settings}>
+        {images.map((image, index) => (
+          <div key={index}>
+            <img
+              src={image}
+              alt={`Slide ${index + 1}`}
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
 
         {loading ? (
-          <div className="flex justify-center items-center min-h-[80vh] w-full ">
+          <div className="flex justify-center items-center min-h-[70vh] w-full ">
             <Loader size="16" color="white" />
           </div>
         ) : (
           <>
             {/* User Status */}
             <div>
-              <p className="text-xl md:text-2xl px-4 font-bold">
+              <p className="text-xl md:text-2xl px-4 font-bold -mt-10 md:m-0">
                 <span className='mr-2'> 
                   Status:{' '}
 
@@ -84,11 +135,11 @@ export default function Dashboard() {
 
             {/* Metrics Cards */}
             <div className="flex w-full flex-col justify-center items-center p-4">
-              <div className="grid gap-2 lg:gap-6 grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-full">
+              <div className="grid gap-2 lg:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-full">
                 {[
                   { label: 'Deposit', value: data.totalDeposits, icon: <FcMoneyTransfer /> },
                   { label: 'Daily Profit Rate', value: `${data.profitRate}%`, icon: <GiTakeMyMoney /> },
-                  { label: 'Trade Profit Income', value: data.tradeProfitIncome, icon: <GiReceiveMoney /> },
+                  { label: 'Trade Profit Income', value: data.tradeProfitIncome.toFixed(2), icon: <GiReceiveMoney /> },
                   { label: 'Referral Income', value: data.referalIncome, icon: <RiMoneyDollarCircleFill /> },
                   { label: 'Total Balance', value: data.totalBalance, icon: <BsCashCoin /> },
                   { label: 'Total Withdrawal', value: data.totalWithdrawals, icon: <FaAward /> },

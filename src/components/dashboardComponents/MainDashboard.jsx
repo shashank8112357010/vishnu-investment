@@ -36,7 +36,7 @@ export default function MainDashboard() {
 
         {/* Main Content */}
         <div className={` md:w-[72%] xl:w-[78%] w-full h-auto flex flex-col justify-center items-center"}`}>
-          <Dashboard_Header onClick={handleClick} />
+          <Dashboard_Header onClick={handleClick} open={!open} />
           <div className="w-full h-auto p-2 md:p-5">
             <Outlet/>
           </div>
