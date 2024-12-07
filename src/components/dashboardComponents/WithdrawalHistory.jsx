@@ -3,14 +3,20 @@ import { toast } from "react-toastify";
 import { fetchWithdrawalHistory } from "../../services/api.service.js"; // Replace with the actual service path
 import Loader from "../../components/Loader.jsx";
 
-const WithdrawalHistory = () => {
-  // const [status, setStatus] = useState("");
-  // const [fromDate, setFromDate] = useState("");
-  // const [toDate, setToDate] = useState("");
+const WithdrawalHistoryForm = () => {
   const [historyData, setHistoryData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
 
+  // Calculate the data for the current page
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
@@ -62,8 +68,9 @@ const WithdrawalHistory = () => {
 
     setFilteredData(filtered);
     if (filtered.length === 0) {
-      toast.info("No records found .");
+      toast.info("No records found.");
     }
+    setCurrentPage(1); // Reset to first page after search
   };
 
   const clearFilters = () => {
@@ -71,12 +78,26 @@ const WithdrawalHistory = () => {
     setFromDate("");
     setToDate("");
     setFilteredData(historyData); // Reset to original data
+    setCurrentPage(1); // Reset to first page after clearing filters
+  };
+
+  // Pagination handlers
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-start">
       {/* Header */}
-       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
+      <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
         Withdrawal History
       </h1>
       <div className="w-full max-w-7xl bg-black border border-gray-700 p-4 rounded-lg shadow-lg mb-8">
@@ -102,8 +123,6 @@ const WithdrawalHistory = () => {
             value={toDate}
             onChange={handleToDateChange}
           />
-
-
           <button
             onClick={handleSearch}
             className="bg-[#0d1b87] px-3 hover:bg-[#1c2fbc] w-full md:w-auto text-white font-semibold p-2 rounded-md transition duration-300"
@@ -112,7 +131,7 @@ const WithdrawalHistory = () => {
           </button>
           <button
             onClick={clearFilters}
-            className="bg-[#0d1b87] px-3  hover:bg-[#1c2fbc] w-full md:w-auto text-white font-semibold p-2 rounded-md transition duration-300"
+            className="bg-[#0d1b87] px-3 hover:bg-[#1c2fbc] w-full md:w-auto text-white font-semibold p-2 rounded-md transition duration-300"
           >
             Clear Filters
           </button>
@@ -141,8 +160,8 @@ const WithdrawalHistory = () => {
                     <Loader color={"white"} size="6" />
                   </td>
                 </tr>
-              ) : filteredData && filteredData.length > 0 ? (
-                filteredData.map((item, index) => (
+              ) : currentRows && currentRows.length > 0 ? (
+                currentRows.map((item, index) => (
                   <tr key={item._id} className="hover:bg-[#444] border-b transition">
                     <td className="p-4">{index + 1}</td>
                     <td className="p-4">{item.withdrawalMethod}</td>
@@ -159,13 +178,11 @@ const WithdrawalHistory = () => {
                     </td>
                     <td className="py-3 px-4">
                       <span
-                        className={`text-sm font-medium px-2 py-1 rounded ${
-                          item?.status === "approved"
-                            ? "bg-green-100 text-green-800"
-                            : item?.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
+                        className={`text-sm font-medium px-2 py-1 rounded ${item?.status === "approved"
+                          ? "bg-green-100 text-green-800"
+                          : item?.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"}`}
                       >
                         {item?.status || "Unknown"}
                       </span>
@@ -182,9 +199,28 @@ const WithdrawalHistory = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="bg-[#0d1b87] text-white p-2 rounded-md disabled:bg-gray-600"
+          >
+            Previous
+          </button>
+          <span className="text-white">{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="bg-[#0d1b87] text-white p-2 rounded-md disabled:bg-gray-600"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default WithdrawalHistory;
+export default WithdrawalHistoryForm;

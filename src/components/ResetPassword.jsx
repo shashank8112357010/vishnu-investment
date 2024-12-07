@@ -69,7 +69,7 @@ function ResetPassword() {
 
   return (
     <div className="flex items-center welcome-main-container pt-20 justify-center min-h-screen ">
-      <div className="w-full max-w-md welcome-boxcontainer p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md welcome-boxcontainer p-6 border rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-white">Reset Password</h2>
         <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4 relative">
