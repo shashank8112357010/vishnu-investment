@@ -7,11 +7,61 @@ import {
   fatchProfileDetail,
 } from "../../services/api.service"; // Assuming your API call for bank details
 
+// import { FaUser, FaBriefcase, FaBuilding, FaEdit, FaTimes } from 'react-icons/fa';
+
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTimes, FaUserCircle, FaUniversity, FaBitcoin } from "react-icons/fa";
+
 // Profile Edit Component
 const EditProfile = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false); // Toggle for profile edit mode
   const [isEditingBank, setIsEditingBank] = useState(false); // Toggle for bank edit mode
   const [isEditingBinance, setIsEditingBinance] = useState(false); // Toggle for binance edit mode
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("profile");
+
+  const [userProfile, setUserProfile] = useState({
+    name: "John Doe",
+    email: "johndoe@example.com",
+    phone: "+1 234 567 8900",
+    address: "123 Main St, New York, NY 10001",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+  });
+
+  const [bankDetails, setBankDetails] = useState({
+    accountHolder: "John Doe",
+    accountNumber: "**** **** **** 1234",
+    bankName: "Chase Bank",
+    swiftCode: "CHASUS33",
+    routingNumber: "021000021"
+  });
+
+  const [binanceDetails, setBinanceDetails] = useState({
+    binanceId: "johndoe123",
+    walletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    tradingLevel: "Advanced",
+    kycStatus: "Verified"
+  });
+
+  const [isEditing, setIsEditing] = useState({
+    profile: false,
+    bank: false,
+    binance: false
+  });
+
+  const handleImageError = (e) => {
+    e.target.src = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
+  };
+
+  const handleEdit = (section) => {
+    setIsEditing({ ...isEditing, [section]: !isEditing[section] });
+  };
+
+  const handleSave = (section) => {
+    setIsEditing({ ...isEditing, [section]: false });
+    // Here you would typically make an API call to save the changes
+  };
+
+
 
   // Profile Data State
   const [profileData, setProfileData] = useState({
@@ -55,7 +105,7 @@ const EditProfile = () => {
       ...prev,
       profilePic: file, // Save the base64 image data
     }));
-   
+
   };
 
   // Profile Edit Handler
@@ -64,9 +114,9 @@ const EditProfile = () => {
     setProfileData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProfileUpdate = async(e) => {
+  const handleProfileUpdate = async (e) => {
     e.preventDefault();
-   await  addProfileDetail({
+    await addProfileDetail({
       firstName: profileData.firstName,
       lastName: profileData.lastName,
       profilePic: profileData.profilePic, // Send the profilePic to the backend
@@ -127,329 +177,204 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="p-3 bg-gray-900">
+    <div className="p-3 bg-gray-900 ">
       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
-          Edit Profile
-        </h1>
-      {/* Profile Section */}
-      <div className="w-full mx-auto border rounded-lg shadow-lg p-5 profile-section bg-black fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">User Profile...</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Profile Image */}
-          <div className="flex flex-col items-center">
-            <img
-              src={profileData.profilePic || "https://via.placeholder.com/150"}
-              alt="Profile"
-              className="rounded-full h-44 w-44 object-cover mb-4"
-            />
-            <input
-              type="file"
-              className="mb-2"
-              onChange={handleImageChange} // Trigger the image change handler
-            />
-          </div>
-          {/* Profile Information */}
-          <div>
-            <h3 className="text-xl font-semibold mb-2">About</h3>
-            <div className="text-lg font-semibold">
-              User Name {profileData?.firstName} {profileData?.lastName}
-            </div>
-            <div>Email: {profileData?.email}</div>
-            <div>Phone: {profileData.phone}</div>
-            <div>
-              Date of Birth:{" "}
-              {(() => {
-                if (!profileData.dob) return "N/A";
+        Edit Profile
+      </h1>
+      <div className="font-sans h-[550px] mt-5">
+        <div className="relative bg-white rounded-xl shadow-xl max-w-4xl w-full p-6 mx-4">
 
-                const date = new Date(profileData.dob);
-                const day = String(date.getDate()).padStart(2, "0");
-                const month = String(date.getMonth() + 1).padStart(2, "0");
-                const year = date.getFullYear();
 
-                return `${day}/${month}/${year}`;
-              })()}
-            </div>
-
-            {/* Edit Button */}
+          <div className="flex space-x-4  mb-6 border-b ">
             <button
-              type="button"
-              onClick={() => setIsEditingProfile(!isEditingProfile)}
-              className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
+              onClick={() => setActiveTab("profile")}
+              className={`flex items-center px-4 py-2 ${activeTab === "profile" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
             >
-              {isEditingProfile ? "Cancel" : "Edit"}
+              <FaUserCircle className="mr-2" /> Profile
+            </button>
+            <button
+              onClick={() => setActiveTab("bank")}
+              className={`flex items-center px-4 py-2 ${activeTab === "bank" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
+            >
+              <FaUniversity className="mr-2" /> Bank Details
+            </button>
+            <button
+              onClick={() => setActiveTab("binance")}
+              className={`flex items-center px-4 py-2 ${activeTab === "binance" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
+            >
+              <FaBitcoin className="mr-2" /> Binance Details
             </button>
           </div>
+
+          {activeTab === "profile" && (
+            <div className="space-y-4 text-black">
+              <div className="flex flex-col items-center mb-6">
+                <img
+                  src={userProfile.avatar}
+                  alt={userProfile.name}
+                  onError={handleImageError}
+                  className="w-24 h-24 rounded-full object-cover mb-4"
+                  loading="lazy"
+                />
+                {isEditing.profile ? (
+                  <div className="space-y-4 w-full max-w-md">
+                    <input
+                      type="text"
+                      value={userProfile.name}
+                      onChange={(e) => setUserProfile({ ...userProfile, name: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md"
+                    />
+                    <input
+                      type="email"
+                      value={userProfile.email}
+                      onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md"
+                    />
+                    <input
+                      type="tel"
+                      value={userProfile.phone}
+                      onChange={(e) => setUserProfile({ ...userProfile, phone: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md"
+                    />
+                    <textarea
+                      value={userProfile.address}
+                      onChange={(e) => setUserProfile({ ...userProfile, address: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800">{userProfile.name}</h2>
+                    <p className="text-gray-600">{userProfile.email}</p>
+                    <p className="text-gray-600">{userProfile.phone}</p>
+                    <p className="text-gray-600">{userProfile.address}</p>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => isEditing.profile ? handleSave("profile") : handleEdit("profile")}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                {isEditing.profile ? "Save" : "Edit"}
+              </button>
+            </div>
+          )}
+
+          {activeTab === "bank" && (
+            <div className="space-y-4 text-black">
+              {isEditing.bank ? (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    value={bankDetails.accountHolder}
+                    onChange={(e) => setBankDetails({ ...bankDetails, accountHolder: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Account Holder Name"
+                  />
+                  <input
+                    type="text"
+                    value={bankDetails.accountNumber}
+                    onChange={(e) => setBankDetails({ ...bankDetails, accountNumber: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Account Number"
+                  />
+                  <input
+                    type="text"
+                    value={bankDetails.bankName}
+                    onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Bank Name"
+                  />
+                  <input
+                    type="text"
+                    value={bankDetails.swiftCode}
+                    onChange={(e) => setBankDetails({ ...bankDetails, swiftCode: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="SWIFT Code"
+                  />
+                  <input
+                    type="text"
+                    value={bankDetails.routingNumber}
+                    onChange={(e) => setBankDetails({ ...bankDetails, routingNumber: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Routing Number"
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2 text-black">
+                  <p><strong>Account Holder:</strong> {bankDetails.accountHolder}</p>
+                  <p><strong>Account Number:</strong> {bankDetails.accountNumber}</p>
+                  <p><strong>Bank Name:</strong> {bankDetails.bankName}</p>
+                  <p><strong>SWIFT Code:</strong> {bankDetails.swiftCode}</p>
+                  <p><strong>Routing Number:</strong> {bankDetails.routingNumber}</p>
+                </div>
+              )}
+              <button
+                onClick={() => isEditing.bank ? handleSave("bank") : handleEdit("bank")}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                {isEditing.bank ? "Save" : "Edit"}
+              </button>
+            </div>
+          )}
+
+          {activeTab === "binance" && (
+            <div className="space-y-4 text-black">
+              {isEditing.binance ? (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    value={binanceDetails.binanceId}
+                    onChange={(e) => setBinanceDetails({ ...binanceDetails, binanceId: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Binance ID"
+                  />
+                  <input
+                    type="text"
+                    value={binanceDetails.walletAddress}
+                    onChange={(e) => setBinanceDetails({ ...binanceDetails, walletAddress: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Wallet Address"
+                  />
+                  <input
+                    type="text"
+                    value={binanceDetails.tradingLevel}
+                    onChange={(e) => setBinanceDetails({ ...binanceDetails, tradingLevel: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="Trading Level"
+                  />
+                  <input
+                    type="text"
+                    value={binanceDetails.kycStatus}
+                    onChange={(e) => setBinanceDetails({ ...binanceDetails, kycStatus: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-md"
+                    placeholder="KYC Status"
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <p><strong>Binance ID:</strong> {binanceDetails.binanceId}</p>
+                  <p><strong>Wallet Address:</strong> {binanceDetails.walletAddress}</p>
+                  <p><strong>Trading Level:</strong> {binanceDetails.tradingLevel}</p>
+                  <p><strong>KYC Status:</strong> {binanceDetails.kycStatus}</p>
+                </div>
+              )}
+              <button
+                onClick={() => isEditing.binance ? handleSave("binance") : handleEdit("binance")}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                {isEditing.binance ? "Save" : "Edit"}
+              </button>
+            </div>
+          )}
         </div>
+
       </div>
 
-      {/* Edit Profile Form */}
-      {isEditingProfile && (
-        <div className="w-full mx-auto border rounded-lg shadow-lg p-3 md:p-5 bg-black  mt-5 personal-details-section fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">
-            Edit Personal Details
-          </h2>
-          <form className="space-y-4" onSubmit={handleProfileUpdate}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
-                <label className="block font-medium">First Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter User ID"
-                  name="firstName"
-                  onChange={handleProfileChange}
-                  value={profileData.firstName}
-                />
-              </div>
-              <div>
-                <label className="block font-medium">Last Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Full Name"
-                  name="lastName"
-                  onChange={handleProfileChange}
-                  value={profileData.lastName}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
-                <label className="block font-medium">Email</label>
-                <input
-                  type="email"
-                  className="w-full p-2 border rounded-lg text-black"
-                  name="email"
-                  value={profileData.email}
-                  disabled
-                />
-              </div>
-              <div>
-                <label className="block font-medium">Phone</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Phone Number"
-                  name="phone"
-                  value={profileData.phone}
-                  onChange={handleProfileChange}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block font-medium">Date of Birth</label>
-              <input
-                type="date"
-                className="w-full p-2 border rounded-lg text-black"
-                name="dob"
-                value={profileData.dob}
-                onChange={handleProfileChange}
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="button-background-color text-white py-2 px-4 rounded-lg w-full"
-            >
-              Save Changes
-            </button>
-          </form>
-        </div>
-      )}
 
 
 
-  
 
-
-{/* Bank Details Section */}
-      <div className="w-full mx-auto border rounded-lg shadow-lg p-5 mt-5 bank-details-section bg-black fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">Bank Details</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <h3 className="text-lg font-semibold">Bank Name</h3>
-            <div>{bankData.bankName}</div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Account Holder Name</h3>
-            <div>{bankData.accountHolderName}</div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-          <div>
-            <h3 className="text-lg font-semibold">Account Number</h3>
-            <div>{bankData.accountNumber}</div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">IFSC Code</h3>
-            <div>{bankData.ifscCode}</div>
-          </div>
-        </div>
-
-        {/* Edit Button */}
-        <button
-          type="button"
-          onClick={() => setIsEditingBank(!isEditingBank)}
-          className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
-        >
-          {isEditingBank ? "Cancel" : "Edit"}
-        </button>
-      </div>
-
-      {/* Edit Bank Details Form */}
-      {isEditingBank && (
-        <div className="w-full mx-auto border rounded-lg shadow-lg p-3 md:p-5 mt-5 bank-details-section bg-black fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">
-            Edit Bank Details
-          </h2>
-          <form className="space-y-4" onSubmit={handleBankUpdate}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <label className="block font-medium">Bank Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Bank Name"
-                  name="bankName"
-                  value={bankData.bankName}
-                  onChange={handleBankChange}
-                />
-              </div>
-              <div>
-                <label className="block font-medium">Account Holder Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Account Holder Name"
-                  name="accountHolderName"
-                  value={bankData.accountHolderName}
-                  onChange={handleBankChange}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <label className="block font-medium">Account Number</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Account Number"
-                  name="accountNumber"
-                  value={bankData.accountNumber}
-                  onChange={handleBankChange}
-                />
-              </div>
-              <div>
-                <label className="block font-medium">IFSC Code</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter IFSC Code"
-                  name="ifscCode"
-                  value={bankData.ifscCode}
-                  onChange={handleBankChange}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end mt-4 space-x-4">
-              <button
-                type="submit"
-                className="bg-[#181D8D] text-white py-2 px-4 rounded-lg"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsEditingBank(false)}
-                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* Binance Account Section */}
-      <div className="w-full mx-auto border rounded-lg shadow-lg p-5 my-5 binance-details-section bg-black fade-in">
-        <h2 className="text-2xl font-bold mb-5 text-center">
-          Binance Account Details
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <h3 className="text-lg font-semibold">Email Id</h3>
-            <div>{binanceData.accountEmail}</div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Binance Address</h3>
-            <div>{binanceData.walletAddress}</div>
-          </div>
-        </div>
-
-        {/* Edit Button */}
-        <button
-          type="button"
-          onClick={() => setIsEditingBinance(!isEditingBinance)}
-          className="mt-4 button-background-color text-white py-2 px-4 rounded-lg"
-        >
-          {isEditingBinance ? "Cancel" : "Edit"}
-        </button>
-      </div>
-
-      {/* Edit Binance Details Form */}
-      {isEditingBinance && (
-        <div className="w-full mx-auto border rounded-lg shadow-lg p-3 md:p-5 mt-5 binance-details-section bg-black fade-in">
-          <h2 className="text-2xl font-bold mb-5 text-center">
-            Edit Binance Details
-          </h2>
-          <form className="space-y-4" onSubmit={handleBinanceUpdate}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <label className="block font-medium">Binance Name</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Binance Name"
-                  name="accountEmail"
-                  value={binanceData.accountEmail}
-                  onChange={handleBinanceChange}
-                />
-              </div>
-              <div>
-                <label className="block font-medium">Binance ID</label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-lg text-black"
-                  placeholder="Enter Binance ID"
-                  name="walletAddress"
-                  value={binanceData.walletAddress}
-                  onChange={handleBinanceChange}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end mt-4 space-x-4">
-              <button
-                type="submit"
-                className="bg-[#181D8D] py-2 px-4 rounded-lg text-black"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsEditingBinance(false)}
-                className="bg-gray-500 text-white py-2 px-4 rounded-lg"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
 
     </div>
   );
@@ -457,7 +382,7 @@ const EditProfile = () => {
 
 export default EditProfile;
 
-      
+
 
 
 
