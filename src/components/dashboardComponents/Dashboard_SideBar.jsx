@@ -57,12 +57,12 @@ export default function Dashboard_SideBar({onClick}) {
                         <ul className={`${isOpen ? "block" : "hidden"}`}>
                             <li>
                                 <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
-                                    <FaUser className='inline text-2xl' />&nbsp;&nbsp;Edit Profile
+                                    <FaUser className='inline text-2xl mr-1' />&nbsp;&nbsp;Edit Profile
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
-                                    <FaLock  className='inline text-sm' />&nbsp;&nbsp;Change Password
+                                    <FaLock  className='inline text-2xl mr-1' />&nbsp;&nbsp;Change Password
                                 </Link>
                             </li>
                         </ul>
@@ -78,12 +78,12 @@ export default function Dashboard_SideBar({onClick}) {
                             <ul className={`${isOpen1 ? "block" : "hidden"}`}>
                                 <li>
                                     <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
-                                        <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
+                                        <IoMdGitPullRequest className='inline text-2xl mr-1' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
-                                        <FaHistory  className='inline text-sm' />&nbsp;&nbsp; Request History
+                                        <FaHistory  className='inline text-2xl mr-1' />&nbsp;&nbsp; Request History
                                     </Link>
                                 </li>
                             </ul>
@@ -104,12 +104,12 @@ export default function Dashboard_SideBar({onClick}) {
                             <ul className={`${isOpen2 ? "block" : "hidden"}`}>
                                 <li>
                                     <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
-                                        <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
+                                        <IoMdGitPullRequest className='inline text-2xl mr-1' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to='/dashboard/withdrawalhistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                        <FaHistory  className='inline text-sm' />&nbsp;&nbsp; Withdrawal History
+                                        <FaHistory  className='inline text-2xl mr-1' />&nbsp;&nbsp; Withdrawal History
                                     </Link>
                                 </li>
                             </ul>

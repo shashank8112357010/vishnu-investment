@@ -248,6 +248,9 @@ const EditProfile = () => {
                       onChange={(e) => setUserProfile({ ...userProfile, address: e.target.value })}
                       className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
                     />
+                    <input type="file"
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
+                    />
                   </div>
                 ) : (
                   <div className="text-center">
@@ -334,36 +337,23 @@ const EditProfile = () => {
                     value={binanceDetails.binanceId}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, binanceId: e.target.value })}
                     className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
-                    placeholder="Binance ID"
+                    placeholder="Email ID"
                   />
                   <input
                     type="text"
                     value={binanceDetails.walletAddress}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, walletAddress: e.target.value })}
                     className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
-                    placeholder="Wallet Address"
+                    placeholder="Binance Address"
                   />
-                  <input
-                    type="text"
-                    value={binanceDetails.tradingLevel}
-                    onChange={(e) => setBinanceDetails({ ...binanceDetails, tradingLevel: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
-                    placeholder="Trading Level"
-                  />
-                  <input
-                    type="text"
-                    value={binanceDetails.kycStatus}
-                    onChange={(e) => setBinanceDetails({ ...binanceDetails, kycStatus: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
-                    placeholder="KYC Status"
-                  />
+                 
+                 
                 </div>
               ) : (
                 <div className="space-y-2 text-white">
-                  <p><strong>Binance ID:</strong> {binanceDetails.binanceId}</p>
-                  <p><strong>Wallet Address:</strong> {binanceDetails.walletAddress}</p>
-                  <p><strong>Trading Level:</strong> {binanceDetails.tradingLevel}</p>
-                  <p><strong>KYC Status:</strong> {binanceDetails.kycStatus}</p>
+                  <p><strong>Email ID:</strong> {binanceDetails.binanceId}</p>
+                  <p><strong>Binance Address:</strong> {binanceDetails.walletAddress}</p>
+                  
                 </div>
               )}
               <button

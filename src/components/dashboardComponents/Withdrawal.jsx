@@ -10,6 +10,7 @@ const Withdrawal = () => {
   const [network, setNetwork] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   // Validate the form fields
   const validateFields = () => {
@@ -70,19 +71,27 @@ const Withdrawal = () => {
     <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
       Withdrawal Request
         </h1>
-      <div className="border text-white p-8 rounded-lg shadow-lg w-full bg-black">
-       
+      <div className="border text-white p-8 rounded-lg shadow-lg w-full bg-black ">
+
+       <div className="h-[40px]  w-full  bg-gray-800   border-[1px]  rounded-md border-double  inline-block relative mb-4">
 
         {/* Transaction Type Dropdown */}
         <select
-          className="w-full text-sm md:text-lg  bg-gray-900 text-white p-3 border border-gray-600 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="appearance-none w-full h-full  p-2  text-white  bg-transparent rounded      border-none pr-8"
           value={withdrawalMethod}
           onChange={handleTransactionChange}
-        >
-          <option value="">Select Transaction Type</option>
-          <option value="Bank_Account">Bank Account</option>
-          <option value="Binance_Account">Binance Account</option>
+          onFocus={() => setIsOpen(true)} 
+          onBlur={() => setIsOpen(false)} 
+          >
+          <option value="" className="bg-gray-800">Select Transaction Type</option>
+          <option value="Bank_Account" className="bg-gray-800">Bank Account</option>
+          <option value="Binance_Account" className="bg-gray-800">Binance Account</option>
         </select>
+        <div  className={`pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+        ▼
+        </div>
+       </div>
+          
 
         {/* Bank Account Form */}
         {withdrawalMethod === "Bank_Account" && (
@@ -146,7 +155,7 @@ const Withdrawal = () => {
         <button
           onClick={handleSubmit}
           disabled={loading} // Disable button during loading
-          className={`  w-full py-3 rounded transition duration-300 ease-in-out ${
+          className={`  w-full py-2 rounded transition duration-300 ease-in-out ${
             loading
               ? "bg-gray-500 cursor-not-allowed"
               : "bg-[#0d1b87]  hover:bg-[#1c2fbc] text-white"

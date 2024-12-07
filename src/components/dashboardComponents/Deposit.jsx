@@ -13,6 +13,8 @@ const Deposit = () => {
   const [transactionImage, setTransactionImage] = useState(null); // Transaction image
   const [transactionId, setTransactionId] = useState(""); // Transaction ID
   const [loading, setLoading] = useState(false); // Loader state
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,12 +23,12 @@ const Deposit = () => {
     if (!depositMethod) {
       return "Please select a deposit method.";
     }
-  
+
     // Step 2: Validate Network for USDT
     if (depositMethod === "USDT" && !network) {
       return "Please select a network.";
     }
-  
+
     // Step 3: Validate Amount
     if (!amount || isNaN(amount)) {
       return "Amount must be a valid number.";
@@ -34,34 +36,33 @@ const Deposit = () => {
     if (amount < 50 || amount > 350) {
       return "Amount must be between $50 and $350.";
     }
-  
+
     // Step 4: Step-specific Validations
     if (step === 2) {
       if (!transactionImage) {
         return "Transaction image is required.";
       }
-  
+
       // Validate File Type
       const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
       if (!allowedImageTypes.includes(transactionImage.type)) {
         return "Only image files (JPG, PNG, GIF) are allowed.";
       }
-  
+
       // Validate File Size
       const maxFileSizeInBytes = 2 * 1024 * 1024; // 2 MB
       if (transactionImage.size > maxFileSizeInBytes) {
         return "File size must not exceed 2 MB.";
       }
-  
+
       if (!transactionId) {
         return "Transaction ID is required.";
       }
     }
-  
+
     // No Errors
     return "";
   };
-  
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -95,7 +96,8 @@ const Deposit = () => {
   // Copy text to clipboard
   const handleCopy = () => {
     const textToCopy = "TDf1MFkUTeyu5upSnZozprY8jhMtLQYL81";
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => toast.success("Copied to clipboard!"))
       .catch((err) => {
         toast.error("Failed to copy!");
@@ -115,38 +117,64 @@ const Deposit = () => {
       >
         {/* Step 1: Deposit Method */}
         {step === 1 && (
-          <>
-            <h2 className="text-xl font-semibold mb-4 text-white">Deposit Method</h2>
-            <select
-              value={depositMethod}
-              onChange={(e) => setDepositMethod(e.target.value)}
-              className="w-full p-2 mb-4 border text-black border-gray-300 rounded"
-            >
-              <option value="">Transaction Type</option>
-              <option value="USDT">USDT</option>
-            </select>
+          <div className="">
+            <h2 className="text-xl font-semibold mb-4 text-white">
+              Deposit Method
+            </h2>
+            <div className=" h-[40px]  w-full  bg-gray-800   border-[1px]  rounded-md border-double  inline-block relative">
+              <select
+                value={depositMethod}
+                onChange={(e) => setDepositMethod(e.target.value)}
+                onFocus={() => setIsOpen1(true)} 
+                onBlur={() => setIsOpen1(false)} 
+                className=" appearance-none w-full h-full  p-2  text-white  bg-transparent rounded      border-none pr-8"
+              >
+                <option value="" className="bg-gray-800">Transaction Type</option>
+                <option value="USDT" className="bg-gray-800">USDT</option>
+              </select>
+              {/* Down Arrow */}
+              <div className={`pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500 ${isOpen1 ? 'rotate-180' : 'rotate-0'}`}>
+                ▼
+              </div>
+            </div>
 
             {depositMethod === "USDT" && (
               <>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-2 text-white">
+                  <label className="block text-sm font-medium mb-2  text-white">
                     Select Network
                   </label>
-                  <select
-                    value={network}
-                    onChange={(e) => setNetwork(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded text-black"
+
+                  <div
+                    className="h-[45px] w-full bg-gray-800 rounded-md border-[1px] border-double 
+    inline-block relative"
                   >
-                    <option value="">Select Network</option>
-                    <option value="TRC20">Tether (TRC20)</option>
-                  </select>
+                    {" "}
+                    <select
+                      value={network}
+                      onChange={(e) => setNetwork(e.target.value)}
+                      onFocus={() => setIsOpen(true)} 
+                       onBlur={() => setIsOpen(false)} 
+                      className="w-full p-2 border border-gray-300 rounded text-white   appearance-none h-full bg-transparent border-none pr-8"
+                    >
+                      <option value="" className="bg-gray-800 text-white">Select Network</option>
+                      <option value="TRC20" className="bg-gray-800 text-white">Tether (TRC20)</option>
+                    </select>
+                    {/* Down Arrow */}
+                    <div
+                      className={`pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500  ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                      ▼
+                    </div>
+                  </div>
                 </div>
 
                 <div className="bg-yellow-100 text-yellow-800 p-4 rounded mb-4">
                   <p className="font-semibold">Important:</p>
                   <ul className="list-disc pl-5">
                     <li>Ensure you select the correct network (TRC20).</li>
-                    <li>Incorrect network selection may lead to loss of funds.</li>
+                    <li>
+                      Incorrect network selection may lead to loss of funds.
+                    </li>
                     <li>Transactions are processed within 15 minutes.</li>
                   </ul>
                 </div>
@@ -160,7 +188,7 @@ const Deposit = () => {
                       type="text"
                       value="USDT"
                       disabled
-                      className="w-full p-2 border border-gray-300 rounded bg-gray-200 text-black"
+                      className="w-full p-2 border border-gray-300 rounded  text-white bg-gray-800"
                     />
                   </div>
                   <div>
@@ -172,13 +200,13 @@ const Deposit = () => {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="Enter amount"
-                      className="w-full p-2 border border-gray-300 rounded text-black"
+                      className="w-full p-2 border border-gray-300 bg-gray-800 rounded text-white"
                     />
                   </div>
                 </div>
               </>
             )}
-          </>
+          </div>
         )}
 
         {/* Step 2: Confirmation */}
@@ -186,8 +214,10 @@ const Deposit = () => {
           <div className="w-full">
             <div className="p-4 border rounded mb-4">
               <h2 className="text-lg mb-2">Transfer to Address (TRC20):</h2>
-              <div className="flex items-center justify-between bg-gray-200 p-2 rounded text-black">
-                <span className="truncate">TDf1MFkUTeyu5upSnZozprY8jhMtLQYL81</span>
+              <div className="flex items-center justify-between bg-gray-800 p-2 rounded text-white">
+                <span className="truncate ">
+                  TDf1MFkUTeyu5upSnZozprY8jhMtLQYL81
+                </span>
                 <button
                   type="button"
                   onClick={handleCopy}
@@ -206,7 +236,7 @@ const Deposit = () => {
                 <input
                   type="file"
                   onChange={(e) => setTransactionImage(e.target.files[0])}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 bg-gray-800 rounded"
                 />
               </div>
               <div className="flex-1">
@@ -218,7 +248,7 @@ const Deposit = () => {
                   placeholder="Enter Transaction ID"
                   value={transactionId}
                   onChange={(e) => setTransactionId(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded text-black"
+                  className="w-full p-2 border border-gray-300 rounded text-white bg-gray-800"
                 />
               </div>
             </div>
@@ -230,7 +260,13 @@ const Deposit = () => {
           type="submit"
           className="w-full bg-[#01137F] text-white p-2 mt-6 rounded hover:bg-[#101C8E] flex items-center justify-center"
         >
-          {loading ? <Loader size="6" color="white" /> : step === 1 ? "Confirm Request" : "Submit Request"}
+          {loading ? (
+            <Loader size="6" color="white" />
+          ) : step === 1 ? (
+            "Confirm Request"
+          ) : (
+            "Submit Request"
+          )}
         </button>
       </form>
     </div>
