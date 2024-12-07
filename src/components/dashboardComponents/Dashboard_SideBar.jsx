@@ -42,7 +42,7 @@ export default function Dashboard_SideBar({onClick}) {
                 <ul>
                     {/* Dashboard */}
                     <li className=''>
-                        <Link to='/dashboard/' onClick={onClick} className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold'>
+                        <Link to='/dashboard/' onClick={onClick} className='block pl-5 p-2  hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold'>
                             <MdDashboard className='inline md:text-2xl ' /> &nbsp;&nbsp;Dashboard
                         </Link>
                     
@@ -50,18 +50,18 @@ export default function Dashboard_SideBar({onClick}) {
 
                     {/* Profile */}
                     <li onClick={() => setIsOpen(!isOpen)} >
-                        <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold'>
+                        <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold'>
                             <FaHouseUser className='inline md:text-2xl' /> &nbsp;&nbsp;Profile
                             {isOpen ? <TiArrowSortedUp className='inline relative left-20 mr-2 md:left-[145px]' /> : <TiArrowSortedDown className='inline mr-2 relative left-20 md:left-[145px]' />}
                         </Link>
                         <ul className={`${isOpen ? "block" : "hidden"}`}>
                             <li>
-                                <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
-                                    <FaUser className='inline text-sm' />&nbsp;&nbsp;Edit Profile
+                                <Link to='/dashboard/editprofile' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
+                                    <FaUser className='inline text-2xl' />&nbsp;&nbsp;Edit Profile
                                 </Link>
                             </li>
                             <li>
-                                <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
+                                <Link to='/dashboard/changepassword' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
                                     <FaLock  className='inline text-sm' />&nbsp;&nbsp;Change Password
                                 </Link>
                             </li>
@@ -71,18 +71,18 @@ export default function Dashboard_SideBar({onClick}) {
                     {/* Deposit */}
                     {isVerified ? (
                         <li onClick={() => setIsOpen1(!isOpen1)}>
-                            <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold'>
+                            <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold'>
                                 <FaWallet className='inline md:text-2xl' /> &nbsp;&nbsp;Deposit
-                                {isOpen1 ? <TiArrowSortedUp className='inline relative ml-2 left-16 md:left-[135px]' /> : <TiArrowSortedDown className='inline relative ml-2 left-16 md:left-[135px]' />}
+                                {isOpen1 ? <TiArrowSortedUp className='inline relative ml-2 left-14 md:left-[126px]' /> : <TiArrowSortedDown className='inline relative ml-2 left-16 md:left-[126px]' />}
                             </Link>
                             <ul className={`${isOpen1 ? "block" : "hidden"}`}>
                                 <li>
-                                    <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
+                                    <Link to='/dashboard/deposit' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
                                         <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
+                                    <Link to='/dashboard/deposithistory' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
                                         <FaHistory  className='inline text-sm' />&nbsp;&nbsp; Request History
                                     </Link>
                                 </li>
@@ -97,13 +97,13 @@ export default function Dashboard_SideBar({onClick}) {
                     {/* Withdrawal */}
                     {isVerified ? (
                         <li onClick={() => setIsOpen2(!isOpen2)}>
-                            <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold'>
+                            <Link to='#' className='block pl-5 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold'>
                                 <BsBank2 className='inline md:text-2xl' /> &nbsp;&nbsp;WithDrawal
                                 {isOpen2 ? <TiArrowSortedUp className='inline relative left-12 md:left-[100px]' /> : <TiArrowSortedDown className='inline relative left-12 md:left-[100px]' />}
                             </Link>
                             <ul className={`${isOpen2 ? "block" : "hidden"}`}>
                                 <li>
-                                    <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-xl font-semibold' onClick={onClick}>
+                                    <Link to='/dashboard/withdrawal' className='block pl-10 p-2 hover:bg-gray-700 active:bg-slate-950 ease-linear border-b border-b-gray-500 text-sm md:text-lg font-semibold' onClick={onClick}>
                                         <IoMdGitPullRequest className='inline text-sm' />&nbsp;&nbsp;Send Request
                                     </Link>
                                 </li>

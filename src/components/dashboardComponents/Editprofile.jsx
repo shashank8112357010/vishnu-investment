@@ -20,10 +20,11 @@ const EditProfile = () => {
   const [activeTab, setActiveTab] = useState("profile");
 
   const [userProfile, setUserProfile] = useState({
-    name: "John Doe",
+    firstName: "John ",
+    lastName:"Doe",
     email: "johndoe@example.com",
-    phone: "+1 234 567 8900",
-    address: "123 Main St, New York, NY 10001",
+    phone: "9876543210",
+    dob: "1990-01-01",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
   });
 
@@ -76,7 +77,7 @@ const EditProfile = () => {
   useEffect(() => {
     fatchProfileDetail()
       .then((res) => {
-        setProfileData(res?.data?.profileData?.personalDetails);
+        setUserProfile(res?.data?.profileData?.personalDetails);
         setBankData(res?.data?.profileData?.bankDetails);
         setBinanceData(res?.data?.profileData?.binanceDetails);
       })
@@ -177,30 +178,30 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="p-3 bg-gray-900 ">
+    <div className="p-3 bg-gray-900  ">
       <h1 className="px-3 py-2 mb-3 bg-gray-400 inline-block rounded-md  text-black font-bold uppercase">
         Edit Profile
       </h1>
-      <div className="font-sans h-[550px] mt-5">
-        <div className="relative bg-white rounded-xl shadow-xl max-w-4xl w-full p-6 mx-4">
+      <div className="font-sans h-screen flex flex-col justify-start ">
+        <div className="relative bg-black rounded-xl shadow-xl overflow-x-hidden  w-full p-6 ">
 
 
           <div className="flex space-x-4  mb-6 border-b ">
             <button
               onClick={() => setActiveTab("profile")}
-              className={`flex items-center px-4 py-2 ${activeTab === "profile" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
+              className={`flex items-center md:px-4 py-2 ${activeTab === "profile" ? "border-b-2 border-blue-500 text-blue-600" : "text-white"}`}
             >
               <FaUserCircle className="mr-2" /> Profile
             </button>
             <button
               onClick={() => setActiveTab("bank")}
-              className={`flex items-center px-4 py-2 ${activeTab === "bank" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
+              className={`flex items-center px-4 py-2 ${activeTab === "bank" ? "border-b-2 border-blue-500 text-blue-600" : "text-white"}`}
             >
               <FaUniversity className="mr-2" /> Bank Details
             </button>
             <button
               onClick={() => setActiveTab("binance")}
-              className={`flex items-center px-4 py-2 ${activeTab === "binance" ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-600"}`}
+              className={`flex items-center px-4 py-2 ${activeTab === "binance" ? "border-b-2 border-blue-500 text-blue-600" : "text-white"}`}
             >
               <FaBitcoin className="mr-2" /> Binance Details
             </button>
@@ -220,40 +221,46 @@ const EditProfile = () => {
                   <div className="space-y-4 w-full max-w-md">
                     <input
                       type="text"
-                      value={userProfile.name}
+                      value={userProfile.firstName}
                       onChange={(e) => setUserProfile({ ...userProfile, name: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
+                    />
+                    <input
+                      type="text"
+                      value={userProfile.lastName}
+                      onChange={(e) => setUserProfile({ ...userProfile, name: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
                     />
                     <input
                       type="email"
                       value={userProfile.email}
                       onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
                     />
                     <input
                       type="tel"
                       value={userProfile.phone}
                       onChange={(e) => setUserProfile({ ...userProfile, phone: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
                     />
-                    <textarea
-                      value={userProfile.address}
+                    <input type="date"
+                      value={userProfile.dob}
                       onChange={(e) => setUserProfile({ ...userProfile, address: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="w-full px-3 py-2 border rounded-md text-white bg-gray-800"
                     />
                   </div>
                 ) : (
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-800">{userProfile.name}</h2>
-                    <p className="text-gray-600">{userProfile.email}</p>
-                    <p className="text-gray-600">{userProfile.phone}</p>
-                    <p className="text-gray-600">{userProfile.address}</p>
+                    <h2 className="text-2xl font-bold text-white">{userProfile.firstName} {userProfile.lastName}</h2>
+                    <p className="text-white">{userProfile.email}</p> 
+                    <p className="text-white">{userProfile.phone}</p>
+                    <p className="text-white">{userProfile.dob}</p>
                   </div>
                 )}
               </div>
               <button
                 onClick={() => isEditing.profile ? handleSave("profile") : handleEdit("profile")}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="px-4 py-2 bg-[#01137F] text-white rounded-md hover:bg-[#01137F]"
               >
                 {isEditing.profile ? "Save" : "Edit"}
               </button>
@@ -268,40 +275,40 @@ const EditProfile = () => {
                     type="text"
                     value={bankDetails.accountHolder}
                     onChange={(e) => setBankDetails({ ...bankDetails, accountHolder: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Account Holder Name"
                   />
                   <input
                     type="text"
                     value={bankDetails.accountNumber}
                     onChange={(e) => setBankDetails({ ...bankDetails, accountNumber: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Account Number"
                   />
                   <input
                     type="text"
                     value={bankDetails.bankName}
                     onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Bank Name"
                   />
                   <input
                     type="text"
                     value={bankDetails.swiftCode}
                     onChange={(e) => setBankDetails({ ...bankDetails, swiftCode: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="SWIFT Code"
                   />
                   <input
                     type="text"
                     value={bankDetails.routingNumber}
                     onChange={(e) => setBankDetails({ ...bankDetails, routingNumber: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Routing Number"
                   />
                 </div>
               ) : (
-                <div className="space-y-2 text-black">
+                <div className="space-y-2 text-white">
                   <p><strong>Account Holder:</strong> {bankDetails.accountHolder}</p>
                   <p><strong>Account Number:</strong> {bankDetails.accountNumber}</p>
                   <p><strong>Bank Name:</strong> {bankDetails.bankName}</p>
@@ -311,7 +318,7 @@ const EditProfile = () => {
               )}
               <button
                 onClick={() => isEditing.bank ? handleSave("bank") : handleEdit("bank")}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="px-4 py-2 bg-[#01137F] text-white rounded-md hover:bg-[#01137F]"
               >
                 {isEditing.bank ? "Save" : "Edit"}
               </button>
@@ -326,33 +333,33 @@ const EditProfile = () => {
                     type="text"
                     value={binanceDetails.binanceId}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, binanceId: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Binance ID"
                   />
                   <input
                     type="text"
                     value={binanceDetails.walletAddress}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, walletAddress: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Wallet Address"
                   />
                   <input
                     type="text"
                     value={binanceDetails.tradingLevel}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, tradingLevel: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="Trading Level"
                   />
                   <input
                     type="text"
                     value={binanceDetails.kycStatus}
                     onChange={(e) => setBinanceDetails({ ...binanceDetails, kycStatus: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-md"
+                    className="w-full px-3 py-2 border rounded-md bg-gray-800 text-white"
                     placeholder="KYC Status"
                   />
                 </div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-2 text-white">
                   <p><strong>Binance ID:</strong> {binanceDetails.binanceId}</p>
                   <p><strong>Wallet Address:</strong> {binanceDetails.walletAddress}</p>
                   <p><strong>Trading Level:</strong> {binanceDetails.tradingLevel}</p>
